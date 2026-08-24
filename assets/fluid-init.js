@@ -4,8 +4,8 @@
 // Эффект оживает при движении курсора (обработчики в fluid.js на window).
 window.generateColor = function () {
   const c = HSVtoRGB(0.42 + Math.random() * 0.10, 0.85, 1.0);
-  c.r *= 0.10;
-  c.g *= 0.10;
-  c.b *= 0.10;
+  c.r *= 0.13;
+  c.g *= 0.13;
+  c.b *= 0.13;
   return c;
 };
