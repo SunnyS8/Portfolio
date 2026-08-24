@@ -3,9 +3,9 @@
 // поэтому переопределяем её: оттенок 150°–172° (зелёный → бирюзовый).
 window.generateColor = function () {
   const c = HSVtoRGB(0.42 + Math.random() * 0.10, 0.85, 1.0);
-  c.r *= 0.22;
-  c.g *= 0.22;
-  c.b *= 0.22;
+  c.r *= 0.45;
+  c.g *= 0.45;
+  c.b *= 0.45;
   return c;
 };
 
