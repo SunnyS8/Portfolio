@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="light">
+<html lang="ru" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,47 +7,47 @@
   <meta name="description" content="Продуктовый аналитик и маркетолог-аналитик. 8 лет в аналитике, AI/LLM-интеграции, автоматизации и веб-разработке. Портфолио: BizView, СИС-калькулятор, Atelier AI, дашборды 1С." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="nav" id="top">
     <div class="nav__inner">
-      <a href="#top" class="nav__logo">АС<span>.</span></a>
+      <a href="#top" class="nav__logo">александра<span>.dev</span></a>
       <nav class="nav__links" id="navLinks">
         <a href="#about">Обо мне</a>
         <a href="#experience">Опыт</a>
-        <a href="#skills">Навыки</a>
+        <a href="#stack">Стек</a>
         <a href="#projects">Проекты</a>
         <a href="#opensource">Open-source</a>
         <a href="#contact">Контакты</a>
       </nav>
       <div class="nav__actions">
         <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему" title="Светлая / тёмная тема">
-          <span class="theme-toggle__icon">🌙</span>
+          <span class="theme-toggle__icon">◐</span>
         </button>
         <a href="#contact" class="btn btn--primary nav__cta">Связаться</a>
-        <button class="nav__burger" id="navBurger" aria-label="Меню">☰</button>
+        <button class="nav__burger" id="navBurger" aria-label="Меню">≡</button>
       </div>
     </div>
   </header>
 
   <section class="hero">
-    <div class="hero__blob hero__blob--1"></div>
-    <div class="hero__blob hero__blob--2"></div>
+    <div class="hero__grid"></div>
     <div class="hero__inner">
       <div class="hero__text">
-        <span class="badge">● открыта к предложениям</span>
-        <p class="hero__eyebrow">Продуктовый аналитик · Маркетолог-аналитик</p>
+        <span class="badge"><span class="badge__dot"></span> открыта к предложениям</span>
+        <p class="hero__comment">// Продуктовый аналитик · Маркетолог-аналитик</p>
         <h1 class="hero__title">Александра<br />Сарычева</h1>
+        <p class="hero__terminal"><span class="term-user">alexandra@portfolio</span><span class="term-sep">:~$</span> whoami</p>
         <p class="hero__sub">
           Я превращаю данные 1С и бизнеса в понятные отчёты, дашборды и
           сервисы, которыми реально пользуются. 8 лет между аналитикой,
-          автоматизацией и веб-разработкой — и искренним интересом к тому,
+          автоматизацией и веб-разработкой — и живым интересом к тому,
           чтобы цифры помогали людям принимать решения.
         </p>
         <div class="hero__actions">
-          <a href="#projects" class="btn btn--primary">Смотреть проекты</a>
+          <a href="#projects" class="btn btn--primary">~/проекты</a>
           <a href="https://github.com/SunnyS8" target="_blank" rel="noopener" class="btn btn--ghost">GitHub</a>
           <a href="https://t.me/SashaShyman" target="_blank" rel="noopener" class="btn btn--ghost">Telegram</a>
         </div>
@@ -63,7 +63,7 @@
           <img class="photo__img" src="assets/photo.jpg" alt="Александра Сарычева"
                onerror="this.style.display='none'" />
         </div>
-        <p class="photo__caption">Александра Сарычева</p>
+        <p class="photo__caption">~/alexandra.jpg</p>
       </div>
     </div>
   </section>
@@ -89,9 +89,9 @@
           в AI-интеграцию, сквозную аналитику и автоматизацию.
         </p>
         <ul class="values">
-          <li><span>📊</span> Данные — для решений, а не для галочки</li>
-          <li><span>🤝</span> Продукт делают люди, не отчёты</li>
-          <li><span>⚡</span> Рутина должна автоматизироваться</li>
+          <li><span class="val-mark">&gt;</span> Данные — для решений, а не для галочки</li>
+          <li><span class="val-mark">&gt;</span> Продукт делают люди, не отчёты</li>
+          <li><span class="val-mark">&gt;</span> Рутина должна автоматизироваться</li>
         </ul>
       </div>
     </section>
@@ -127,22 +127,19 @@
       </ol>
     </section>
 
-    <section id="skills" class="section">
-      <h2 class="section__title">Навыки</h2>
-      <div class="chips">
-        <span class="chip">Python</span>
-        <span class="chip">SQL</span>
-        <span class="chip">1С (данные/выгрузки)</span>
-        <span class="chip">Power BI</span>
-        <span class="chip">Excel · Power Query · Pivot</span>
-        <span class="chip">Streamlit</span>
-        <span class="chip">LLM / AI-агенты</span>
-        <span class="chip">Парсеры и автоматизация</span>
-        <span class="chip">HTML / JS / TypeScript</span>
-        <span class="chip">React / Next.js</span>
-        <span class="chip">Дашборды и KPI</span>
-        <span class="chip">ABC/XYZ-анализ</span>
-        <span class="chip">Vibe-coding</span>
+    <section id="stack" class="section">
+      <h2 class="section__title">Стек</h2>
+      <div class="terminal">
+        <div class="terminal__bar">
+          <span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span>
+          <span class="terminal__title">alexandra@portfolio: ~</span>
+        </div>
+        <pre class="terminal__body"><span class="term-cmd">$ cat stack.txt</span>
+<span class="k">languages</span>  Python · SQL · 1C (данные/выгрузки)
+<span class="k">analytics</span> Power BI · Excel · Power Query · Streamlit
+<span class="k">ai</span>        LLM · AI-агенты · Python + AI/LLM
+<span class="k">web</span>       HTML · JS · TypeScript · React / Next.js
+<span class="k">tools</span>     Парсеры · Дашборды · Автоматизация · ABC/XYZ</pre>
       </div>
     </section>
 
@@ -150,75 +147,75 @@
       <h2 class="section__title">Проекты</h2>
       <div class="grid">
         <article class="card">
-          <div class="card__head"><h3>BizView</h3><span class="card__tag">AI · Аналитика</span></div>
+          <div class="card__head"><h3>BizView</h3><span class="card__tag">[AI · Аналитика]</span></div>
           <p>AI-анализ продаж для малого бизнеса: загрузи CSV → KPI, динамика, топ/анти-топ
             товаров, ABC-анализ, локальные AI-рекомендации и готовый отчёт в Excel/HTML.
             Реализована SaaS-модель (Stripe Checkout, paywall, usage tracking).</p>
           <div class="card__tech">Python · Streamlit · pandas · Plotly · Excel</div>
-          <a class="card__link" href="https://github.com/SunnyS8/BizView" target="_blank" rel="noopener">Открыть на GitHub →</a>
+          <a class="card__link" href="https://github.com/SunnyS8/BizView" target="_blank" rel="noopener">открыть →</a>
         </article>
 
         <article class="card">
-          <div class="card__head"><h3>СИС-калькулятор</h3><span class="card__tag">Full-stack</span></div>
+          <div class="card__head"><h3>СИС-калькулятор</h3><span class="card__tag">[Full-stack]</span></div>
           <p>Калькулятор смет натяжных потолков и бесшовных стен (СИС) за 15 секунд:
             live-пересчёт, скачивание сметы в PDF, форма заявки с передачей лида в
             Bitrix24 / MegaCRM.</p>
           <div class="card__tech">Node.js · Express · SQLite · vanilla JS · PDF</div>
-          <a class="card__link" href="https://github.com/SunnyS8/potolok-party" target="_blank" rel="noopener">Открыть на GitHub →</a>
+          <a class="card__link" href="https://github.com/SunnyS8/potolok-party" target="_blank" rel="noopener">открыть →</a>
         </article>
 
         <article class="card">
-          <div class="card__head"><h3>Atelier AI</h3><span class="card__tag">AI · Web</span></div>
+          <div class="card__head"><h3>Atelier AI</h3><span class="card__tag">[AI · Web]</span></div>
           <p>Виртуальная AI-примерка одежды: загрузи фото → примерь любой образ,
             личный кабинет, система кредитов, оплата через ЮKassa, REST API для магазинов.</p>
           <div class="card__tech">Next.js · TypeScript · Supabase · Prisma · AI</div>
-          <a class="card__link" href="https://github.com/SunnyS8/fitting" target="_blank" rel="noopener">Открыть на GitHub →</a>
+          <a class="card__link" href="https://github.com/SunnyS8/fitting" target="_blank" rel="noopener">открыть →</a>
         </article>
 
         <article class="card">
-          <div class="card__head"><h3>Nelikvid Dashboard</h3><span class="card__tag">1С · Дашборд</span></div>
+          <div class="card__head"><h3>Nelikvid Dashboard</h3><span class="card__tag">[1С · Дашборд]</span></div>
           <p>Анализ неликвидов из выгрузок 1С прямо в браузере: KPI-карточки, графики
             по складам, фильтры и экспорт отчёта в Excel без сервера.</p>
           <div class="card__tech">JavaScript · SheetJS · Chart.js · Excel</div>
-          <a class="card__link" href="https://github.com/SunnyS8/nelikvid-dashboard" target="_blank" rel="noopener">Открыть на GitHub →</a>
+          <a class="card__link" href="https://github.com/SunnyS8/nelikvid-dashboard" target="_blank" rel="noopener">открыть →</a>
         </article>
 
         <article class="card">
-          <div class="card__head"><h3>Flex</h3><span class="card__tag">Лендинг</span></div>
+          <div class="card__head"><h3>Flex</h3><span class="card__tag">[Лендинг]</span></div>
           <p>Витрина фриланс-студии аналитики: услуги, кейсы (BizView, калькуляторы,
             боты), процесс работы и пакеты цен. Позиционирование аналитической практики.</p>
           <div class="card__tech">HTML · CSS · JS · маркетинг</div>
-          <a class="card__link" href="https://github.com/SunnyS8/Flex" target="_blank" rel="noopener">Открыть на GitHub →</a>
+          <a class="card__link" href="https://github.com/SunnyS8/Flex" target="_blank" rel="noopener">открыть →</a>
         </article>
 
         <article class="card">
-          <div class="card__head"><h3>Digital Sewing Planner</h3><span class="card__tag">Web-приложение</span></div>
+          <div class="card__head"><h3>Digital Sewing Planner</h3><span class="card__tag">[Web-приложение]</span></div>
           <p>Планер швейных проектов: мерки, генерация персональной SVG-фигуры,
             наложение ткани и выкройки на силуэт, экспорт в PDF / PNG / SVG.</p>
           <div class="card__tech">React 19 · TypeScript · Vite · Fabric.js</div>
-          <a class="card__link" href="https://github.com/SunnyS8/digital-sewing-planner" target="_blank" rel="noopener">Открыть на GitHub →</a>
+          <a class="card__link" href="https://github.com/SunnyS8/digital-sewing-planner" target="_blank" rel="noopener">открыть →</a>
         </article>
 
         <article class="card">
-          <div class="card__head"><h3>IKS Wallpaper Calculator</h3><span class="card__tag">Инструмент</span></div>
+          <div class="card__head"><h3>IKS Wallpaper Calculator</h3><span class="card__tag">[Инструмент]</span></div>
           <p>Калькулятор обоев для ГК ИКС (importks.ru): расчёт материалов и сметы
             для подбора и продажи.</p>
           <div class="card__tech">TypeScript · инструмент расчёта</div>
-          <a class="card__link" href="https://github.com/SunnyS8/iks-wallpaper-calculator" target="_blank" rel="noopener">Открыть на GitHub →</a>
+          <a class="card__link" href="https://github.com/SunnyS8/iks-wallpaper-calculator" target="_blank" rel="noopener">открыть →</a>
         </article>
 
         <article class="card">
-          <div class="card__head"><h3>PDF Bot</h3><span class="card__tag">Telegram-бот</span></div>
+          <div class="card__head"><h3>PDF Bot</h3><span class="card__tag">[Telegram-бот]</span></div>
           <p>Telegram-бот, который извлекает данные из PDF-накладных и сводит их
             в структурированный Excel-файл.</p>
           <div class="card__tech">Python · Telegram · PDF · Excel</div>
-          <a class="card__link" href="https://github.com/SunnyS8/PDF_bot" target="_blank" rel="noopener">Открыть на GitHub →</a>
+          <a class="card__link" href="https://github.com/SunnyS8/PDF_bot" target="_blank" rel="noopener">открыть →</a>
         </article>
       </div>
     </section>
 
     <section id="opensource" class="section">
-      <h2 class="section__title">Open-source и обучение</h2>
+      <h2 class="section__title">Open-source</h2>
       <p class="opensource__text">
         Изучаю и адаптирую AI-инструменты под задачи аналитики и автоматизации —
         форки и эксперименты с <a href="https://github.com/SunnyS8/claude-skills" target="_blank" rel="noopener">Claude Skills</a>,
@@ -250,7 +247,7 @@
   </main>
 
   <footer class="footer">
-    <p>© 2026 Александра Сарычева · Портфолио собрано как статический сайт и задеплоено на GitHub Pages.</p>
+    <p>© 2026 Александра Сарычева · собрано как статический сайт · задеплоено на GitHub Pages</p>
   </footer>
 
   <script src="main.js"></script>

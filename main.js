@@ -13,7 +13,7 @@ const saved = (function () {
   try { return localStorage.getItem('theme'); } catch (e) { return null; }
 })();
 if (saved) applyTheme(saved);
-else applyTheme('light');
+else applyTheme('dark');
 
 toggle.addEventListener('click', () => {
   applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
