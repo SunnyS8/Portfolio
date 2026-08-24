@@ -59,7 +59,7 @@ body::before {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: color-mix(in srgb, var(--bg) 35%, transparent);
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
 }
 @media (prefers-reduced-motion: reduce) {
   #fluid { display: none; }
