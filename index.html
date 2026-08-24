@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Александра Сарычева — Продуктовый аналитик / Маркетолог-аналитик</title>
-  <meta name="description" content="Продуктовый аналитик и маркетолог-аналитик. 8 лет в аналитике, AI/LLM-интеграции, автоматизации и веб-разработке. Портфолио проектов: BizView, СИС-калькулятор, Atelier AI, дашборды 1С." />
+  <meta name="description" content="Продуктовый аналитик и маркетолог-аналитик. 8 лет в аналитике, AI/LLM-интеграции, автоматизации и веб-разработке. Портфолио: BizView, СИС-калькулятор, Atelier AI, дашборды 1С." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="nav" id="top">
     <div class="nav__inner">
       <a href="#top" class="nav__logo">АС<span>.</span></a>
-      <nav class="nav__links">
+      <nav class="nav__links" id="navLinks">
         <a href="#about">Обо мне</a>
         <a href="#experience">Опыт</a>
         <a href="#skills">Навыки</a>
@@ -20,29 +22,49 @@
         <a href="#opensource">Open-source</a>
         <a href="#contact">Контакты</a>
       </nav>
-      <a href="#contact" class="btn btn--primary nav__cta">Связаться</a>
+      <div class="nav__actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему" title="Светлая / тёмная тема">
+          <span class="theme-toggle__icon">🌙</span>
+        </button>
+        <a href="#contact" class="btn btn--primary nav__cta">Связаться</a>
+        <button class="nav__burger" id="navBurger" aria-label="Меню">☰</button>
+      </div>
     </div>
   </header>
 
   <section class="hero">
+    <div class="hero__blob hero__blob--1"></div>
+    <div class="hero__blob hero__blob--2"></div>
     <div class="hero__inner">
-      <p class="hero__eyebrow">Продуктовый аналитик · Маркетолог-аналитик</p>
-      <h1 class="hero__title">Александра<br />Сарычева</h1>
-      <p class="hero__sub">
-        Соединяю аналитику, AI/LLM и веб-разработку: превращаю данные
-        1С и бизнеса в понятные отчёты, дашборды и работающие сервисы.
-        8 лет в аналитике, автоматизации и управлении цифровыми проектами.
-      </p>
-      <div class="hero__actions">
-        <a href="#projects" class="btn btn--primary">Смотреть проекты</a>
-        <a href="https://github.com/SunnyS8" target="_blank" rel="noopener" class="btn btn--ghost">GitHub</a>
-        <a href="https://t.me/SashaShyman" target="_blank" rel="noopener" class="btn btn--ghost">Telegram</a>
+      <div class="hero__text">
+        <span class="badge">● открыта к предложениям</span>
+        <p class="hero__eyebrow">Продуктовый аналитик · Маркетолог-аналитик</p>
+        <h1 class="hero__title">Александра<br />Сарычева</h1>
+        <p class="hero__sub">
+          Я превращаю данные 1С и бизнеса в понятные отчёты, дашборды и
+          сервисы, которыми реально пользуются. 8 лет между аналитикой,
+          автоматизацией и веб-разработкой — и искренним интересом к тому,
+          чтобы цифры помогали людям принимать решения.
+        </p>
+        <div class="hero__actions">
+          <a href="#projects" class="btn btn--primary">Смотреть проекты</a>
+          <a href="https://github.com/SunnyS8" target="_blank" rel="noopener" class="btn btn--ghost">GitHub</a>
+          <a href="https://t.me/SashaShyman" target="_blank" rel="noopener" class="btn btn--ghost">Telegram</a>
+        </div>
+        <ul class="hero__facts">
+          <li><strong>Ставрополь, РФ</strong><span>удалённо / командировки</span></li>
+          <li><strong>8 лет</strong><span>аналитика и продукт</span></li>
+          <li><strong>Python · SQL · 1С</strong><span>Power BI · LLM/AI</span></li>
+        </ul>
       </div>
-      <ul class="hero__facts">
-        <li><strong>Ставрополь, РФ</strong><span>удалённо / командировки</span></li>
-        <li><strong>8 лет</strong><span>аналитика и продукт</span></li>
-        <li><strong>Python · SQL · 1С</strong><span>Power BI · LLM/AI</span></li>
-      </ul>
+      <div class="hero__media">
+        <div class="photo">
+          <div class="photo__fallback" aria-hidden="true">АС</div>
+          <img class="photo__img" src="assets/photo.jpg" alt="Александра Сарычева"
+               onerror="this.style.display='none'" />
+        </div>
+        <p class="photo__caption">Александра Сарычева</p>
+      </div>
     </div>
   </section>
 
@@ -58,13 +80,19 @@
         </p>
         <p>
           Параллельно развиваю собственные инструменты и сервисы: от AI-анализатора
-          продаж до калькуляторов смет и виртуальной примерки одежды. Люблю, когда
-          аналитика заканчивается не графиком, а готовым продуктом, которым пользуются люди.
+          продаж до калькуляторов смет и виртуальной примерки одежды. Мне нравится,
+          когда аналитика заканчивается не графиком, а готовым продуктом, которым
+          пользуются люди.
         </p>
         <p class="about__note">
           Ищу позицию продуктового / маркетинг-аналитика (Junior/Middle) с уклоном
           в AI-интеграцию, сквозную аналитику и автоматизацию.
         </p>
+        <ul class="values">
+          <li><span>📊</span> Данные — для решений, а не для галочки</li>
+          <li><span>🤝</span> Продукт делают люди, не отчёты</li>
+          <li><span>⚡</span> Рутина должна автоматизироваться</li>
+        </ul>
       </div>
     </section>
 
@@ -127,7 +155,7 @@
             товаров, ABC-анализ, локальные AI-рекомендации и готовый отчёт в Excel/HTML.
             Реализована SaaS-модель (Stripe Checkout, paywall, usage tracking).</p>
           <div class="card__tech">Python · Streamlit · pandas · Plotly · Excel</div>
-          <a class="card__link" href="https://github.com/SunnyS8/BizView" target="_blank" rel="noopener">GitHub →</a>
+          <a class="card__link" href="https://github.com/SunnyS8/BizView" target="_blank" rel="noopener">Открыть на GitHub →</a>
         </article>
 
         <article class="card">
@@ -136,7 +164,7 @@
             live-пересчёт, скачивание сметы в PDF, форма заявки с передачей лида в
             Bitrix24 / MegaCRM.</p>
           <div class="card__tech">Node.js · Express · SQLite · vanilla JS · PDF</div>
-          <a class="card__link" href="https://github.com/SunnyS8/potolok-party" target="_blank" rel="noopener">GitHub →</a>
+          <a class="card__link" href="https://github.com/SunnyS8/potolok-party" target="_blank" rel="noopener">Открыть на GitHub →</a>
         </article>
 
         <article class="card">
@@ -144,7 +172,7 @@
           <p>Виртуальная AI-примерка одежды: загрузи фото → примерь любой образ,
             личный кабинет, система кредитов, оплата через ЮKassa, REST API для магазинов.</p>
           <div class="card__tech">Next.js · TypeScript · Supabase · Prisma · AI</div>
-          <a class="card__link" href="https://github.com/SunnyS8/fitting" target="_blank" rel="noopener">GitHub →</a>
+          <a class="card__link" href="https://github.com/SunnyS8/fitting" target="_blank" rel="noopener">Открыть на GitHub →</a>
         </article>
 
         <article class="card">
@@ -152,7 +180,7 @@
           <p>Анализ неликвидов из выгрузок 1С прямо в браузере: KPI-карточки, графики
             по складам, фильтры и экспорт отчёта в Excel без сервера.</p>
           <div class="card__tech">JavaScript · SheetJS · Chart.js · Excel</div>
-          <a class="card__link" href="https://github.com/SunnyS8/nelikvid-dashboard" target="_blank" rel="noopener">GitHub →</a>
+          <a class="card__link" href="https://github.com/SunnyS8/nelikvid-dashboard" target="_blank" rel="noopener">Открыть на GitHub →</a>
         </article>
 
         <article class="card">
@@ -160,7 +188,7 @@
           <p>Витрина фриланс-студии аналитики: услуги, кейсы (BizView, калькуляторы,
             боты), процесс работы и пакеты цен. Позиционирование аналитической практики.</p>
           <div class="card__tech">HTML · CSS · JS · маркетинг</div>
-          <a class="card__link" href="https://github.com/SunnyS8/Flex" target="_blank" rel="noopener">GitHub →</a>
+          <a class="card__link" href="https://github.com/SunnyS8/Flex" target="_blank" rel="noopener">Открыть на GitHub →</a>
         </article>
 
         <article class="card">
@@ -168,7 +196,7 @@
           <p>Планер швейных проектов: мерки, генерация персональной SVG-фигуры,
             наложение ткани и выкройки на силуэт, экспорт в PDF / PNG / SVG.</p>
           <div class="card__tech">React 19 · TypeScript · Vite · Fabric.js</div>
-          <a class="card__link" href="https://github.com/SunnyS8/digital-sewing-planner" target="_blank" rel="noopener">GitHub →</a>
+          <a class="card__link" href="https://github.com/SunnyS8/digital-sewing-planner" target="_blank" rel="noopener">Открыть на GitHub →</a>
         </article>
 
         <article class="card">
@@ -176,7 +204,7 @@
           <p>Калькулятор обоев для ГК ИКС (importks.ru): расчёт материалов и сметы
             для подбора и продажи.</p>
           <div class="card__tech">TypeScript · инструмент расчёта</div>
-          <a class="card__link" href="https://github.com/SunnyS8/iks-wallpaper-calculator" target="_blank" rel="noopener">GitHub →</a>
+          <a class="card__link" href="https://github.com/SunnyS8/iks-wallpaper-calculator" target="_blank" rel="noopener">Открыть на GitHub →</a>
         </article>
 
         <article class="card">
@@ -184,7 +212,7 @@
           <p>Telegram-бот, который извлекает данные из PDF-накладных и сводит их
             в структурированный Excel-файл.</p>
           <div class="card__tech">Python · Telegram · PDF · Excel</div>
-          <a class="card__link" href="https://github.com/SunnyS8/PDF_bot" target="_blank" rel="noopener">GitHub →</a>
+          <a class="card__link" href="https://github.com/SunnyS8/PDF_bot" target="_blank" rel="noopener">Открыть на GitHub →</a>
         </article>
       </div>
     </section>
@@ -203,7 +231,7 @@
 
     <section id="contact" class="section contact">
       <h2 class="section__title">Контакты</h2>
-      <p class="contact__lead">Открыта к предложениям о работе и интересным задачам.</p>
+      <p class="contact__lead">Напишите мне — обсудим задачу или просто познакомимся.</p>
       <div class="contact__grid">
         <a class="contact__item" href="https://t.me/SashaShyman" target="_blank" rel="noopener">
           <span class="contact__label">Telegram</span><span class="contact__value">@SashaShyman</span>
