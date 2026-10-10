@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Александра Сарычева — Продуктовый аналитик / Маркетолог-аналитик</title>
-  <meta name="description" content="Продуктовый аналитик и маркетолог-аналитик. 8 лет в аналитике, AI/LLM-интеграции, автоматизации и веб-разработке. Портфолио: BizView, СИС-калькулятор, Atelier AI, дашборды 1С." />
+  <meta name="description" content="Продуктовый аналитик и маркетолог-аналитик. 8 лет в аналитике, AI/LLM-интеграции, автоматизации и веб-разработке. Портфолио: BizView, калькулятор КП и доставки из Китая, агент контекстной рекламы, дашборды 1С." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -80,9 +80,9 @@
         </p>
         <p>
           Параллельно развиваю собственные инструменты и сервисы: от AI-анализатора
-          продаж до калькуляторов смет и виртуальной примерки одежды. Мне нравится,
-          когда аналитика заканчивается не графиком, а готовым продуктом, которым
-          пользуются люди.
+          продаж и агента контекстной рекламы до калькуляторов смет и расчёта
+          доставки из Китая. Мне нравится, когда аналитика заканчивается не графиком,
+          а готовым продуктом, которым пользуются люди.
         </p>
         <p class="about__note">
           Ищу позицию продуктового / маркетинг-аналитика (Junior/Middle) с уклоном
@@ -165,11 +165,24 @@
         </article>
 
         <article class="card">
-          <div class="card__head"><h3>Atelier AI</h3><span class="card__tag">[AI · Web]</span></div>
-          <p>Виртуальная AI-примерка одежды: загрузи фото → примерь любой образ,
-            личный кабинет, система кредитов, оплата через ЮKassa, REST API для магазинов.</p>
-          <div class="card__tech">Next.js · TypeScript · Supabase · Prisma · AI</div>
-          <a class="card__link" href="https://github.com/SunnyS8/fitting" target="_blank" rel="noopener">открыть →</a>
+          <div class="card__head"><h3>Калькулятор КП · доставка из Китая</h3><span class="card__tag">[Логистика · Калькулятор]</span></div>
+          <p>Расчёт себестоимости и коммерческого предложения по импорту из Китая: инвойс,
+            таможенные пошлины по ставке 2026, сборы, НДС и маржа. Сравнение ставок
+            экспедиторов, маршруты «порт → склад» (ВВО, ж/д, авто), сроки доставки и
+            себестоимость за кг / за м². Курсы ЦБ РФ, коды ТН ВЭД, экспорт КП в Excel и PDF.</p>
+          <div class="card__tech">React 19 · TypeScript · Vite · Tailwind · Recharts · Excel</div>
+          <a class="card__link" href="https://github.com/SunnyS8/Tonlos" target="_blank" rel="noopener">код →</a>
+          <a class="card__link" href="https://chinacalc.ai.studio/" target="_blank" rel="noopener">запустить онлайн ↗</a>
+        </article>
+
+        <article class="card">
+          <div class="card__head"><h3>Агент контекстной рекламы</h3><span class="card__tag">[AI · Автоматизация]</span></div>
+          <p>Автоматизация контекстной рекламы: Яндекс.Директ (через eLama API) и VK Ads.
+            Выгрузка статистики, расчёт KPI (CTR, CPC, CPA, CPL, ДРР, ROAS), поиск аномалий,
+            AI-рекомендации по ставкам и генерация текстов объявлений. Веб-панель + Telegram-бот,
+            журнал действий и режим DRY_RUN.</p>
+          <div class="card__tech">Python · FastAPI · Next.js · aiogram · PostgreSQL · LLM</div>
+          <a class="card__link" href="https://github.com/SunnyS8/ads-context-agent" target="_blank" rel="noopener">открыть →</a>
         </article>
 
         <article class="card">
@@ -189,14 +202,6 @@
         </article>
 
         <article class="card">
-          <div class="card__head"><h3>Digital Sewing Planner</h3><span class="card__tag">[Web-приложение]</span></div>
-          <p>Планер швейных проектов: мерки, генерация персональной SVG-фигуры,
-            наложение ткани и выкройки на силуэт, экспорт в PDF / PNG / SVG.</p>
-          <div class="card__tech">React 19 · TypeScript · Vite · Fabric.js</div>
-          <a class="card__link" href="https://github.com/SunnyS8/digital-sewing-planner" target="_blank" rel="noopener">открыть →</a>
-        </article>
-
-        <article class="card">
           <div class="card__head"><h3>IKS Wallpaper Calculator</h3><span class="card__tag">[Инструмент]</span></div>
           <p>Калькулятор обоев для ГК ИКС (importks.ru): расчёт материалов и сметы
             для подбора и продажи.</p>
@@ -204,15 +209,7 @@
           <a class="card__link" href="https://github.com/SunnyS8/iks-wallpaper-calculator" target="_blank" rel="noopener">открыть →</a>
         </article>
 
-          <article class="card">
-            <div class="card__head"><h3>PDF Bot</h3><span class="card__tag">[Telegram-бот]</span></div>
-            <p>Telegram-bot, который извлекает данные из PDF-накладных и сводит их
-              в структурированный Excel-файл.</p>
-            <div class="card__tech">Python · Telegram · PDF · Excel</div>
-            <a class="card__link" href="https://github.com/SunnyS8/PDF_bot" target="_blank" rel="noopener">открыть →</a>
-          </article>
-
-          <article class="card">
+        <article class="card">
             <div class="card__head"><h3>AVA — помощник руководителя</h3><span class="card__tag">[AI-агент]</span></div>
             <p>Личный AI-помощник руководителя (форк Betsy): голос, видео, долгосрочная память
               и настраиваемый характер. Ведёт расписание, напоминает о встречах, ищет информацию,
