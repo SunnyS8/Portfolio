@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Александра Сарычева — Project / Product Manager BI и отчётности</title>
+<meta name="description" content="Отклик на позицию Project / Product Manager в направлении BI и отчётности. Опыт поставки BI-решений под ключ: 13 отчётов, дашборды, Power BI, SQL, Python, автоматизация выгрузок из 1С." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  .letter { max-width: 830px; color: var(--muted); }
+  .letter p { margin: 0 0 16px; }
+  .letter strong { color: var(--text); font-weight: 600; }
+  .letter__sign { color: var(--text); font-family: var(--font-mono); font-size: 14px; margin-top: 24px; }
+  .letter__sign span { display: block; color: var(--muted); }
+  .copy-row { margin: 26px 0 0; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+
+  .stats { display: flex; flex-wrap: wrap; gap: 14px; margin: 18px 0 0; }
+  .stat {
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--bg-soft) 70%, transparent);
+    border-radius: 10px;
+    padding: 12px 16px;
+    min-width: 132px;
+    font-family: var(--font-mono);
+  }
+  .stat b { display: block; font-size: 20px; color: var(--accent); }
+  .stat span { font-size: 12.5px; color: var(--muted); }
+
+  .kv { border-left: 2px solid var(--line); padding-left: 16px; }
+  .kv h4 { margin: 0 0 6px; font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); text-transform: uppercase; letter-spacing: .4px; }
+  .kv p { margin: 0; color: var(--muted); font-size: 14.5px; }
+  .kv--fix { border-left-color: var(--accent-2); }
+  .kv--fix h4 { color: var(--accent-2); }
+
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
+  .step-card {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: color-mix(in srgb, var(--card) 78%, transparent);
+    padding: 20px; display: flex; flex-direction: column; gap: 7px;
+  }
+  .step-card .num { font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); font-weight: 700; }
+  .step-card h3 { margin: 0; font-size: 16.5px; font-family: var(--font-body); font-weight: 600; }
+  .step-card p { margin: 0; color: var(--muted); font-size: 14px; }
+
+  .panel {
+    border: 1px solid var(--line); border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    background: color-mix(in srgb, var(--bg-soft) 70%, transparent);
+    padding: 24px; max-width: 830px;
+  }
+  .panel p { margin: 0 0 14px; color: var(--muted); }
+  .panel p:last-child { margin-bottom: 0; }
+  .panel strong { color: var(--text); }
+
+  .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }
+  .work-card {
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--card) 78%, transparent);
+    border-radius: var(--radius); padding: 18px;
+    display: flex; flex-direction: column; gap: 6px;
+    transition: border-color .18s ease, transform .18s ease;
+  }
+  .work-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .work-card__label { font-family: var(--font-mono); font-size: 12px; color: var(--comment); }
+  .work-card__name { font-weight: 600; font-size: 16px; }
+  .work-card__note { font-size: 13.5px; color: var(--muted); }
+  .work-card__url { font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); word-break: break-all; }
+</style>
+</head>
+<body>
+
+<canvas id="fluid" aria-hidden="true"></canvas>
+
+<header class="nav" id="top">
+  <div class="nav__inner">
+    <a href="#top" class="nav__logo">александра<span>.dev</span></a>
+    <nav class="nav__links" id="navLinks">
+      <a href="#letter">Письмо</a>
+      <a href="#process">Процесс</a>
+      <a href="#cases">Кейсы</a>
+      <a href="#stack">Инструменты</a>
+      <a href="#works">Работы</a>
+      <a href="#terms">Условия</a>
+    </nav>
+    <div class="nav__actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему" title="Светлая / тёмная тема">
+        <span class="theme-toggle__icon">◐</span>
+      </button>
+      <a href="#contact" class="btn btn--primary nav__cta">Связаться</a>
+      <button class="nav__burger" id="navBurger" aria-label="Меню">≡</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero__grid"></div>
+  <div class="hero__inner">
+    <div class="hero__text">
+      <span class="badge"><span class="badge__dot"></span> отклик на вакансию · удалённо МСК</span>
+      <p class="hero__comment">// Project / Product Manager · BI и отчётность</p>
+      <h1 class="hero__title">Единая точка<br />поставки отчётов</h1>
+      <p class="hero__terminal"><span class="term-user">alexandra@bi</span><span class="term-sep">:~$</span> cat backlog.md</p>
+      <p class="hero__sub">
+        Три года строю отчётность для бизнеса в Power BI, Excel и SQL. Знаю, как
+        запрос «нужен отчёт» превращается в задачу на разработку, и как сделать так,
+        чтобы отчёт не развалился через месяц после сдачи.
+      </p>
+      <div class="hero__actions">
+        <a href="#cases" class="btn btn--primary">~/кейсы</a>
+        <a href="#letter" class="btn btn--ghost">Письмо</a>
+      </div>
+      <ul class="hero__facts">
+        <li><strong>3 года</strong><span>BI и аналитика</span></li>
+        <li><strong>13</strong><span>отчётов в одном приложении</span></li>
+        <li><strong>500k+</strong><span>строк в выгрузках</span></li>
+        <li><strong>Power BI · SQL</strong><span>Python · 1С</span></li>
+      </ul>
+    </div>
+    <div class="hero__media">
+      <div class="photo">
+        <div class="photo__fallback" aria-hidden="true">АС</div>
+        <img class="photo__img" src="assets/photo.png" alt="Александра Сарычева"
+             onerror="this.style.display='none'" />
+      </div>
+      <p class="photo__caption">Александра Сарычева · Ставрополь</p>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+
+  <!-- ПИСЬМО -->
+  <section id="letter" class="section">
+    <h2 class="section__title">Сопроводительное письмо</h2>
+    <div class="letter" id="letterText">
+      <p>Здравствуйте!</p>
+
+      <p>Откликаюсь на позицию Project / Product Manager в направлении BI и отчётности.</p>
+
+      <p><strong>Отчётность для меня не чужая тема, а ежедневная.</strong> Три года строю
+      управленческую отчётность в Power BI и Excel: продажи, остатки, дебиторка,
+      ассортимент, промо, оборачиваемость. Последние два года — маркетплейс-контекст:
+      остатки по складам, динамика прихода и расхода, позиции, которые перестали
+      двигаться. Знаю, как такие отчёты выглядят не на бумаге, а в жизни заказчика.</p>
+
+      <p><strong>Умею превращать хаос запросов в приоритеты.</strong> Задач всегда больше,
+      чем ресурсов. Разбираю входящие, отбираю по бизнес-эффекту, остальное объясняю
+      заказчику с причинами. Бэклог без объяснения приоритетов превращается в список
+      обещаний, которым никто не доверяет, — и говорить «нет» в такой ситуации не
+      страшно, потому что есть аргумент.</p>
+
+      <p><strong>Запрос почти никогда не формулируется так, как нужно.</strong> Приходит
+      «нужен отчёт по продажам» — а дальше выясняется, что нужен фильтр по статусу,
+      потому что в текущем виде туда попадают позиции, которых в системе просто нет.
+      Разбираюсь до постановки задачи, а не после.</p>
+
+      <p><strong>Есть опыт поставки BI-решений под ключ.</strong> Собрала приложение
+      с 13 типами отчётов для отдела продаж: сама выявила потребность, написала ТЗ,
+      приняла работу подрядчика, перевела пользователей, обучила — дальше веду сама:
+      обновления, новые запросы, правила расчёта и документация. Отдельно — дашборд
+      неликвидов прямо из выгрузок 1С в браузере.</p>
+
+      <p><strong>Инструменты.</strong> Power BI, Excel (сводные, сложные формулы,
+      Power Query), SQL, Python и pandas для обработки выгрузок 500k+ строк. Данные из 1С.
+      Автоматизирую рутинные отчёты на Python — то, что занимало несколько дней ручной
+      работы, собирается само по расписанию.</p>
+
+      <p><strong>AI как усиление.</strong> Собрала агента для управления контекстной
+      рекламой на LLM: FastAPI, Next.js, Telegram-бот, детерминированные правила решений,
+      DRY_RUN, аудит-лог. Понимаю, где AI ускоряет, а где добавляет работы.</p>
+
+      <p><strong>Про BPMN честно.</strong> Формально в нотации не работала. Процессы
+      выстраиваю через описание, бизнес-правила и критерии приёмки — на это и опираюсь
+      в приёмке. Освоить BPMN планирую, это вопрос недели, а не месяцев.</p>
+
+      <p>Ожидания по доходу: 160 000 ₽, готова обсуждать структуру и KPI.</p>
+
+      <p class="letter__sign">
+        Александра Сарычева
+        <span>Telegram: @SashaShyman · shymans8@gmail.com</span>
+        <span>Портфолио: https://sunnys8.github.io/Portfolio/</span>
+      </p>
+    </div>
+
+    <div class="copy-row">
+      <button class="btn btn--primary" id="copyLetter">Скопировать письмо</button>
+    </div>
+  </section>
+
+  <!-- ПРОЦЕСС -->
+  <section id="process" class="section">
+    <h2 class="section__title">Как проходит путь от запроса до приёмки</h2>
+    <div class="steps">
+      <div class="step-card">
+        <span class="num">01 / запрос</span>
+        <h3>Разбор</h3>
+        <p>Бизнес приходит с формулировкой задачи, а не с техническим заданием. Разбираю,
+        что на самом деле нужно, ищу первопричину: нет данных, не тот статус, не та
+        группировка.</p>
+      </div>
+      <div class="step-card">
+        <span class="num">02 / правила</span>
+        <h3>Формализация</h3>
+        <p>Фиксирую метрики, бизнес-правила и критерии приёмки. Пока правило расчёта не
+        записано словами, его всегда можно посчитать двумя способами.</p>
+      </div>
+      <div class="step-card">
+        <span class="num">03 / приоритет</span>
+        <h3>Согласование</h3>
+        <p>Собираю бэклог целиком, отбираю по бизнес-эффекту. Не попало в этот релиз —
+        объясняю заказчику почему, с аргументом и сроками.</p>
+      </div>
+      <div class="step-card">
+        <span class="num">04 / поставка</span>
+        <h3>ТЗ и сроки</h3>
+        <p>Декомпозирую на понятные части, фиксирую критерии приёмки. Разработка
+        получает задачу, которую можно проверить, а не описать в общих словах.</p>
+      </div>
+      <div class="step-card">
+        <span class="num">05 / приёмка</span>
+        <h3>Проверка на данных</h3>
+        <p>Сверяю результат с источником, а не с ожиданиями. Проверяю на данных, где
+        отчёт должен вести себя иначе: пустые значения, аномалии, пропущенные периоды.</p>
+      </div>
+      <div class="step-card">
+        <span class="num">06 / передача</span>
+        <h3>Документация и обучение</h3>
+        <p>Правила расчёта, описание показателей, инструкция — в том числе, чтобы
+        следующий человек мог проверить любую цифру сам.</p>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top: 28px;">
+      <p><strong>Главный принцип приоритизации.</strong> Бэклог без объяснения приоритетов
+      превращается в список обещаний, которым никто не доверяет. Поэтому каждое «нет» или
+      «не в этот релиз» сопровождается причиной: что даёт задача, сколько стоит, что
+      будет, если её отложить. Это и есть работа по общению с бизнесом, а не формальная
+      расстановка приоритетов в трекере.</p>
+    </div>
+  </section>
+
+  <!-- КЕЙСЫ -->
+  <section id="cases" class="section">
+    <h2 class="section__title">Кейсы</h2>
+
+    <article class="card">
+      <div class="card__head">
+        <h3>Отчёты отдела продаж</h3>
+        <span class="card__tag">[BI · Поставка под ключ]</span>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>13</b><span>типов отчётов</span></div>
+        <div class="stat"><b>1</b><span>точка входа вместо 13 файлов</span></div>
+        <div class="stat"><b>1С</b><span>выгрузка напрямую</span></div>
+        <div class="stat"><b>0</b><span>ручного переноса между файлами</span></div>
+      </div>
+      <div class="kv" style="margin-top: 16px;">
+        <h4>Задача</h4>
+        <p>Отчётность отдела продаж собиралась из выгрузок 1С вручную: продажи, остатки,
+        задолженность по менеджерам, неоплаченные счета, незакрытые ЭДО — каждый отчёт
+        отдельным файлом и своей логикой.</p>
+      </div>
+      <div class="kv" style="margin-top: 12px;">
+        <h4>Что сделала лично я</h4>
+        <p>Выявила потребность, написала ТЗ, приняла работу подрядчика, перевела
+        пользователей и обучила. Дальше веду сама: обновления, новые запросы,
+        документация. Неликвиды считаются по формуле «цена × длина × ширина × рулоны» —
+        под рулонные материалы. Пени по неоплаченным счетам, план против факта с
+        отклонением. Глобальный фильтр по датам: выбрал период — пересчитались все отчёты.</p>
+      </div>
+      <div class="kv" style="margin-top: 12px;">
+        <h4>Инсайт</h4>
+        <p>«Отчёт по продажам» — это не одна таблица, а десяток разных вопросов: директор
+        спрашивает одно, кладовщик другое, бухгалтер третье. Когда каждая выгрузка
+        открывается отдельно, одну и ту же работу повторяют каждую неделю.</p>
+      </div>
+      <div class="card__tech" style="margin-top: 14px;">FastAPI · pandas · openpyxl · Jinja2 · Bootstrap · выгрузки 1С</div>
+    </article>
+
+    <div class="grid" style="margin-top: 16px;">
+
+      <article class="card">
+        <div class="card__head">
+          <h3>Дашборд неликвидов</h3>
+          <span class="card__tag">[BI · Данные 1С]</span>
+        </div>
+        <div class="kv">
+          <h4>Задача</h4>
+          <p>Список неликвидов от РОПа, остатки и продажи из 1С — три отдельных Excel-файла,
+          которые сводились копированием между таблицами.</p>
+        </div>
+        <div class="kv" style="margin-top: 12px;">
+          <h4>Что сделала лично я</h4>
+          <p>Решение на чистом фронтенде: Excel разбирается прямо в браузере, без сервера
+          и без выгрузки на чужой аккаунт. Сопоставление по ключу «код + ширина» — один
+          артикул существует в нескольких вариантах ширины, и наивное соединение даёт
+          задвоение. Четыре статуса позиции, графики по складам, экспорт обратно в Excel.</p>
+        </div>
+        <div class="kv kv--fix" style="margin-top: 12px;">
+          <h4>Что пришлось исправить</h4>
+          <p>Статус вычисляется автоматически и используется как фильтр. Сначала смотрят
+          «остаток есть, продаж нет» — это работа для закупщика; всё остальное — контроль
+          качества данных. Заодно нашла и починила ошибку в расчёте продаж и невидимые
+          графики: canvas без заданной высоты при включённом responsive-режиме.</p>
+        </div>
+        <div class="card__tech" style="margin-top: 14px;">JavaScript · SheetJS · Chart.js · Excel</div>
+        <a class="card__link" href="https://github.com/SunnyS8/nelikvid-dashboard" target="_blank" rel="noopener">открыть →</a>
+      </article>
+
+      <article class="card">
+        <div class="card__head">
+          <h3>Автоматизация выгрузок</h3>
+          <span class="card__tag">[ETL · Python]</span>
+        </div>
+        <div class="kv">
+          <h4>Задача</h4>
+          <p>Регулярная отчётность собиралась вручную: выгрузка, обработка в Excel,
+          раскладка по файлам. На ежемесячные цикры уходили дни.</p>
+        </div>
+        <div class="kv" style="margin-top: 12px;">
+          <h4>Что сделала лично я</h4>
+          <p>Перенесла обработку в Python: pandas и openpyxl разбирают выгрузку 1С,
+          считают показатели, формируют отчёты и раскладывают их по назначению. Запуск
+          по расписанию. Плюс ABC/XYZ-анализ ассортимента поверх тех же данных.</p>
+        </div>
+        <div class="kv" style="margin-top: 12px;">
+          <h4>Инсайт</h4>
+          <p>Автоматизация без проверяемых правил расчёта просто переносит ошибку из
+          Excel в код — и делает это быстрее. Поэтому правила фиксируются текстом до
+          автоматизации, а не после.</p>
+        </div>
+        <div class="card__tech" style="margin-top: 14px;">Python · pandas · openpyxl · SQL · выгрузки 500k+ строк</div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ИНСТРУМЕНТЫ -->
+  <section id="stack" class="section">
+    <h2 class="section__title">Инструменты</h2>
+    <div class="terminal">
+      <div class="terminal__bar">
+        <span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span>
+        <span class="terminal__title">alexandra@bi: ~</span>
+      </div>
+      <pre class="terminal__body"><span class="term-cmd">$ cat stack.txt</span>
+<span class="k">bi</span>           Power BI · Excel (сводные, формулы, Power Query)
+<span class="k">data</span>         SQL · Python · pandas · выгрузки 1С
+<span class="k">methods</span>      ABC/XYZ · оборачиваемость · неликвиды · отклонения
+<span class="k">delivery</span>     ТЗ · приёмка · критерии · документация · обучение
+<span class="k">automation</span>  Python по расписанию · LLM-агенты · API
+<span class="k">domain</span>       торговля и маркетплейсы: остатки, продажи, маржа</pre>
+    </div>
+
+    <div class="panel" style="margin-top: 26px;">
+      <p><strong>Как считаю результат.</strong> Отчёт оценивается не по факту сдачи, а по
+      решениям, которые бизнес принимает с его помощью. Поэтому в каждом отчёте есть
+      явный сигнал: где показатель выходит за границы, где данных не хватает, где
+      источник расходится. Панель, после которой не нужно ничего уточнять в Excel, —
+      это отчёт, который работает.</p>
+    </div>
+  </section>
+
+  <!-- РАБОТЫ -->
+  <section id="works" class="section">
+    <h2 class="section__title">Что сделала руками</h2>
+    <div class="links-grid">
+      <a class="work-card" href="https://sunnys8.github.io/Portfolio/" target="_blank" rel="noopener">
+        <span class="work-card__label">Портфолио</span>
+        <span class="work-card__name">Проекты и кейсы</span>
+        <span class="work-card__note">Отчёты 1С, дашборд неликвидов, калькуляторы, агент рекламы.</span>
+        <span class="work-card__url">sunnys8.github.io/Portfolio</span>
+      </a>
+      <a class="work-card" href="https://github.com/SunnyS8/-kapitan-reports" target="_blank" rel="noopener">
+        <span class="work-card__label">GitHub</span>
+        <span class="work-card__name">Отчёты отдела продаж</span>
+        <span class="work-card__note">13 типов отчётов, работа с выгрузками 1С, документация.</span>
+        <span class="work-card__url">github.com/SunnyS8/-kapitan-reports</span>
+      </a>
+      <a class="work-card" href="https://github.com/SunnyS8/nelikvid-dashboard" target="_blank" rel="noopener">
+        <span class="work-card__label">GitHub</span>
+        <span class="work-card__name">Дашборд неликвидов</span>
+        <span class="work-card__note">Разбор Excel в браузере, статусы позиций, графики по складам.</span>
+        <span class="work-card__url">github.com/SunnyS8/nelikvid-dashboard</span>
+      </a>
+      <a class="work-card" href="https://github.com/SunnyS8/BizView" target="_blank" rel="noopener">
+        <span class="work-card__label">GitHub</span>
+        <span class="work-card__name">BizView</span>
+        <span class="work-card__note">AI-анализ продаж: KPI, динамика, топ/антитоп, ABC-анализ.</span>
+        <span class="work-card__url">github.com/SunnyS8/BizView</span>
+      </a>
+      <a class="work-card" href="https://chinacalc.ai.studio/" target="_blank" rel="noopener">
+        <span class="work-card__label">Калькулятор</span>
+        <span class="work-card__name">КП и доставка из Китая</span>
+        <span class="work-card__note">Живой расчёт себестоимости с пошлинами и НДС, выгрузка КП.</span>
+        <span class="work-card__url">chinacalc.ai.studio</span>
+      </a>
+      <a class="work-card" href="https://github.com/SunnyS8/ads-context-agent" target="_blank" rel="noopener">
+        <span class="work-card__label">AI-агент</span>
+        <span class="work-card__name">Управление контекстной рекламой</span>
+        <span class="work-card__note">Метрики, аномалии, правила решений, DRY_RUN, аудит-лог.</span>
+        <span class="work-card__url">github.com/SunnyS8/ads-context-agent</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- УСЛОВИЯ -->
+  <section id="terms" class="section">
+    <h2 class="section__title">Условия</h2>
+    <div class="about">
+      <p>Удалённая работа по московскому времени, график 9/10–18/19 — подходит полностью.
+      Понимаю, что отчётность — это операционная нагрузка: понимаю и дедлайны, и то,
+      что срочное и важное в один день встречается редко.</p>
+      <ul class="values">
+        <li><span class="val-mark">&gt;</span> Ожидания по доходу: 160 000 ₽</li>
+        <li><span class="val-mark">&gt;</span> Готова обсуждать структуру и KPI</li>
+        <li><span class="val-mark">&gt;</span> Технический кейс с BI-командой — готова выполнить</li>
+        <li><span class="val-mark">&gt;</span> Экспертиза в 1С и торговле — считаю преимуществом для быстрого входа</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- КОНТАКТЫ -->
+  <section id="contact" class="section contact">
+    <h2 class="section__title">Контакты</h2>
+    <p class="contact__lead">Напишите — отвечаю быстро, на первые два сообщения.</p>
+    <div class="contact__grid">
+      <a class="contact__item" href="https://t.me/SashaShyman" target="_blank" rel="noopener">
+        <span class="contact__label">Telegram</span><span class="contact__value">@SashaShyman</span>
+      </a>
+      <a class="contact__item" href="mailto:shymans8@gmail.com">
+        <span class="contact__label">Email</span><span class="contact__value">shymans8@gmail.com</span>
+      </a>
+      <a class="contact__item" href="tel:+79887444848">
+        <span class="contact__label">Телефон</span><span class="contact__value">+7 988 744-48-48</span>
+      </a>
+      <a class="contact__item" href="https://github.com/SunnyS8" target="_blank" rel="noopener">
+        <span class="contact__label">GitHub</span><span class="contact__value">SunnyS8</span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>© 2026 Александра Сарычева · отклик на вакансию Project / Product Manager BI и отчётности</p>
+</footer>
+
+<script src="main.js"></script>
+<script>window.ga = function () {};</script>
+<script src="assets/fluid.js"></script>
+<script src="assets/fluid-init.js"></script>
+<script>
+  (function () {
+    var btn = document.getElementById('copyLetter');
+    var box = document.getElementById('letterText');
+    if (!btn || !box) return;
+    btn.addEventListener('click', function () {
+      var text = box.innerText.replace(/\n{3,}/g, '\n\n').trim();
+      navigator.clipboard.writeText(text).then(function () {
+        var old = btn.textContent;
+        btn.textContent = 'Скопировано ✓';
+        setTimeout(function () { btn.textContent = old; }, 1800);
+      });
+    });
+  })();
+</script>
+</body>
+</html>

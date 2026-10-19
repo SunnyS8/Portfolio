@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Александра Сарычева — отклик на вакансию «Ведущий маркетолог-практик» · СОЛОМКА</title>
+<meta name="description" content="Отклик на позицию ведущего маркетолога-практика: агент контекстной рекламы, сборка воронок и страниц, база компаний для холодных продаж. Аналитика, автоматизация, ИИ с проверкой результата." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  /* ---------- Дополнения к дизайну портфолио ---------- */
+  .todo {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--accent-2);
+    background: color-mix(in srgb, var(--accent-2) 12%, transparent);
+    border: 1px dashed color-mix(in srgb, var(--accent-2) 45%, transparent);
+    padding: 1px 8px;
+    border-radius: 6px;
+  }
+  .letter { max-width: 820px; color: var(--muted); }
+  .letter p { margin: 0 0 16px; }
+  .letter strong { color: var(--text); font-weight: 600; }
+  .letter__sign { color: var(--text); font-family: var(--font-mono); font-size: 14px; margin-top: 24px; }
+  .letter__sign span { display: block; color: var(--muted); }
+  .copy-row { margin: 26px 0 0; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .copy-hint { font-family: var(--font-mono); font-size: 12.5px; color: var(--comment); }
+
+  .stats { display: flex; flex-wrap: wrap; gap: 14px; margin: 18px 0 0; }
+  .stat {
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--bg-soft) 70%, transparent);
+    border-radius: 10px;
+    padding: 12px 16px;
+    min-width: 132px;
+    font-family: var(--font-mono);
+  }
+  .stat b { display: block; font-size: 20px; color: var(--accent); }
+  .stat span { font-size: 12.5px; color: var(--muted); }
+
+  .case { display: flex; flex-direction: column; }
+  .case__grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  .kv { border-left: 2px solid var(--line); padding-left: 16px; }
+  .kv h4 { margin: 0 0 6px; font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); text-transform: uppercase; letter-spacing: .4px; }
+  .kv p { margin: 0; color: var(--muted); font-size: 14.5px; }
+  .kv--fix { border-left-color: var(--accent-2); }
+  .kv--fix h4 { color: var(--accent-2); }
+
+  .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }
+  .work-card {
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--card) 78%, transparent);
+    border-radius: var(--radius);
+    padding: 18px;
+    display: flex; flex-direction: column; gap: 6px;
+    transition: border-color .18s ease, transform .18s ease;
+  }
+  .work-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .work-card__label { font-family: var(--font-mono); font-size: 12px; color: var(--comment); }
+  .work-card__name { font-weight: 600; font-size: 16px; }
+  .work-card__note { font-size: 13.5px; color: var(--muted); }
+  .work-card__url { font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); word-break: break-all; }
+
+  .honest { border: 1px solid var(--line); border-left: 3px solid var(--accent-2); border-radius: 0 var(--radius) var(--radius) 0;
+            background: color-mix(in srgb, var(--bg-soft) 70%, transparent); padding: 22px; max-width: 820px; }
+  .honest p { margin: 0 0 14px; color: var(--muted); }
+  .honest p:last-child { margin-bottom: 0; }
+  .honest strong { color: var(--text); }
+</style>
+</head>
+<body>
+
+<canvas id="fluid" aria-hidden="true"></canvas>
+
+<header class="nav" id="top">
+  <div class="nav__inner">
+    <a href="#top" class="nav__logo">александра<span>.dev</span></a>
+    <nav class="nav__links" id="navLinks">
+      <a href="#letter">Письмо</a>
+      <a href="#cases">Кейсы</a>
+      <a href="#ai">ИИ</a>
+      <a href="#analytics">Проверка данных</a>
+      <a href="#works">Работы</a>
+      <a href="#terms">Условия</a>
+    </nav>
+    <div class="nav__actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему" title="Светлая / тёмная тема">
+        <span class="theme-toggle__icon">◐</span>
+      </button>
+      <a href="#contact" class="btn btn--primary nav__cta">Связаться</a>
+      <button class="nav__burger" id="navBurger" aria-label="Меню">≡</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero__grid"></div>
+  <div class="hero__inner">
+    <div class="hero__text">
+      <span class="badge"><span class="badge__dot"></span> отклик на вакансию · удалённо</span>
+      <p class="hero__comment">// Ведущий маркетолог-практик · СОЛОМКА</p>
+      <h1 class="hero__title">Маркетолог,<br />который считает</h1>
+      <p class="hero__terminal"><span class="term-user">alexandra@solomka</span><span class="term-sep">:~$</span> cat about.txt</p>
+      <p class="hero__sub">
+        Три года в аналитике и два года в производстве — весь срок на стыке данных
+        и продвижения. Собираю воронки, страницы и ИИ-инструменты, проверяю их
+        на реальных данных и не приписываю маркетингу то, что не подтверждено.
+      </p>
+      <div class="hero__actions">
+        <a href="#cases" class="btn btn--primary">~/кейсы</a>
+        <a href="#letter" class="btn btn--ghost">Письмо</a>
+      </div>
+      <ul class="hero__facts">
+        <li><strong>3 года</strong><span>в аналитике</span></li>
+        <li><strong>10+</strong><span>лендингов запущено</span></li>
+        <li><strong>500k+</strong><span>строк в выгрузках</span></li>
+        <li><strong>удалённо</strong><span>10:00–18:00 МСК</span></li>
+      </ul>
+    </div>
+    <div class="hero__media">
+      <div class="photo">
+        <div class="photo__fallback" aria-hidden="true">АС</div>
+        <img class="photo__img" src="assets/photo.png" alt="Александра Сарычева"
+             onerror="this.style.display='none'" />
+      </div>
+      <p class="photo__caption">Александра Сарычева · Ставрополь</p>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+
+  <!-- ================= ПИСЬМО ================= -->
+  <section id="letter" class="section">
+    <h2 class="section__title">Сопроводительное письмо</h2>
+    <div class="letter" id="letterText">
+      <p>Здравствуйте!</p>
+
+      <p>Откликаюсь на позицию ведущего маркетолога-практика. Сразу оговорюсь: у меня
+      не шесть лет в маркетинге — три года в аналитике и два года в производстве, и весь
+      этот срок я работала на стыке данных и продвижения. Ниже — что сделано руками,
+      с цифрами и ссылками.</p>
+
+      <p><strong>Реклама и экономика.</strong> Собрала сервис агрегации контекстной
+      рекламы: Яндекс.Директ и VK Ads, выгрузка статистики, расчёт CTR, CPC, CPA, CPL,
+      ДРР, ROAS, поиск аномалий. Веб-панель и Telegram-бот. Управление ставками идёт
+      по правилам с порогами: меньше 30 кликов — решение не принимается; 0 конверсий при
+      30+ кликах — критическая аномалия; CPA выше цели на 30 % — снижение ставки;
+      изменение ставки не больше 15 % за раз. Режим DRY_RUN, журнал всех действий,
+      бюджет не меняется автоматически никогда.</p>
+
+      <p><strong>Аналитика — то, где я сильнее всего.</strong> Три года на выгрузках 1С
+      и CRM: остатки, продажи, дебиторка, ассортимент, промо. Данные на 500k+ строк,
+      SQL и Python. Моя работа — искать расхождения: дубли, пропущенные события, ошибки
+      в источниках. Привычка: продажа не считается продажей, пока не проверена по
+      первичной записи.</p>
+
+      <p><strong>Страницы и воронки.</strong> Собрала посадочную страницу услуги с оффером,
+      ценами и формой заявки — от идеи до публикации. Сделала старт-кит продвижения:
+      тексты постов для Telegram и VK, оффер с ценами, шаблоны сообщений, объявление
+      для доски объявлений, шаблоны откликов на биржи. До аналитики — два года менеджером
+      производства: 10+ лендингов и сайтов, коммуникации с заказчиками и подрядчиками,
+      запуски.</p>
+
+      <p><strong>ИИ — так, как это описано у вас.</strong> LLM генерирует только тексты
+      объявлений. Все решения по деньгам принимают правила, а не модель. Что пришлось
+      проверить и исправить: порог в 30 кликов взят из практики Директа — при меньшем
+      числе кликов конверсия статистически не читается; ставку нельзя менять больше чем
+      на 15 % за раз; бюджет не трогаем без человека. Отдельно проверяю, что модель
+      не выдумывает показатели: цифры сверяю с источником.</p>
+
+      <p>Ниже два кейса с цифрами и ссылками на то, что я сделала сама.</p>
+
+      <p class="letter__sign">
+        Александра Сарычева
+        <span>Telegram: @SashaShyman · shymans8@gmail.com</span>
+        <span>Портфолио: https://sunnys8.github.io/Portfolio/</span>
+      </p>
+    </div>
+
+    <div class="copy-row">
+      <button class="btn btn--primary" id="copyLetter">Скопировать письмо</button>
+    </div>
+  </section>
+
+  <!-- ================= КЕЙСЫ ================= -->
+  <section id="cases" class="section">
+    <h2 class="section__title">Кейсы</h2>
+
+    <article class="card case">
+      <div class="card__head">
+        <h3>Агент контекстной рекламы</h3>
+        <span class="card__tag">[Маркетинг · AI · Аналитика]</span>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><b>2</b><span>кабинета: Директ, VK Ads</span></div>
+        <div class="stat"><b>8</b><span>метрик: CTR…ROAS</span></div>
+        <div class="stat"><b>30</b><span>кликов: порог решения</span></div>
+        <div class="stat"><b>15 %</b><span>максимум изменения ставки</span></div>
+        <div class="stat"><b>0 ₽</b><span>автоизменение бюджета</span></div>
+      </div>
+
+      <div class="case__grid" style="margin-top: 18px;">
+        <div class="kv">
+          <h4>Задача</h4>
+          <p>Статистика кампаний в двух кабинетах. CTR, CPC, CPA, ДРР и ROAS считались
+          вручную — операция заканчивалась ошибкой или тем, что её не делали.</p>
+        </div>
+        <div class="kv">
+          <h4>Что сделала лично я</h4>
+          <p>Архитектура и код сервиса целиком: FastAPI + Next.js + Telegram-бот,
+          PostgreSQL, интеграции с eLama API. Логика решений, детектор аномалий,
+          режим DRY_RUN, журнал действий, тесты. Промпты для генерации текстов объявлений.</p>
+        </div>
+        <div class="kv">
+          <h4>Инсайт</h4>
+          <p>«Плохая кампания» и «кампания с недостатком данных» — это разные решения.
+          Низкая конверсия при 10 кликах и при 500 кликах означает противоположное.
+          Порог в 30 кликов не даёт рекомендовать паузу на основе шума.</p>
+        </div>
+        <div class="kv kv--fix">
+          <h4>Что пришлось исправить</h4>
+          <p>Решения вынесены из «LLM решает» в детерминированные правила с порогами.
+          Ставка меняется максимум на 15 % и только с подтверждением человека, бюджет
+          не меняется автоматически никогда. Проверяю вывод модели по первичным данным,
+          а не принимаю на веру.</p>
+        </div>
+        <div class="kv">
+          <h4>Статус</h4>
+          <p>Система собрана и работает, рекламный кабинет на запуске — поэтому
+          результатов в цифрах пока нет, показываю механику и правила принятия решений,
+          а не отчёт.</p>
+        </div>
+      </div>
+
+      <div class="card__tech" style="margin-top: 16px;">Python · FastAPI · Next.js · aiogram · PostgreSQL · LLM</div>
+      <div>
+        <a class="card__link" href="https://github.com/SunnyS8/ads-context-agent" target="_blank" rel="noopener">код →</a>
+      </div>
+    </article>
+
+    <div class="grid" style="margin-top: 16px;">
+
+      <article class="card case">
+        <div class="card__head">
+          <h3>Академия Роста: лендинг, AI-консультант, лиды</h3>
+          <span class="card__tag">[Страницы · AI · Лидогенерация]</span>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>8</b><span>программ в каталоге</span></div>
+          <div class="stat"><b>1 h1</b><span>после аудита разметки</span></div>
+          <div class="stat"><b>6</b><span>тем контент-плана</span></div>
+          <div class="stat"><b>5</b><span>стадий воронки</span></div>
+          <div class="stat"><b>~1 ч</b><span>запуск нового города</span></div>
+        </div>
+        <div class="kv">
+          <h4>Задача</h4>
+          <p>Психологический центр работает по франшизе. Нужен не «просто сайт», а пакет,
+          который тиражируется на новые точки: отличаются только бренд, город, контакты
+          и набор программ.</p>
+        </div>
+        <div class="kv" style="margin-top: 12px;">
+          <h4>Что сделала лично я</h4>
+          <p>Собрала пакет целиком: одностраничный лендинг (82 КБ разметки), serverless
+          AI-консультант на Gemini через API, приём лидов в Telegram, контент-план и
+          конфиг параметров. Все данные бренда вынесены в один <code>config.json</code>:
+          8 программ в 3 категориях, цены, адрес, соцсети, промпт AI.</p>
+        </div>
+        <div class="kv" style="margin-top: 12px;">
+          <h4>AI-консультант</h4>
+          <p>Промпт заточен под продукт: отвечает по программам и ценам (тренинги
+          25–28 тыс., расстановка 10 тыс., игра 1,5 тыс.), помогает выбрать направление
+          и записаться. В промпте заданы тон, краткость и прямой запрет давать медицинские
+          советы — модель не выходит за рамки.</p>
+        </div>
+        <div class="kv" style="margin-top: 12px;">
+          <h4>Контент и воронка</h4>
+          <p>6 тем × 5 форматов (карусель, Reels, сторис, пост, гайд) × 5 стадий:
+          узнаваемость → вовлечение → доверие → экспертность → конверсия. Ключевой
+          запрос и аудитория заданы в конфиге рядом с сайтом.</p>
+        </div>
+        <div class="kv kv--fix" style="margin-top: 12px;">
+          <h4>Что пришлось исправить</h4>
+          <p>Провела аудит проекта — SEO on-page, WCAG 2.1 AA и QA. Нашла 6 замечаний,
+          из них критичные: 4+ <code>&lt;h1&gt;</code> в разметке, отсутствие JSON-LD
+          схемы, canonical и og:image, нет города в title, не отдаются robots.txt и
+          sitemap.xml. Всё исправлено, повторная проверка — чисто.</p>
+        </div>
+        <div class="kv" style="margin-top: 12px;">
+          <h4>Инсайт</h4>
+          <p>Пакет для франшизы отличается от «просто сайта» тем, что его нельзя делать
+          под одну точку. Всё, что меняется от города к городу, живёт в конфиге —
+          запуск новой точки это копия папки, правка конфига и деплой.</p>
+        </div>
+        <div class="card__tech" style="margin-top: 14px;">HTML · JS · Vercel Functions · Gemini API · Telegram Bot API · JSON-LD</div>
+        <div>
+          <a class="card__link" href="https://akademiya-rosta-tau.vercel.app" target="_blank" rel="noopener">сайт ↗</a>
+        </div>
+      </article>
+
+      <article class="card case">
+        <div class="card__head">
+          <h3>База компаний для холодных продаж</h3>
+          <span class="card__tag">[Лидогенерация · Данные]</span>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>744</b><span>строк в реестре ФНС</span></div>
+          <div class="stat"><b>717</b><span>после фильтрации</span></div>
+          <div class="stat"><b>20</b><span>компаний с контактами</span></div>
+          <div class="stat"><b>61</b><span>телефон в нормализованном виде</span></div>
+          <div class="stat"><b>9</b><span>ошибок найдено и исправлено</span></div>
+        </div>
+        <div class="kv" style="margin-top: 14px;">
+          <h4>Задача</h4>
+          <p>Список компаний, по которому можно звонить сразу — без ручного поиска
+          сайта и телефона по каждой строке.</p>
+        </div>
+        <div class="kv" style="margin-top: 12px;">
+          <h4>Решение</h4>
+          <p>Вход — открытый реестр ФНС (ИНН, ОКВЭД, статус). Обогащение — разбор
+          сайтов: главная и страницы контактов, контакты из атрибутов <code>mailto:</code>
+          и <code>tel:</code>, а не только из текста. Контакты разделены по ролям:
+          общие, руководитель, HR.</p>
+        </div>
+        <div class="kv kv--fix" style="margin-top: 12px;">
+          <h4>Что пришлось исправить</h4>
+          <p>Жадный регекс резал номера без разделителей до неверного кода. В поле
+          «Руководитель» попадали «Ставропольного Края» и пункты меню — пришлось
+          проверять ФИО по шаблону «должность + ФИО». В поле HR попадала «Политика
+          обработки персональных данных». ИНН и ОКВЭД терялись при переносе в рабочий
+          файл. Каждая правка проверялась на полном прогоне.</p>
+        </div>
+        <div class="card__tech" style="margin-top: 14px;">Python · pandas · BeautifulSoup · requests · openpyxl</div>
+        <div class="card__link" style="color: var(--muted);">Сборщик базы</div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ================= ИИ ================= -->
+  <section id="ai" class="section">
+    <h2 class="section__title">Как я работаю с ИИ</h2>
+    <div class="terminal">
+      <div class="terminal__bar">
+        <span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span>
+        <span class="terminal__title">alexandra@ads-agent: ~</span>
+      </div>
+      <pre class="terminal__body"><span class="term-cmd">$ cat ai-workflow.md</span>
+<span class="k">контекст</span>   модель получает продуктовый контекст, данные
+                кампании и ограничения (бюджет, ставки, тон)
+<span class="k">делегирую</span>  генерацию текстов объявлений, варианты офферов,
+                черновики постов — то, где цена ошибки нулевая
+<span class="k">не делегирую</span> решения по деньгам, проверку цифр, выводы
+                по первичным данным
+<span class="k">проверяю</span>    факты и расчёты по источнику; показатели —
+                по выгрузке, не по пересказу модели
+<span class="k">ограничения</span> DRY_RUN перед любым действием; бюджет —
+                только вручную; журнал всех решений
+
+<span class="term-cmd">$ grep -n "30" rules/decision.py</span>
+<span class="k">if</span> clicks &lt; 30: <span class="k">return</span> <span class="term-cmd">"# недостаточно данных"</span>
+<span class="k">if</span> conversions == 0 <span class="k">and</span> clicks &gt;= 30: <span class="k">return</span> <span class="term-cmd">"критическая аномалия"</span>
+<span class="k">if</span> cpa &gt; target * 1.3: bid -= bid * 0.15   <span class="k"># не быстрее 15%</span></pre>
+    </div>
+    <div class="honest" style="margin-top: 24px;">
+      <p><strong>Почему решения вынесены из модели.</strong> Первая версия агента
+      спрашивала у LLM: «подними ставку или поставь на паузу?» Ответ был правдоподобным
+      и регулярно неверным: при 12 кликах модель спокойно рекомендовала паузу, хотя
+      данных для вывода не было. Правило «меньше 30 кликов — не решаем» стоило дешевле
+      и работало предсказуемо.</p>
+      <p><strong>Что это даёт на практике.</strong> Повторяемый процесс с проверкой
+      человеком: система предлагает, человек подтверждает, всё пишется в журнал.
+      Откат — одна строка в логе.</p>
+    </div>
+  </section>
+
+  <!-- ================= АНАЛИТИКА ================= -->
+  <section id="analytics" class="section">
+    <h2 class="section__title">Проверка данных</h2>
+    <div class="about">
+      <p>Маркетинговая отчётность умирает на трёх вещах: дубли, пропущенные события
+      и расхождения между системами. Все три я ищу регулярно — это три года работы
+      с выгрузками 1С и CRM объёмом до 500k+ строк.</p>
+      <ul class="values">
+        <li><span class="val-mark">&gt;</span> Сверяю источники между собой, а не с отчётом</li>
+        <li><span class="val-mark">&gt;</span> «Нет данных» и «нет продаж» — это разные вещи</li>
+        <li><span class="val-mark">&gt;</span> Каждая цифра в отчёте проверяема до первичной записи</li>
+        <li><span class="val-mark">&gt;</span> Не приписываю маркетингу продажи, которых нет в выгрузке</li>
+        <li><span class="val-mark">&gt;</span> Один неудачный тест фиксирую с выводом, что изменил</li>
+      </ul>
+      <p class="about__note">
+        Пример: в агенте рекламы порог по кликам я подбирала не «на глаз» — сравнивала
+        кампании, где решение принималось и где не принималось, и смотрела, при каком
+        объёме данных решения совпадали с последующей фактической динамикой.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= РАБОТЫ ================= -->
+  <section id="works" class="section">
+    <h2 class="section__title">Что сделала сама</h2>
+    <div class="links-grid">
+      <a class="work-card" href="https://akademiya-rosta-tau.vercel.app" target="_blank" rel="noopener">
+        <span class="work-card__label">Пакет для франшизы</span>
+        <span class="work-card__name">Академия Роста</span>
+        <span class="work-card__note">Лендинг, AI-консультант и приём лидов. Всё в одном конфиге, запуск нового города — около часа.</span>
+        <span class="work-card__url">akademiya-rosta-tau.vercel.app</span>
+      </a>
+      <a class="work-card" href="https://sunnys8.github.io/Portfolio/" target="_blank" rel="noopener">
+        <span class="work-card__label">Портфолио</span>
+        <span class="work-card__name">Проекты и кейсы</span>
+        <span class="work-card__note">Агент рекламы, отчёты 1С, дашборд неликвидов, калькуляторы.</span>
+        <span class="work-card__url">sunnys8.github.io/Portfolio</span>
+      </a>
+      <a class="work-card" href="https://t.me/svod_1c" target="_blank" rel="noopener">
+        <span class="work-card__label">Telegram-канал</span>
+        <span class="work-card__name">«Автоматизация без магии»</span>
+        <span class="work-card__note">Регулярные посты на боль из данных 1С, без продажи в лоб.</span>
+        <span class="work-card__url">t.me/svod_1c</span>
+      </a>
+      <a class="work-card" href="https://chinacalc.ai.studio/" target="_blank" rel="noopener">
+        <span class="work-card__label">Калькулятор</span>
+        <span class="work-card__name">КП и доставка из Китая</span>
+        <span class="work-card__note">Живой расчёт себестоимости с таможней и НДС, выгрузка КП.</span>
+        <span class="work-card__url">chinacalc.ai.studio</span>
+      </a>
+      <a class="work-card" href="https://github.com/SunnyS8/ads-context-agent" target="_blank" rel="noopener">
+        <span class="work-card__label">GitHub</span>
+        <span class="work-card__name">Агент контекстной рекламы</span>
+        <span class="work-card__note">FastAPI, Next.js, Telegram-бот, DRY_RUN, аудит-лог.</span>
+        <span class="work-card__url">github.com/SunnyS8/ads-context-agent</span>
+      </a>
+      <a class="work-card" href="https://github.com/SunnyS8" target="_blank" rel="noopener">
+        <span class="work-card__label">GitHub</span>
+        <span class="work-card__name">Остальные репозитории</span>
+        <span class="work-card__note">Дашборд неликвидов, BizView, ИИ-инструменты и навыки.</span>
+        <span class="work-card__url">github.com/SunnyS8</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= УСЛОВИЯ ================= -->
+  <section id="terms" class="section">
+    <h2 class="section__title">Условия</h2>
+    <div class="about">
+      <p>Готова обсуждать формат: ГПХ с самозанятым или фиксированная часть
+      с проектными премиями. Удалёнка, связь по будням с 10:00 до 18:00 МСК —
+      подходит полностью.</p>
+      <ul class="values">
+        <li><span class="val-mark">&gt;</span> Ожидания по доходу: 100 000 ₽</li>
+        <li><span class="val-mark">&gt;</span> Дата возможного начала работы: 1 ноября</li>
+        <li><span class="val-mark">&gt;</span> Практическая часть с ИИ — готова выполнить сразу</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= КОНТАКТЫ ================= -->
+  <section id="contact" class="section contact">
+    <h2 class="section__title">Контакты</h2>
+    <p class="contact__lead">Напишите — отвечаю быстро, на первые два сообщения.</p>
+    <div class="contact__grid">
+      <a class="contact__item" href="https://t.me/SashaShyman" target="_blank" rel="noopener">
+        <span class="contact__label">Telegram</span><span class="contact__value">@SashaShyman</span>
+      </a>
+      <a class="contact__item" href="mailto:shymans8@gmail.com">
+        <span class="contact__label">Email</span><span class="contact__value">shymans8@gmail.com</span>
+      </a>
+      <a class="contact__item" href="tel:+79887444848">
+        <span class="contact__label">Телефон</span><span class="contact__value">+7 988 744-48-48</span>
+      </a>
+      <a class="contact__item" href="https://github.com/SunnyS8" target="_blank" rel="noopener">
+        <span class="contact__label">GitHub</span><span class="contact__value">SunnyS8</span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>© 2026 Александра Сарычева · отклик на вакансию «Ведущий маркетолог-практик» · СОЛОМКА</p>
+</footer>
+
+<script src="main.js"></script>
+<script>window.ga = function () {};</script>
+<script src="assets/fluid.js"></script>
+<script src="assets/fluid-init.js"></script>
+<script>
+  // Копирование письма без HTML-разметки
+  (function () {
+    var btn = document.getElementById('copyLetter');
+    var box = document.getElementById('letterText');
+    if (!btn || !box) return;
+    btn.addEventListener('click', function () {
+      var text = box.innerText.replace(/\n{3,}/g, '\n\n').trim();
+      navigator.clipboard.writeText(text).then(function () {
+        var old = btn.textContent;
+        btn.textContent = 'Скопировано ✓';
+        setTimeout(function () { btn.textContent = old; }, 1800);
+      });
+    });
+  })();
+</script>
+</body>
+</html>

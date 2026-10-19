@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Александра Сарычева — категорийный менеджер · ассортимент, цены, юнит-экономика</title>
+<meta name="description" content="Отклик на позицию категорийного менеджера. Три года в ассортименте и ценообразовании: ABC/XYZ с внедрением изменений, неликвиды, юнит-экономика, оборачиваемость, запуск новых SKU." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  .todo {
+    display: inline-block; font-family: var(--font-mono); font-size: 13px;
+    color: var(--accent-2);
+    background: color-mix(in srgb, var(--accent-2) 12%, transparent);
+    border: 1px dashed color-mix(in srgb, var(--accent-2) 45%, transparent);
+    padding: 1px 8px; border-radius: 6px;
+  }
+
+  .letter { max-width: 830px; color: var(--muted); }
+  .letter p { margin: 0 0 16px; }
+  .letter strong { color: var(--text); font-weight: 600; }
+  .letter__sign { color: var(--text); font-family: var(--font-mono); font-size: 14px; margin-top: 24px; }
+  .letter__sign span { display: block; color: var(--muted); }
+  .copy-row { margin: 26px 0 0; display: flex; gap: 12px; flex-wrap: wrap; }
+
+  .stats { display: flex; flex-wrap: wrap; gap: 14px; margin: 18px 0 0; }
+  .stat {
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--bg-soft) 70%, transparent);
+    border-radius: 10px; padding: 12px 16px; min-width: 132px;
+    font-family: var(--font-mono);
+  }
+  .stat b { display: block; font-size: 20px; color: var(--accent); }
+  .stat span { font-size: 12.5px; color: var(--muted); }
+
+  .kv { border-left: 2px solid var(--line); padding-left: 16px; }
+  .kv h4 { margin: 0 0 6px; font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); text-transform: uppercase; letter-spacing: .4px; }
+  .kv p { margin: 0; color: var(--muted); font-size: 14.5px; }
+  .kv--fix { border-left-color: var(--accent-2); }
+  .kv--fix h4 { color: var(--accent-2); }
+
+  .panel {
+    border: 1px solid var(--line); border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    background: color-mix(in srgb, var(--bg-soft) 70%, transparent);
+    padding: 24px; max-width: 840px;
+  }
+  .panel p { margin: 0 0 14px; color: var(--muted); }
+  .panel p:last-child { margin-bottom: 0; }
+  .panel strong { color: var(--text); }
+
+  .matrix { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 20px; }
+  .cell {
+    border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px;
+    background: color-mix(in srgb, var(--card) 78%, transparent);
+    font-family: var(--font-mono);
+  }
+  .cell b { display: block; font-size: 15px; margin-bottom: 5px; }
+  .cell span { font-size: 12.5px; color: var(--muted); font-family: var(--font-body); }
+  .cell--ax b { color: var(--accent); }
+  .cell--cz b { color: var(--warn, #d8a24a); }
+
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .step-card {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: color-mix(in srgb, var(--card) 78%, transparent);
+    padding: 20px; display: flex; flex-direction: column; gap: 7px;
+  }
+  .step-card .num { font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); font-weight: 700; }
+  .step-card h3 { margin: 0; font-size: 16.5px; font-family: var(--font-body); font-weight: 600; }
+  .step-card p { margin: 0; color: var(--muted); font-size: 14px; }
+
+  .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }
+  .work-card {
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--card) 78%, transparent);
+    border-radius: var(--radius); padding: 18px;
+    display: flex; flex-direction: column; gap: 6px;
+    transition: border-color .18s ease, transform .18s ease;
+  }
+  .work-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .work-card__label { font-family: var(--font-mono); font-size: 12px; color: var(--comment); }
+  .work-card__name { font-weight: 600; font-size: 16px; }
+  .work-card__note { font-size: 13.5px; color: var(--muted); }
+  .work-card__url { font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); word-break: break-all; }
+</style>
+</head>
+<body>
+
+<canvas id="fluid" aria-hidden="true"></canvas>
+
+<header class="nav" id="top">
+  <div class="nav__inner">
+    <a href="#top" class="nav__logo">александра<span>.dev</span></a>
+    <nav class="nav__links" id="navLinks">
+      <a href="#letter">Письмо</a>
+      <a href="#cases">Кейсы</a>
+      <a href="#matrix">Матрица</a>
+      <a href="#unit">Юнит-экономика</a>
+      <a href="#works">Работы</a>
+      <a href="#terms">Условия</a>
+    </nav>
+    <div class="nav__actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему" title="Светлая / тёмная тема">
+        <span class="theme-toggle__icon">◐</span>
+      </button>
+      <a href="#contact" class="btn btn--primary nav__cta">Связаться</a>
+      <button class="nav__burger" id="navBurger" aria-label="Меню">≡</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero__grid"></div>
+  <div class="hero__inner">
+    <div class="hero__text">
+      <span class="badge"><span class="badge__dot"></span> отклик на вакансию · удалённо / гибрид</span>
+      <p class="hero__comment">// Категорийный менеджер · ассортимент и цены</p>
+      <h1 class="hero__title">Матрица,<br />цена, маржа</h1>
+      <p class="hero__terminal"><span class="term-user">alexandra@category</span><span class="term-sep">:~$</span> cat assortment.txt</p>
+      <p class="hero__sub">
+        Три года отвечаю за ассортиментную матрицу, ценообразование и промо. Считаю
+        ABC/XYZ и довожу результат до решений: что оставить, что вывести, где маржа
+        съедается скидкой. Отчёты и дашборды строю сама — на Power BI, SQL и Python.
+      </p>
+      <div class="hero__actions">
+        <a href="#cases" class="btn btn--primary">~/кейсы</a>
+        <a href="#letter" class="btn btn--ghost">Письмо</a>
+      </div>
+      <ul class="hero__facts">
+        <li><strong>3 года</strong><span>в ассортименте</span></li>
+        <li><strong>ABC/XYZ</strong><span>с внедрением изменений</span></li>
+        <li><strong>Юнит-экономика</strong><span>на реальных поставках</span></li>
+        <li><strong>Power BI · SQL</strong><span>Excel · Python · 1С</span></li>
+      </ul>
+    </div>
+    <div class="hero__media">
+      <div class="photo">
+        <div class="photo__fallback" aria-hidden="true">АС</div>
+        <img class="photo__img" src="assets/photo.png" alt="Александра Сарычева"
+             onerror="this.style.display='none'" />
+      </div>
+      <p class="photo__caption">Александра Сарычева · Ставрополь</p>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+
+  <!-- ПИСЬМО -->
+  <section id="letter" class="section">
+    <h2 class="section__title">Сопроводительное письмо</h2>
+    <div class="letter" id="letterText">
+      <p>Здравствуйте!</p>
+
+      <p>Откликаюсь на позицию категорийного менеджера.</p>
+
+      <p><strong>Ассортимент, ценообразование и промо — основная часть моей работы
+      последние годы.</strong> В текущей роли отвечаю за ассортиментную матрицу,
+      ценообразование и складские остатки: какие позиции входят в матрицу, по какой цене,
+      с каким запасом и когда из неё выходят. Это и есть управление ассортиментом,
+      только в другой товарной нише.</p>
+
+      <p><strong>ABC/XYZ-анализ внедряю и довожу до решений.</strong> Не просто считаю —
+      по его результатам меняю матрицу: сегмент AX держим и страхуем, CZ выводим.
+      Строю отчёты в Excel и Power BI так, что видно и вклад позиции, и стабильность
+      её продаж.</p>
+
+      <p><strong>Неликвиды — отдельный проект с рабочим инструментом.</strong> Собрала
+      дашборд по выгрузкам из 1С прямо в браузере: остатки, продажи, статусы позиций,
+      графики по складам, экспорт в Excel. Ключевая логика: «есть остаток, но нет продаж» —
+      кандидат на вывод, а «нет данных» — дыра в выгрузке. Смешивать их нельзя, иначе
+      в список попадёт то, чего в системе просто нет.</p>
+
+      <p><strong>Юнит-экономика — считаю на практике.</strong> Собирала калькулятор
+      себестоимости поставки: инвойс, логистика по маршрутам «порт → склад», таможенные
+      ставки, НДС, маржа. Видела, как одинаковая цена за единицу даёт разную итоговую
+      стоимость на складе и как маршрут меняет маржу сильнее, чем скидка поставщика.
+      По промо считаю эффект на маржу, а не только на выручку.</p>
+
+      <p><strong>Запасы.</strong> Оборачиваемость, дни наличия, динамика прихода и
+      расхода, дефициты и затоваривание — по каждому артикулу и складу. Планирование
+      поставок смотрю через сезонность и тренд продаж.</p>
+
+      <p><strong>Инструменты.</strong> Продвинутый Excel: сводные таблицы, сложные
+      формулы, Power Query. Power BI. Уверенный SQL, Python. Данные из 1С. Автоматизирую
+      рутинные расчёты — то, что занимало несколько дней ручной работы, собирается само.</p>
+
+      <p><strong>Честно про домен и пробелы.</strong> В энергетическом оборудовании —
+      генераторах, инверторах, накопителях — работала не я, категорию с нуля на чужом
+      товаре выводить не приходилось, саплай чейндж и бандлы для среднего чека тоже вне
+      зоны моего опыта. Но логика категорийного управления — матрица, маржа, оборот, вывод
+      умирающих SKU — знакомая, а предметную часть по конкретным брендам освою быстро.
+      Готова прийти на собеседование с расчётами и логикой, а не только с намерениями.</p>
+
+      <p class="letter__sign">
+        Александра Сарычева
+        <span>Telegram: @SashaShyman · shymans8@gmail.com</span>
+        <span>Портфолио: https://sunnys8.github.io/Portfolio/</span>
+      </p>
+    </div>
+
+    <div class="copy-row">
+      <button class="btn btn--primary" id="copyLetter">Скопировать письмо</button>
+    </div>
+  </section>
+
+  <!-- КЕЙСЫ -->
+  <section id="cases" class="section">
+    <h2 class="section__title">Кейсы</h2>
+
+    <article class="card">
+      <div class="card__head">
+        <h3>Дашборд неликвидов и оборачиваемости</h3>
+        <span class="card__tag">[Вывод SKU · Аналитика]</span>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>4</b><span>статуса позиции</span></div>
+        <div class="stat"><b>1С</b><span>выгрузка напрямую</span></div>
+        <div class="stat"><b>0</b><span>ручного копирования между файлами</span></div>
+        <div class="stat"><b>2</b><span>ошибки найдены и исправлены</span></div>
+      </div>
+      <div class="kv" style="margin-top: 16px;">
+        <h4>Задача</h4>
+        <p>Список неликвидов от РОПа, остатки и продажи из 1С — три отдельных Excel-файла,
+        которые сводились копированием между таблицами. Решение по выводу позиции принималось
+        по списку без разделения на причины.</p>
+      </div>
+      <div class="kv" style="margin-top: 12px;">
+        <h4>Что сделала лично я</h4>
+        <p>Собрала дашборд прямо в браузере: Excel разбирается на клиенте, без сервера и
+        выгрузки на чужой аккаунт. Сопоставление по ключу «код + ширина» — один артикул
+        существует в нескольких вариантах ширины, и наивное соединение даёт задвоение.
+        Четыре автоматических статуса, графики по складам, экспорт обратно в Excel.</p>
+      </div>
+      <div class="kv kv--fix" style="margin-top: 12px;">
+        <h4>Что пришлось исправить</h4>
+        <p>Статус вычисляется автоматически и используется как фильтр: сначала смотрят
+        «остаток есть, продаж нет» — это работа для закупщика; всё остальное — контроль
+        качества данных. По ходу нашла ошибку в расчёте продаж (парсер молча отдавал ноль)
+        и невидимые графики: canvas без заданной высоты при включённом responsive-режиме.</p>
+      </div>
+      <div class="kv" style="margin-top: 12px;">
+        <h4>Инсайт</h4>
+        <p>«Продаж нет» и «нет данных» — разные вещи. Первое означает кандидата на вывод
+        из ассортимента, второе — дыру в выгрузке. Смешивать их в один столбец нельзя:
+        в список попадёт то, чего в системе просто нет.</p>
+      </div>
+      <div class="card__tech" style="margin-top: 14px;">JavaScript · SheetJS · Chart.js · выгрузки 1С</div>
+      <div>
+        <a class="card__link" href="https://github.com/SunnyS8/nelikvid-dashboard" target="_blank" rel="noopener">открыть →</a>
+      </div>
+    </article>
+
+    <div class="grid" style="margin-top: 16px;">
+
+      <article class="card">
+        <div class="card__head">
+          <h3>Калькулятор поставки и юнит-экономика</h3>
+          <span class="card__tag">[Цены · Закупки]</span>
+        </div>
+        <div class="kv">
+          <h4>Задача</h4>
+          <p>Поставщиков сравнивали по цене за единицу — без учёта того, во сколько она
+          превращается на складе после логистики, пошлин и налогов.</p>
+        </div>
+        <div class="kv" style="margin-top: 12px;">
+          <h4>Что сделала лично я</h4>
+          <p>Разложила себестоимость на компоненты: инвойс, море, ж/д, авто, терминальные
+          расходы, пошлина, НДС, маржа. Тариф пошлин 2026 года — 8 ступеней, три режима
+          цены (за штуку, за м², за кг) и матрица маршрутов «порт → склад». Курсы ЦБ РФ,
+          коды ТН ВЭД, экспорт КП в Excel и PDF.</p>
+        </div>
+        <div class="kv" style="margin-top: 12px;">
+          <h4>Инсайт</h4>
+          <p>Разница между дешёвым и выгодным поставщиком возникает не в цене за единицу,
+          а в маршруте и режиме пошлины: одинаковая цена в юанях даёт разную себестоимость.
+          На одной партии разница между маршрутами составила почти 90 ₽ за квадратный метр.</p>
+        </div>
+        <div class="card__tech" style="margin-top: 14px;">React · TypeScript · Tailwind · Recharts · Excel / PDF</div>
+        <div>
+          <a class="card__link" href="https://chinacalc.ai.studio/" target="_blank" rel="noopener">открыть ↗</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card__head">
+          <h3>Отчёты отдела продаж</h3>
+          <span class="card__tag">[Управленческая отчётность]</span>
+        </div>
+        <div class="kv">
+          <h4>Задача</h4>
+          <p>Отчётность собиралась из выгрузок 1С вручную: продажи, остатки, задолженность
+          по менеджерам, неоплаченные счета, незакрытые ЭДО — каждый отчёт отдельным файлом.</p>
+        </div>
+        <div class="kv" style="margin-top: 12px;">
+          <h4>Что сделала лично я</h4>
+          <p>13 типов отчётов в одном приложении: выявила потребность, написала ТЗ, приняла
+          работу подрядчика, перевела пользователей, обучила. Дальше веду сама — обновления,
+          новые запросы, документация. Пени по неоплаченным счетам, план против факта
+          с отклонением, глобальный фильтр по датам.</p>
+        </div>
+        <div class="kv" style="margin-top: 12px;">
+          <h4>Инсайт</h4>
+          <p>«Отчёт по продажам» — это не одна таблица, а десяток разных вопросов:
+          директор спрашивает одно, кладовщик другое, бухгалтер третье. Когда каждая выгрузка
+          открывается отдельно, одну и ту же работу повторяют каждую неделю.</p>
+        </div>
+        <div class="card__tech" style="margin-top: 14px;">FastAPI · pandas · openpyxl · Excel · Power BI</div>
+        <div>
+          <a class="card__link" href="https://github.com/SunnyS8/-kapitan-reports" target="_blank" rel="noopener">открыть →</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card__head">
+          <h3>Запуск новых SKU</h3>
+          <span class="card__tag">[Новинки · Тренды]</span>
+        </div>
+        <div class="kv">
+          <h4>Задача</h4>
+          <p>Новый продукт нужно было не просто завести в матрицу, а быстро понять,
+          заходит он аудитории или нет, — без ожидания нескольких месяцев продаж.</p>
+        </div>
+        <div class="kv" style="margin-top: 12px;">
+          <h4>Что сделала лично я</h4>
+          <p>Запуск новых продуктов, подготовка ТЗ и расчётов под них. Контрольные точки
+          задавала заранее: какой объём продаж и за какой срок считается успехом,
+          а какой — основанием выводить позицию.</p>
+        </div>
+        <div class="kv" style="margin-top: 12px;">
+          <h4>Инсайт</h4>
+          <p>Новина без истории продаж не может оцениваться по тем же правилам, что и
+          зрелая позиция. Для неё нужен отдельный порог и отдельный срок: низкие продажи
+          в первые недели — это не сигнал к выводу, а отсутствие данных.</p>
+        </div>
+        <div class="card__tech" style="margin-top: 14px;">1С · Excel · Power BI · анализ продаж</div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- МАТРИЦА -->
+  <section id="matrix" class="section">
+    <h2 class="section__title">Как я читаю ABC/XYZ</h2>
+    <div class="terminal">
+      <div class="terminal__bar">
+        <span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span>
+        <span class="terminal__title">alexandra@category: ~</span>
+      </div>
+      <pre class="terminal__body"><span class="term-cmd">$ cat abcxyz.txt</span>
+<span class="k">ABC</span>  вклад в выручку: сколько позиций приносит 80 % денег
+<span class="k">XYZ</span>  вариативность продаж: насколько предсказуем спрос
+<span class="k">ось</span>  решения: сегмент задаёт стратегию, а не просто ярлык
+
+<span class="term-cmd">$ echo $?</span>
+0 <span class="k"># анализ без решений — это отчёт, а не работа</span></pre>
+    </div>
+
+    <div class="matrix">
+      <div class="cell cell--ax"><b>AX</b><span>Локомотивы. Держим, страхуем по остатку, сезонность известна</span></div>
+      <div class="cell"><b>AY / AZ</b><span>Стабильные или сезонные средние. Планируем поставки заранее</span></div>
+      <div class="cell"><b>BX / BY</b><span>Средний вклад, ровные продажи. Управляем в рамках окупаемости</span></div>
+      <div class="cell cell--cz"><b>CZ</b><span>Неликвиды. Кандидат на вывод — проверяем, что это не дыра в данных</span></div>
+      <div class="cell cell--cz"><b>CZ без данных</b><span>Не «мёртвая» позиция, а позиция без истории продаж</span></div>
+    </div>
+
+    <div class="panel" style="margin-top: 28px;">
+      <p><strong>Главное правило: анализ без решений — это отчёт, а не работа.</strong>
+      ABC/XYZ считается ради конкретного действия: расширить матрицу, сократить,
+      пересмотреть цену, изменить запас. Поэтому каждый расчёт я довожу до списка
+      позиций с пометкой, что с ними делать.</p>
+      <p><strong>Проверка перед выводом.</strong> Прежде чем признать позицию
+      неликвидом, проверяю, что продажи действительно нет, а не что они не выгрузились.
+      Помечаю источник данных в каждой строке, чтобы отличить «нет спроса» от «нет данных».</p>
+    </div>
+  </section>
+
+  <!-- ЮНИТ-ЭКОНОМИКА -->
+  <section id="unit" class="section">
+    <h2 class="section__title">Цена, промо и маржа</h2>
+    <div class="steps">
+      <div class="step-card">
+        <span class="num">01 / себестоимость</span>
+        <h3>Полная, а не за единицу</h3>
+        <p>Инвойс, логистика до склада, терминальные расходы, пошлина, НДС. Разница
+        между дешёвым и выгодным поставщиком чаще в маршруте, чем в цене.</p>
+      </div>
+      <div class="step-card">
+        <span class="num">02 / цена</span>
+        <h3>Розница и опт</h3>
+        <p>Наценка считается от полной себестоимости, а не от цены закупщика: иначе
+        промо-скидка незаметно съедает маржу и обнаруживается это только в конце периода.</p>
+      </div>
+      <div class="step-card">
+        <span class="num">03 / промо</span>
+        <h3>Эффект на маржу</h3>
+        <p>Считаю, что даёт скидка: рост объёма окупает потерю в марже или нет. Проверяю
+        после — отрабатывает ли позиция объём, который мы на неё планировали.</p>
+      </div>
+      <div class="step-card">
+        <span class="num">04 / клиент</span>
+        <h3>Кто покупает</h3>
+        <p>Смотрю, какие категории берут вместе и какими скидками пользуются чаще всего.
+        Отсюда бандлы: такая связка повышает средний чек без снижения цены.</p>
+      </div>
+      <div class="step-card">
+        <span class="num">05 / оборот</span>
+        <h3>Оборачиваемость</h3>
+        <p>Деньги в запасе — это не бесплатно. Сравниваю маржу позиции с тем, сколько она
+        занимает капитала: высокая маржа при медленном обороте проигрывает средней.</p>
+      </div>
+      <div class="step-card">
+        <span class="num">06 / тренды</span>
+        <h3>Проверка гипотезы</h3>
+        <p>Гипотеза о новом товаре проверяется ограниченным тестом с заранее оговорённым
+        критерием: объём и срок. Без критерия тест не заканчивается никогда.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- РАБОТЫ -->
+  <section id="works" class="section">
+    <h2 class="section__title">Примеры работ</h2>
+    <div class="links-grid">
+      <a class="work-card" href="https://sunnys8.github.io/Portfolio/" target="_blank" rel="noopener">
+        <span class="work-card__label">Портфолио</span>
+        <span class="work-card__name">Проекты и кейсы</span>
+        <span class="work-card__note">Ассортимент, цены, неликвиды, дашборды, отчётность.</span>
+        <span class="work-card__url">sunnys8.github.io/Portfolio</span>
+      </a>
+      <a class="work-card" href="https://chinacalc.ai.studio/" target="_blank" rel="noopener">
+        <span class="work-card__label">Калькулятор</span>
+        <span class="work-card__name">КП и доставка из Китая</span>
+        <span class="work-card__note">Себестоимость партии, маршруты, пошлины, НДС, маржа.</span>
+        <span class="work-card__url">chinacalc.ai.studio</span>
+      </a>
+      <a class="work-card" href="https://github.com/SunnyS8/nelikvid-dashboard" target="_blank" rel="noopener">
+        <span class="work-card__label">GitHub</span>
+        <span class="work-card__name">Дашборд неликвидов</span>
+        <span class="work-card__note">Автоматические статусы позиций, графики по складам.</span>
+        <span class="work-card__url">github.com/SunnyS8/nelikvid-dashboard</span>
+      </a>
+      <a class="work-card" href="https://github.com/SunnyS8/-kapitan-reports" target="_blank" rel="noopener">
+        <span class="work-card__label">GitHub</span>
+        <span class="work-card__name">Отчёты отдела продаж</span>
+        <span class="work-card__note">13 типов отчётов, план/факт, дебиторка, ЭДО.</span>
+        <span class="work-card__url">github.com/SunnyS8/-kapitan-reports</span>
+      </a>
+      <a class="work-card" href="https://github.com/SunnyS8/BizView" target="_blank" rel="noopener">
+        <span class="work-card__label">GitHub</span>
+        <span class="work-card__name">BizView</span>
+        <span class="work-card__note">KPI, динамика, топ/антитоп, ABC-анализ продаж.</span>
+        <span class="work-card__url">github.com/SunnyS8/BizView</span>
+      </a>
+      <a class="work-card" href="https://github.com/SunnyS8/ads-context-agent" target="_blank" rel="noopener">
+        <span class="work-card__label">AI-агент</span>
+        <span class="work-card__name">Пороги вместо интуиции</span>
+        <span class="work-card__note">Решения по правилам, DRY_RUN, аудит-лог, тесты.</span>
+        <span class="work-card__url">github.com/SunnyS8/ads-context-agent</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- УСЛОВИЯ -->
+  <section id="terms" class="section">
+    <h2 class="section__title">Условия</h2>
+    <div class="about">
+      <p>Ставрополь, удалённый формат или гибрид — подходит полностью. Готова прийти
+      на собеседование с расчётами и логикой: показать, как считала бы матрицу,
+      цену и вывод SKU на ваших данных.</p>
+      <ul class="values">
+        <li><span class="val-mark">&gt;</span> Ожидания по доходу: от 150 000 ₽ на руки</li>
+        <li><span class="val-mark">&gt;</span> Готова оформиться самозанятым или ИП</li>
+        <li><span class="val-mark">&gt;</span> Предметную часть по брендам освою быстро</li>
+        <li><span class="val-mark">&gt;</span> Могу показать код и расчёты — без презентации ради презентации</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- КОНТАКТЫ -->
+  <section id="contact" class="section contact">
+    <h2 class="section__title">Контакты</h2>
+    <p class="contact__lead">Напишите — отвечаю быстро, на первые два сообщения.</p>
+    <div class="contact__grid">
+      <a class="contact__item" href="https://t.me/SashaShyman" target="_blank" rel="noopener">
+        <span class="contact__label">Telegram</span><span class="contact__value">@SashaShyman</span>
+      </a>
+      <a class="contact__item" href="mailto:shymans8@gmail.com">
+        <span class="contact__label">Email</span><span class="contact__value">shymans8@gmail.com</span>
+      </a>
+      <a class="contact__item" href="tel:+79887444848">
+        <span class="contact__label">Телефон</span><span class="contact__value">+7 988 744-48-48</span>
+      </a>
+      <a class="contact__item" href="https://github.com/SunnyS8" target="_blank" rel="noopener">
+        <span class="contact__label">GitHub</span><span class="contact__value">SunnyS8</span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>© 2026 Александра Сарычева · отклик на вакансию категорийного менеджера</p>
+</footer>
+
+<script src="main.js"></script>
+<script>window.ga = function () {};</script>
+<script src="assets/fluid.js"></script>
+<script src="assets/fluid-init.js"></script>
+<script>
+  (function () {
+    var btn = document.getElementById('copyLetter');
+    var box = document.getElementById('letterText');
+    if (!btn || !box) return;
+    btn.addEventListener('click', function () {
+      var text = box.innerText.replace(/\n{3,}/g, '\n\n').trim();
+      navigator.clipboard.writeText(text).then(function () {
+        var old = btn.textContent;
+        btn.textContent = 'Скопировано ✓';
+        setTimeout(function () { btn.textContent = old; }, 1800);
+      });
+    });
+  })();
+</script>
+</body>
+</html>

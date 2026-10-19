@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Александра Сарычева — аналитик закупок / Supply Chain Data Analyst</title>
+<meta name="description" content="Отклик на позицию аналитика закупок. Опыт: себестоимость и логистика поставок, остатки и оборачиваемость, неликвиды, ABC/XYZ, SQL, автоматизация расчётов на Python с участием LLM." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  .todo {
+    display: inline-block; font-family: var(--font-mono); font-size: 13px;
+    color: var(--accent-2);
+    background: color-mix(in srgb, var(--accent-2) 12%, transparent);
+    border: 1px dashed color-mix(in srgb, var(--accent-2) 45%, transparent);
+    padding: 1px 8px; border-radius: 6px;
+  }
+
+  .letter { max-width: 830px; color: var(--muted); }
+  .letter p { margin: 0 0 16px; }
+  .letter strong { color: var(--text); font-weight: 600; }
+  .letter__sign { color: var(--text); font-family: var(--font-mono); font-size: 14px; margin-top: 24px; }
+  .letter__sign span { display: block; color: var(--muted); }
+  .copy-row { margin: 26px 0 0; display: flex; gap: 12px; flex-wrap: wrap; }
+
+  .stats { display: flex; flex-wrap: wrap; gap: 14px; margin: 18px 0 0; }
+  .stat {
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--bg-soft) 70%, transparent);
+    border-radius: 10px; padding: 12px 16px; min-width: 132px;
+    font-family: var(--font-mono);
+  }
+  .stat b { display: block; font-size: 20px; color: var(--accent); }
+  .stat span { font-size: 12.5px; color: var(--muted); }
+
+  .kv { border-left: 2px solid var(--line); padding-left: 16px; }
+  .kv h4 { margin: 0 0 6px; font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); text-transform: uppercase; letter-spacing: .4px; }
+  .kv p { margin: 0; color: var(--muted); font-size: 14.5px; }
+  .kv--fix { border-left-color: var(--accent-2); }
+  .kv--fix h4 { color: var(--accent-2); }
+
+  .panel {
+    border: 1px solid var(--line); border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    background: color-mix(in srgb, var(--bg-soft) 70%, transparent);
+    padding: 24px; max-width: 840px;
+  }
+  .panel p { margin: 0 0 14px; color: var(--muted); }
+  .panel p:last-child { margin-bottom: 0; }
+  .panel strong { color: var(--text); }
+
+  .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }
+  .work-card {
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--card) 78%, transparent);
+    border-radius: var(--radius); padding: 18px;
+    display: flex; flex-direction: column; gap: 6px;
+    transition: border-color .18s ease, transform .18s ease;
+  }
+  .work-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .work-card__label { font-family: var(--font-mono); font-size: 12px; color: var(--comment); }
+  .work-card__name { font-weight: 600; font-size: 16px; }
+  .work-card__note { font-size: 13.5px; color: var(--muted); }
+  .work-card__url { font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); word-break: break-all; }
+</style>
+</head>
+<body>
+
+<canvas id="fluid" aria-hidden="true"></canvas>
+
+<header class="nav" id="top">
+  <div class="nav__inner">
+    <a href="#top" class="nav__logo">александра<span>.dev</span></a>
+    <nav class="nav__links" id="navLinks">
+      <a href="#letter">Письмо</a>
+      <a href="#cases">Кейсы</a>
+      <a href="#stock">Запасы</a>
+      <a href="#supplier">Поставки</a>
+      <a href="#ai">Вайбкодинг</a>
+      <a href="#works">Работы</a>
+      <a href="#terms">Условия</a>
+    </nav>
+    <div class="nav__actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему" title="Светлая / тёмная тема">
+        <span class="theme-toggle__icon">◐</span>
+      </button>
+      <a href="#contact" class="btn btn--primary nav__cta">Связаться</a>
+      <button class="nav__burger" id="navBurger" aria-label="Меню">≡</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero__grid"></div>
+  <div class="hero__inner">
+    <div class="hero__text">
+      <span class="badge"><span class="badge__dot"></span> отклик на вакансию · удалённо</span>
+      <p class="hero__comment">// Аналитик закупок · Supply Chain Data Analyst</p>
+      <h1 class="hero__title">Что, когда<br />и сколько заказать</h1>
+      <p class="hero__terminal"><span class="term-user">alexandra@supply</span><span class="term-sep">:~$</span> cat calc.txt</p>
+      <p class="hero__sub">
+        Считаю не «сколько продалось», а что происходит с позицией: сколько лежит,
+        сколько дней наличия осталось, что двигается и что уже мёртвое. Отдельно —
+        поставки: себестоимость партии на складе, а не цена за единицу в инвойсе.
+      </p>
+      <div class="hero__actions">
+        <a href="#cases" class="btn btn--primary">~/кейсы</a>
+        <a href="#letter" class="btn btn--ghost">Письмо</a>
+      </div>
+      <ul class="hero__facts">
+        <li><strong>3 года</strong><span>в аналитике</span></li>
+        <li><strong>Оборачиваемость</strong><span>остатки · дни наличия</span></li>
+        <li><strong>SQL · Python</strong><span>1С · Power Query · PBI</span></li>
+        <li><strong>500k+</strong><span>строк в выгрузках</span></li>
+      </ul>
+    </div>
+    <div class="hero__media">
+      <div class="photo">
+        <div class="photo__fallback" aria-hidden="true">АС</div>
+        <img class="photo__img" src="assets/photo.png" alt="Александра Сарычева"
+             onerror="this.style.display='none'" />
+      </div>
+      <p class="photo__caption">Александра Сарычева · Ставрополь</p>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+
+  <!-- ПИСЬМО -->
+  <section id="letter" class="section">
+    <h2 class="section__title">Сопроводительное письмо</h2>
+    <div class="letter" id="letterText">
+      <p>Здравствуйте!</p>
+
+      <p>Откликаюсь на позицию аналитика закупок / Supply Chain Data Analyst.</p>
+
+      <p><strong>Закупки и поставки — не соседняя тема.</strong> Собрала калькулятор
+      себестоимости поставки: инвойс, логистика по маршрутам «порт → склад» (ВВО, ж/д,
+      авто), таможенные ставки, НДС, сроки доставки, сравнение ставок экспедиторов.
+      Маршрут выбирается не по цене за единицу, а по тому, во сколько обходится партия
+      на складе.</p>
+
+      <p><strong>Запасы и оборачиваемость — ежедневная работа.</strong> Остатки по каждому
+      артикулу и складу, динамика прихода и расхода, дни наличия, позиции, которые
+      перестали двигаться. Внедряю ABC/XYZ-анализ — XYZ как раз про вариативность,
+      из неё потом и считается запас под нестабильный спрос.</p>
+
+      <p><strong>Отдельно про новинки и нерегулярный спрос.</strong> Ключевое различие:
+      «нет продаж» и «нет данных» — это разные вещи. У нового артикула без истории
+      отсутствие продаж не означает ни дефицит, ни избыток. Смешивать их в одном столбце
+      нельзя — расчёт заказа уедет сразу. В дашборде неликвидов этот статус вычисляется
+      отдельно именно поэтому.</p>
+
+      <p><strong>SQL и консолидация данных.</strong> Уверенный SQL, выгрузки 500k+ строк,
+      1С, pandas. Сводила данные из нескольких источников в единую отчётность
+      с автоматизацией на Python — то, что занимало несколько дней ручной работы,
+      собирается само.</p>
+
+      <p><strong>Про вайбкодинг — это мой основной способ работы.</strong> Инструменты,
+      которые я собрала (агент управления рекламой, пакет для сети, сборщик баз),
+      построены с участием LLM. Но цифры модели не доверяю: правила расчёта выношу
+      в детерминированную логику с порогами, а модель оставляю там, где цена ошибки
+      нулевая. Это и есть проверка алгоритма, созданного ИИ: не «выглядит правильно»,
+      а сверяется с первичными данными.</p>
+
+      <p><strong>Честно:</strong> Safety Stock в формуле и систему автозаказа я не
+      внедряла. Логику понимаю — страховой запас как буфер вариативности спроса и срока
+      поставки, потребность с учётом сезонности и ограничений поставщика, — но считаю
+      это зоной, где мне нужен разбор на ваших исторических данных, а не готовый ответ.</p>
+
+      <p class="letter__sign">
+        Александра Сарычева
+        <span>Telegram: @SashaShyman · shymans8@gmail.com</span>
+        <span>Портфолио: https://sunnys8.github.io/Portfolio/</span>
+        <span>Ожидания по доходу: от 120 000 ₽ на руки</span>
+      </p>
+    </div>
+
+    <div class="copy-row">
+      <button class="btn btn--primary" id="copyLetter">Скопировать письмо</button>
+    </div>
+  </section>
+
+  <!-- КЕЙСЫ -->
+  <section id="cases" class="section">
+    <h2 class="section__title">Кейсы</h2>
+
+    <article class="card">
+      <div class="card__head">
+        <h3>Калькулятор поставки и коммерческого предложения</h3>
+        <span class="card__tag">[Закупки · Логистика]</span>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>3</b><span>режима цены: штука, м², кг</span></div>
+        <div class="stat"><b>8</b><span>ступеней пошлин 2026</span></div>
+        <div class="stat"><b>3</b><span>маршрута: ВВО, ж/д, авто</span></div>
+        <div class="stat"><b>≈90 ₽/м²</b><span>разница между маршрутами</span></div>
+      </div>
+      <div class="kv" style="margin-top: 16px;">
+        <h4>Задача</h4>
+        <p>Поставщиков сравнивали по цене за единицу — без учёта того, во сколько она
+        превращается на складе после логистики, пошлин и налогов.</p>
+      </div>
+      <div class="kv" style="margin-top: 12px;">
+        <h4>Что сделала лично я</h4>
+        <p>Разложила себестоимость на компоненты (инвойс, море, ж/д, авто, терминальные
+        расходы, пошлина, НДС, маржа), внесла тариф пошлин 2026 года — 8 ступеней
+        от 1 231 ₽ до 73 860 ₽, добавила три режима цены и матрицу маршрутов
+        «порт → склад». Курсы ЦБ РФ, коды ТН ВЭД, экспорт КП в Excel и PDF.</p>
+      </div>
+      <div class="kv" style="margin-top: 12px;">
+        <h4>Инсайт</h4>
+        <p>Разница между дешёвым и выгодным поставщиком возникает не в цене за единицу,
+        а в маршруте и режиме пошлины: одинаковая цена в юанях даёт разную себестоимость,
+        потому что таможенная стоимость попадает в разную ступень. На одной партии
+        разница между маршрутами составила почти 90 ₽ за квадратный метр.</p>
+      </div>
+      <div class="card__tech" style="margin-top: 14px;">React · TypeScript · Tailwind · Recharts · Excel / PDF</div>
+      <div>
+        <a class="card__link" href="https://chinacalc.ai.studio/" target="_blank" rel="noopener">открыть ↗</a>
+      </div>
+    </article>
+
+    <div class="grid" style="margin-top: 16px;">
+
+      <article class="card">
+        <div class="card__head">
+          <h3>Дашборд неликвидов и оборачиваемости</h3>
+          <span class="card__tag">[Запасы · Статусы]</span>
+        </div>
+        <div class="kv">
+          <h4>Задача</h4>
+          <p>Список неликвидов от РОПа, остатки и продажи из 1С — три отдельных
+          Excel-файла, которые сводились копированием между таблицами.</p>
+        </div>
+        <div class="kv" style="margin-top: 12px;">
+          <h4>Что сделала лично я</h4>
+          <p>Excel разбирается прямо в браузере. Сопоставление по ключу «код + ширина»:
+          один артикул существует в нескольких вариантах ширины, и наивное соединение
+          даёт задвоение. Четыре статуса позиции, графики по складам, экспорт в Excel.</p>
+        </div>
+        <div class="kv kv--fix" style="margin-top: 12px;">
+          <h4>Что пришлось исправить</h4>
+          <p>Статус вычисляется автоматически и используется как фильтр: сначала смотрят
+          «остаток есть, продаж нет» — это работа для закупщика; всё остальное — контроль
+          качества данных. По ходу нашла и починила ошибку в расчёте продаж и невидимые
+          графики: canvas без заданной высоты при включённом responsive-режиме.</p>
+        </div>
+        <div class="card__tech" style="margin-top: 14px;">JavaScript · SheetJS · Chart.js · Excel</div>
+        <a class="card__link" href="https://github.com/SunnyS8/nelikvid-dashboard" target="_blank" rel="noopener">открыть →</a>
+      </article>
+
+      <article class="card">
+        <div class="card__head">
+          <h3>Автоматизация расчётов</h3>
+          <span class="card__tag">[Excel → код · ETL]</span>
+        </div>
+        <div class="kv">
+          <h4>Задача</h4>
+          <p>Регулярные расчёты собирались вручную: выгрузка из 1С, обработка в Excel,
+          раскладка по файлам. Ежемесячные циклы уходили на дни ручной работы.</p>
+        </div>
+        <div class="kv" style="margin-top: 12px;">
+          <h4>Что сделала лично я</h4>
+          <p>Перенесла обработку в Python: pandas и openpyxl разбирают выгрузку,
+          приводят справочники к единому виду, считают показатели, раскладывают отчёты
+          по назначению. Запуск по расписанию. Поверх тех же данных — ABC/XYZ-анализ
+          ассортимента.</p>
+        </div>
+        <div class="kv" style="margin-top: 12px;">
+          <h4>Инсайт</h4>
+          <p>Автоматизация без зафиксированных правил расчёта просто переносит ошибку
+          из Excel в код — и делает это быстрее. Поэтому правила сначала описываются
+          текстом, и только потом автоматизируются.</p>
+        </div>
+        <div class="card__tech" style="margin-top: 14px;">Python · pandas · openpyxl · SQL · расписание</div>
+      </article>
+
+      <article class="card">
+        <div class="card__head">
+          <h3>Отчёты отдела продаж</h3>
+          <span class="card__tag">[Отчётность · 1С]</span>
+        </div>
+        <div class="kv">
+          <h4>Задача</h4>
+          <p>Отчётность собиралась из выгрузок 1С вручную: продажи, остатки, задолженность
+          по менеджерам, неоплаченные счета, незакрытые ЭДО — каждый отчёт отдельным файлом.</p>
+        </div>
+        <div class="kv" style="margin-top: 12px;">
+          <h4>Что сделала лично я</h4>
+          <p>13 типов отчётов в одном приложении: сама выявила потребность, написала ТЗ,
+          приняла работу подрядчика, перевела пользователей, обучила. Дальше веду сама —
+          обновления, новые запросы, документация. Пени по неоплаченным счетам, план
+          против факта с отклонением, глобальный фильтр по датам.</p>
+        </div>
+        <div class="kv" style="margin-top: 12px;">
+          <h4>Инсайт</h4>
+          <p>«Отчёт по продажам» — это не одна таблица, а десяток разных вопросов:
+          директор спрашивает одно, кладовщик другое, бухгалтер третье. Когда каждая
+          выгрузка открывается отдельно, одну и ту же работу повторяют каждую неделю.</p>
+        </div>
+        <div class="card__tech" style="margin-top: 14px;">FastAPI · pandas · openpyxl · Excel · выгрузки 1С</div>
+        <a class="card__link" href="https://github.com/SunnyS8/-kapitan-reports" target="_blank" rel="noopener">открыть →</a>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ЗАПАСЫ -->
+  <section id="stock" class="section">
+    <h2 class="section__title">Как я смотрю на позицию</h2>
+    <div class="terminal">
+      <div class="terminal__bar">
+        <span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span>
+        <span class="terminal__title">alexandra@supply: ~</span>
+      </div>
+      <pre class="terminal__body"><span class="term-cmd">$ cat position.txt</span>
+<span class="k">остаток</span>       по каждому артикулу и складу, в разрезе ширины
+<span class="k">оборачиваемость</span>  скорость ухода позиции из запаса
+<span class="k">дни наличия</span>     сколько осталось при текущем темпе продаж
+<span class="k">динамика</span>       приход и расход по периодам, тренд, сезонность
+<span class="k">мёртвые</span>        позиции, которые перестали двигаться
+<span class="k">дефициты</span>       остаток ниже порога при стабильном спросе
+<span class="k">abc-xyz</span>        вклад в выручку и вариативность спроса</pre>
+    </div>
+
+    <div class="panel" style="margin-top: 26px;">
+      <p><strong>Главное различие, на котором ломается расчёт заказа.</strong>
+      «Нет продаж» и «нет данных» — это разные состояния позиции. У нового артикула без
+      истории отсутствие продаж не означает ни дефицит, ни избыток: у него просто нет
+      статистики. Если свести их в один столбец, алгоритм на новых позициях будет
+      рекомендовать то полный заказ, то нулевой — и оба решения будут ошибочными.</p>
+      <p><strong>Второе: запас под нестабильный спрос считается от вариативности,
+      а не от среднего.</strong> XYZ-анализ как раз и отвечает на вопрос, какая позиция
+      предсказуема, а какая прыгает. Средние продажи по «прыгающей» позиции —
+      это не прогноз, а усреднение двух разных сценариев.</p>
+    </div>
+  </section>
+
+  <!-- ПОСТАВКИ -->
+  <section id="supplier" class="section">
+    <h2 class="section__title">Поставщик, маршрут, срок</h2>
+    <div class="panel">
+      <p><strong>Цена за единицу в инвойсе — не себестоимость.</strong> Реальная
+      себестоимость партии складывается из инвойса, логистики до склада, терминальных
+      расходов, таможенной пошлины (ставка зависит от кода ТН ВЭД и таможенной стоимости),
+      НДС и маржи. Одинаковая цена в юанях на разных маршрутах и в разных ступенях
+      пошлины даёт разную конечную цифру.</p>
+      <p><strong>Сроки поставки меняют всё.</strong> Задержка увеличивает потребность
+      в страховом запасе: та же партия при более непредсказуемом сроке требует другого
+      буфера. Именно поэтому вариативность срока — самостоятельная величина рядом
+      с вариативностью спроса, а не часть одного расчёта.</p>
+      <p><strong>Ограничения поставщика задаются извне.</strong> Минимальная партия,
+      кратность заказа и график отгрузок могут сделать «оптимальный» расчёт
+      неисполнимым. Поэтому потребность и заказ — разные сущности, и сведение их
+      в одно число приводит к ошибке в закупке.</p>
+    </div>
+  </section>
+
+  <!-- ВАЙБКОДИНГ -->
+  <section id="ai" class="section">
+    <h2 class="section__title">Вайбкодинг и проверка кода</h2>
+    <div class="panel">
+      <p><strong>Как это выглядит на практике.</strong> Собранные мной инструменты —
+      агент управления рекламой, пакет для сети с AI-консультантом, сборщик баз
+      компаний — строятся с участием LLM: модель пишет черновик кода, я проверяю
+      логику и добиваю до рабочего состояния. Один из проектов целиком на TypeScript
+      и Node.js, другой на Python — но оба прошли через сборку и через приёмку.</p>
+      <p><strong>Где модели не доверяю.</strong> Цифры. В агенте рекламы LLM генерирует
+      тексты объявлений, а решение «поднять ставку или поставить на паузу» принимает
+      код с порогами: меньше 30 кликов — решения нет, отклонение CPA больше 30 % —
+      снижение ставки, изменение ставки не больше 15 % за раз, бюджет не трогаем
+      вообще без человека. Первая версия спрашивала у модели напрямую — и модель
+      регулярно рекомендовала паузу на 12 кликах, то есть на шуме.</p>
+      <p><strong>Как проверяю результат.</strong> Цифры сверяю с источником, а не с
+      правдоподобием. Правила расчёта фиксирую текстом до автоматизации: иначе
+      автоматизация просто переносит ошибку из Excel в код, но делает это быстрее.</p>
+    </div>
+  </section>
+
+  <!-- РАБОТЫ -->
+  <section id="works" class="section">
+    <h2 class="section__title">Примеры работ</h2>
+    <div class="links-grid">
+      <a class="work-card" href="https://chinacalc.ai.studio/" target="_blank" rel="noopener">
+        <span class="work-card__label">Калькулятор</span>
+        <span class="work-card__name">КП и доставка из Китая</span>
+        <span class="work-card__note">Себестоимость партии: логистика, пошлины, НДС, маршруты.</span>
+        <span class="work-card__url">chinacalc.ai.studio</span>
+      </a>
+      <a class="work-card" href="https://sunnys8.github.io/Portfolio/" target="_blank" rel="noopener">
+        <span class="work-card__label">Портфолио</span>
+        <span class="work-card__name">Проекты и кейсы</span>
+        <span class="work-card__note">Запасы, дашборды, отчётность 1С, AI-агент.</span>
+        <span class="work-card__url">sunnys8.github.io/Portfolio</span>
+      </a>
+      <a class="work-card" href="https://github.com/SunnyS8/nelikvid-dashboard" target="_blank" rel="noopener">
+        <span class="work-card__label">GitHub</span>
+        <span class="work-card__name">Дашборд неликвидов</span>
+        <span class="work-card__note">Оборачиваемость и статусы позиций из выгрузок 1С.</span>
+        <span class="work-card__url">github.com/SunnyS8/nelikvid-dashboard</span>
+      </a>
+      <a class="work-card" href="https://github.com/SunnyS8/-kapitan-reports" target="_blank" rel="noopener">
+        <span class="work-card__label">GitHub</span>
+        <span class="work-card__name">Отчёты отдела продаж</span>
+        <span class="work-card__note">13 типов отчётов, автоматизация выгрузок, документация.</span>
+        <span class="work-card__url">github.com/SunnyS8/-kapitan-reports</span>
+      </a>
+      <a class="work-card" href="https://github.com/SunnyS8/ads-context-agent" target="_blank" rel="noopener">
+        <span class="work-card__label">AI-агент</span>
+        <span class="work-card__name">Пороги вместо интуиции</span>
+        <span class="work-card__note">Решения по правилам, DRY_RUN, аудит-лог, тесты.</span>
+        <span class="work-card__url">github.com/SunnyS8/ads-context-agent</span>
+      </a>
+      <a class="work-card" href="https://github.com/SunnyS8" target="_blank" rel="noopener">
+        <span class="work-card__label">GitHub</span>
+        <span class="work-card__name">Остальные репозитории</span>
+        <span class="work-card__note">Дашборды, аналитика, ИИ-инструменты и навыки.</span>
+        <span class="work-card__url">github.com/SunnyS8</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- УСЛОВИЯ -->
+  <section id="terms" class="section">
+    <h2 class="section__title">Условия</h2>
+    <div class="about">
+      <p>Ставрополь, удалённый формат, 5/2 — подходит полностью. Готова пройти путь
+      от бизнес-задачи до работающего алгоритма самостоятельно, но с разбором
+      на ваших исторических данных.</p>
+      <ul class="values">
+        <li><span class="val-mark">&gt;</span> Ожидания по доходу: от 120 000 ₽ на руки</li>
+        <li><span class="val-mark">&gt;</span> Постоянное трудоустройство по ТК РФ рассматриваю в приоритете</li>
+        <li><span class="val-mark">&gt;</span> Готова начинать с разбора существующих расчётов и их проверки</li>
+        <li><span class="val-mark">&gt;</span> Могу показать код и расчёты на созвоне — без презентации ради презентации</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- КОНТАКТЫ -->
+  <section id="contact" class="section contact">
+    <h2 class="section__title">Контакты</h2>
+    <p class="contact__lead">Напишите — отвечаю быстро, на первые два сообщения.</p>
+    <div class="contact__grid">
+      <a class="contact__item" href="https://t.me/SashaShyman" target="_blank" rel="noopener">
+        <span class="contact__label">Telegram</span><span class="contact__value">@SashaShyman</span>
+      </a>
+      <a class="contact__item" href="mailto:shymans8@gmail.com">
+        <span class="contact__label">Email</span><span class="contact__value">shymans8@gmail.com</span>
+      </a>
+      <a class="contact__item" href="tel:+79887444848">
+        <span class="contact__label">Телефон</span><span class="contact__value">+7 988 744-48-48</span>
+      </a>
+      <a class="contact__item" href="https://github.com/SunnyS8" target="_blank" rel="noopener">
+        <span class="contact__label">GitHub</span><span class="contact__value">SunnyS8</span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>© 2026 Александра Сарычева · отклик на вакансию аналитика закупок / Supply Chain Data Analyst</p>
+</footer>
+
+<script src="main.js"></script>
+<script>window.ga = function () {};</script>
+<script src="assets/fluid.js"></script>
+<script src="assets/fluid-init.js"></script>
+<script>
+  (function () {
+    var btn = document.getElementById('copyLetter');
+    var box = document.getElementById('letterText');
+    if (!btn || !box) return;
+    btn.addEventListener('click', function () {
+      var text = box.innerText.replace(/\n{3,}/g, '\n\n').trim();
+      navigator.clipboard.writeText(text).then(function () {
+        var old = btn.textContent;
+        btn.textContent = 'Скопировано ✓';
+        setTimeout(function () { btn.textContent = old; }, 1800);
+      });
+    });
+  })();
+</script>
+</body>
+</html>
