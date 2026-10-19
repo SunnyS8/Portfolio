@@ -74,7 +74,6 @@
   <div class="nav__inner">
     <a href="#top" class="nav__logo">александра<span>.dev</span></a>
     <nav class="nav__links" id="navLinks">
-      <a href="#letter">Письмо</a>
       <a href="#cases">Кейсы</a>
       <a href="#stock">Запасы</a>
       <a href="#supplier">Поставки</a>
@@ -96,8 +95,8 @@
   <div class="hero__grid"></div>
   <div class="hero__inner">
     <div class="hero__text">
-      <span class="badge"><span class="badge__dot"></span> отклик на вакансию · удалённо</span>
-      <p class="hero__comment">// Аналитик закупок · Supply Chain Data Analyst</p>
+      <span class="badge"><span class="badge__dot"></span> аналитик запасов и поставок · удалённо</span>
+      <p class="hero__comment">// Закупки · Запасы · Поставки</p>
       <h1 class="hero__title">Что, когда<br />и сколько заказать</h1>
       <p class="hero__terminal"><span class="term-user">alexandra@supply</span><span class="term-sep">:~$</span> cat calc.txt</p>
       <p class="hero__sub">
@@ -107,7 +106,6 @@
       </p>
       <div class="hero__actions">
         <a href="#cases" class="btn btn--primary">~/кейсы</a>
-        <a href="#letter" class="btn btn--ghost">Письмо</a>
       </div>
       <ul class="hero__facts">
         <li><strong>3 года</strong><span>в аналитике</span></li>
@@ -127,64 +125,8 @@
   </div>
 </section>
 
-<main class="container">
-
-  <!-- ПИСЬМО -->
-  <section id="letter" class="section">
-    <h2 class="section__title">Сопроводительное письмо</h2>
-    <div class="letter" id="letterText">
-      <p>Здравствуйте!</p>
-
-      <p>Откликаюсь на позицию аналитика закупок / Supply Chain Data Analyst.</p>
-
-      <p><strong>Закупки и поставки — не соседняя тема.</strong> Собрала калькулятор
-      себестоимости поставки: инвойс, логистика по маршрутам «порт → склад» (ВВО, ж/д,
-      авто), таможенные ставки, НДС, сроки доставки, сравнение ставок экспедиторов.
-      Маршрут выбирается не по цене за единицу, а по тому, во сколько обходится партия
-      на складе.</p>
-
-      <p><strong>Запасы и оборачиваемость — ежедневная работа.</strong> Остатки по каждому
-      артикулу и складу, динамика прихода и расхода, дни наличия, позиции, которые
-      перестали двигаться. Внедряю ABC/XYZ-анализ — XYZ как раз про вариативность,
-      из неё потом и считается запас под нестабильный спрос.</p>
-
-      <p><strong>Отдельно про новинки и нерегулярный спрос.</strong> Ключевое различие:
-      «нет продаж» и «нет данных» — это разные вещи. У нового артикула без истории
-      отсутствие продаж не означает ни дефицит, ни избыток. Смешивать их в одном столбце
-      нельзя — расчёт заказа уедет сразу. В дашборде неликвидов этот статус вычисляется
-      отдельно именно поэтому.</p>
-
-      <p><strong>SQL и консолидация данных.</strong> Уверенный SQL, выгрузки 500k+ строк,
-      1С, pandas. Сводила данные из нескольких источников в единую отчётность
-      с автоматизацией на Python — то, что занимало несколько дней ручной работы,
-      собирается само.</p>
-
-      <p><strong>Про вайбкодинг — это мой основной способ работы.</strong> Инструменты,
-      которые я собрала (агент управления рекламой, пакет для сети, сборщик баз),
-      построены с участием LLM. Но цифры модели не доверяю: правила расчёта выношу
-      в детерминированную логику с порогами, а модель оставляю там, где цена ошибки
-      нулевая. Это и есть проверка алгоритма, созданного ИИ: не «выглядит правильно»,
-      а сверяется с первичными данными.</p>
-
-      <p><strong>Честно:</strong> Safety Stock в формуле и систему автозаказа я не
-      внедряла. Логику понимаю — страховой запас как буфер вариативности спроса и срока
-      поставки, потребность с учётом сезонности и ограничений поставщика, — но считаю
-      это зоной, где мне нужен разбор на ваших исторических данных, а не готовый ответ.</p>
-
-      <p class="letter__sign">
-        Александра Сарычева
-        <span>Telegram: @SashaShyman · shymans8@gmail.com</span>
-        <span>Портфолио: https://sunnys8.github.io/Portfolio/</span>
-        <span>Ожидания по доходу: от 120 000 ₽ на руки</span>
-      </p>
-    </div>
-
-    <div class="copy-row">
-      <button class="btn btn--primary" id="copyLetter">Скопировать письмо</button>
-    </div>
-  </section>
-
-  <!-- КЕЙСЫ -->
+<main class="conta
+<!-- КЕЙСЫ -->
   <section id="cases" class="section">
     <h2 class="section__title">Кейсы</h2>
 
@@ -462,27 +404,14 @@
 </main>
 
 <footer class="footer">
-  <p>© 2026 Александра Сарычева · отклик на вакансию аналитика закупок / Supply Chain Data Analyst</p>
+  <p>© 2026 Александра Сарычева · аналитик запасов и поставок · удалённо</p>
 </footer>
 
 <script src="main.js"></script>
 <script>window.ga = function () {};</script>
 <script src="assets/fluid.js"></script>
 <script src="assets/fluid-init.js"></script>
-<script>
-  (function () {
-    var btn = document.getElementById('copyLetter');
-    var box = document.getElementById('letterText');
-    if (!btn || !box) return;
-    btn.addEventListener('click', function () {
-      var text = box.innerText.replace(/\n{3,}/g, '\n\n').trim();
-      navigator.clipboard.writeText(text).then(function () {
-        var old = btn.textContent;
-        btn.textContent = 'Скопировано ✓';
-        setTimeout(function () { btn.textContent = old; }, 1800);
-      });
-    });
-  })();
-</script>
+<scri
+</script></script>
 </body>
 </html>
