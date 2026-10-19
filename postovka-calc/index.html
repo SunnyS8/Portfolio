@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Расчёт себестоимости поставки из Китая — до склада, а не по инвойсу</title>
+<meta name="description" content="Считаю реальную себестоимость поставки из Китая: маршрут, таможенная пошлина по коду ТН ВЭД, НДС, юнит-экономика по каждой позиции. Показываю, где вы теряете на ставке, на коде и на сроке." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  .todo {
+    display: inline-block; font-family: var(--font-mono); font-size: 13px;
+    color: var(--accent-2);
+    background: color-mix(in srgb, var(--accent-2) 12%, transparent);
+    border: 1px dashed color-mix(in srgb, var(--accent-2) 45%, transparent);
+    padding: 1px 8px; border-radius: 6px;
+  }
+
+  .lead { max-width: 760px; color: var(--muted); font-size: 18px; margin: 0 0 28px; }
+  .lead strong { color: var(--text); }
+
+  .stats { display: flex; flex-wrap: wrap; gap: 14px; margin: 18px 0 0; }
+  .stat {
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--bg-soft) 70%, transparent);
+    border-radius: 10px; padding: 12px 16px; min-width: 140px;
+    font-family: var(--font-mono);
+  }
+  .stat b { display: block; font-size: 20px; color: var(--accent); }
+  .stat b.warn { color: #e0a355; }
+  .stat span { font-size: 12.5px; color: var(--muted); }
+
+  .kv { border-left: 2px solid var(--line); padding-left: 16px; }
+  .kv h4 { margin: 0 0 6px; font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); text-transform: uppercase; letter-spacing: .4px; }
+  .kv p { margin: 0; color: var(--muted); font-size: 14.5px; }
+  .kv--fix { border-left-color: #e0a355; }
+  .kv--fix h4 { color: #e0a355; }
+
+  .panel {
+    border: 1px solid var(--line); border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    background: color-mix(in srgb, var(--bg-soft) 70%, transparent);
+    padding: 24px; max-width: 840px;
+  }
+  .panel p { margin: 0 0 14px; color: var(--muted); }
+  .panel p:last-child { margin-bottom: 0; }
+  .panel strong { color: var(--text); }
+
+  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: color-mix(in srgb, var(--card) 78%, transparent); }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th { font-family: var(--font-mono); font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; font-weight: 500; }
+  tr:last-child td { border-bottom: none; }
+  td.hl { color: var(--accent); font-weight: 600; }
+  td.muted { color: var(--muted); }
+
+  .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+  .price-card {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: color-mix(in srgb, var(--card) 78%, transparent);
+    padding: 24px; display: flex; flex-direction: column;
+  }
+  .price-card--accent { border-color: var(--accent); box-shadow: var(--shadow-hover); }
+  .price-card__name { font-family: var(--font-mono); font-size: 13px; color: var(--accent); margin-bottom: 8px; }
+  .price-card__price { font-family: var(--font-mono); font-size: 26px; font-weight: 700; margin-bottom: 4px; }
+  .price-card__when { font-size: 13px; color: var(--comment); font-family: var(--font-mono); margin-bottom: 16px; }
+  .price-card ul { margin: 0 0 18px; padding-left: 18px; color: var(--muted); font-size: 14.5px; }
+  .price-card li { margin-bottom: 6px; }
+
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
+  .step-card {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: color-mix(in srgb, var(--card) 78%, transparent);
+    padding: 20px; display: flex; flex-direction: column; gap: 7px;
+  }
+  .step-card .num { font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); font-weight: 700; }
+  .step-card h3 { margin: 0; font-size: 16.5px; font-family: var(--font-body); font-weight: 600; }
+  .step-card p { margin: 0; color: var(--muted); font-size: 14px; }
+
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin: 22px 0 0; max-width: 760px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); }
+  .field input, .field textarea, .field select {
+    background: color-mix(in srgb, var(--bg-soft) 70%, transparent);
+    border: 1px solid var(--line); border-radius: 10px;
+    padding: 11px 13px; color: var(--text); font-family: inherit; font-size: 14.5px;
+    transition: border-color .15s ease;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: var(--accent); }
+  .field--wide { grid-column: 1 / -1; }
+  .form-note { font-size: 13px; color: var(--comment); margin: 16px 0 0; font-family: var(--font-mono); }
+</style>
+</head>
+<body>
+
+<canvas id="fluid" aria-hidden="true"></canvas>
+
+<header class="nav" id="top">
+  <div class="nav__inner">
+    <a href="#top" class="nav__logo">поставка<span>.calc</span></a>
+    <nav class="nav__links" id="navLinks">
+      <a href="#why">Зачем</a>
+      <a href="#cases">Примеры</a>
+      <a href="#rates">Коды и пошлины</a>
+      <a href="#how">Как работаю</a>
+      <a href="#prices">Цены</a>
+      <a href="#contact">Заявка</a>
+    </nav>
+    <div class="nav__actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему" title="Светлая / тёмная тема">
+        <span class="theme-toggle__icon">◐</span>
+      </button>
+      <a href="#contact" class="btn btn--primary nav__cta">Рассчитать</a>
+      <button class="nav__burger" id="navBurger" aria-label="Меню">≡</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero__grid"></div>
+  <div class="hero__inner">
+    <div class="hero__text">
+      <span class="badge"><span class="badge__dot"></span> расчёт поставки из Китая · от 5 000 ₽</span>
+      <p class="hero__comment">// себестоимость до склада</p>
+      <h1 class="hero__title">Цена из инвойса<br />— не себестоимость</h1>
+      <p class="hero__terminal"><span class="term-user">client</span><span class="term-sep">:~$</span> cat invoice.csv</p>
+      <p class="hero__sub">
+        Считаю, во сколько обойдёт ваша поставка, когда контейнер стоит
+        на вашем складе: маршрут, пошлина по коду ТН ВЭД, НДС, терминальные
+        расходы, маржа по каждой позиции. Показываю, где именно вы теряете —
+        на ставке, на коде или на сроке поставки.
+      </p>
+      <div class="hero__actions">
+        <a href="#contact" class="btn btn--primary">Рассчитать поставку</a>
+        <a href="#cases" class="btn btn--ghost">Примеры расчётов</a>
+      </div>
+      <ul class="hero__facts">
+        <li><strong>1 день</strong><span>срок расчёта</span></li>
+        <li><strong>до склада</strong><span>все компоненты</span></li>
+        <li><strong>0 ₽</strong><span>скрытых комиссий</span></li>
+      </ul>
+    </div>
+    <div class="hero__media">
+      <div class="photo">
+        <div class="photo__fallback" aria-hidden="true">АС</div>
+        <img class="photo__img" src="assets/photo.png" alt="Александра Сарычева"
+             onerror="this.style.display='none'" />
+      </div>
+      <p class="photo__caption">Александра Сарычева · Ставрополь</p>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+
+  <!-- ЗАЧЕМ -->
+  <section id="why" class="section">
+    <h2 class="section__title">Где обычно теряют</h2>
+    <p class="lead">
+      Себестоимость начинается не в инвойсе, а на складе. Между этими двумя
+      точками — маршрут, таможня, налоги и три месяца замороженных денег.
+      Большинство импортёров считают только цену за единицу и видят
+      убыток уже после того, как контейнер пришёл.
+    </p>
+    <div class="stats">
+      <div class="stat"><b class="warn">×2,5</b><span>разница в ставке пошлины на похожих кодах</span></div>
+      <div class="stat"><b class="warn">25 дней</b><span>разница в сроке между маршрутами</span></div>
+      <div class="stat"><b class="warn">22% / 5%</b><span>НДС на разных маршрутах</span></div>
+    </div>
+
+    <div class="panel" style="margin-top: 30px;">
+      <p><strong>Самая частая ошибка — считать маршрут по минимальной ставке.</strong>
+      Маршрут через Владивосток может стоить вдвое дешевле по статке — и при этом
+      идти 45 дней вместо 25. Эти два месяца ваши деньги лежат в пути, товар
+      не продаётся, оборот встаёт. Экономия на ставке съедается замороженным оборотом.</p>
+      <p><strong>Вторая — указывать весь товар под одним кодом ТН ВЭД.</strong>
+      Похожие позиции легко попадают под ставки от 5% до 12%. Разница на партии —
+      не округление, а реальные деньги.</p>
+    </div>
+  </section>
+
+  <!-- КЕЙСЫ -->
+  <section id="cases" class="section">
+    <h2 class="section__title">Примеры расчётов</h2>
+    <p class="about__note" style="margin-bottom: 26px;">
+      Реальные расчёты с работы в оптовой торговле. Названия компаний и партнёров
+      не используются — суть расчёта от этого не меняется.
+    </p>
+
+    <article class="card">
+      <div class="card__head">
+        <h3>Сравнение маршрутов: Ставрополь</h3>
+        <span class="card__tag">[Логистика · 40 HC · 26 т]</span>
+      </div>
+      <div class="kv" style="margin-top: 14px;">
+        <h4>Задача</h4>
+        <p>Сравнить стоимость доставки контейнера из Китая в Ставрополь по
+        доступным маршрутам. Считать было нечем, кроме как вручную в Excel.</p>
+      </div>
+      <div class="tablewrap" style="margin: 18px 0;">
+        <table>
+          <thead>
+            <tr><th>Маршрут</th><th>Ставка</th><th>Срок</th><th>НДС</th><th>Терминальные</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Море → Новороссийск → авто</td><td>7 550 USD</td><td class="hl">32–38 дней</td><td class="hl">5%</td><td>59 660 ₽</td></tr>
+            <tr><td>Прямой ж/д → СВХ ВТТ</td><td>9 800 USD</td><td class="hl">25–27 дней</td><td>22%</td><td>59 600 ₽</td></tr>
+            <tr><td>ВВО → ж/д Ростов → авто</td><td class="hl">4 300 USD</td><td>45–50 дней</td><td>22%</td><td class="hl">38 000 ₽</td></tr>
+            <tr><td>ВВО → ж/д Тимашевск → авто</td><td class="hl">4 700 USD</td><td>40–45 дней</td><td>22%</td><td>45 000 ₽</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="kv kv--fix">
+        <h4>Находка</h4>
+        <p>Самый дешёвый маршрут — самый долгий: 45–50 дней против 25–27. На контейнере
+        с оборотным товаром разница в ставке съедается тем, что деньги заморожены
+        в пути вдвое дольше. И НДС: 22% на маршрутах через Владивосток против 5%
+        на прямом ж/д — на объёме это отдельные десятки тысяч рублей.</p>
+      </div>
+      <div class="kv" style="margin-top: 14px;">
+        <h4>Итог</h4>
+        <p>Выбор делался не по минимальной ставке, а по сроку и структуре расходов.
+        Два из четырёх маршрутов отсеялись ещё на этапе сравнения — до того,
+        как появились счета за растаможку.</p>
+      </div>
+    </article>
+
+    <div class="grid" style="margin-top: 16px;">
+
+      <article class="card">
+        <div class="card__head">
+          <h3>Код ТН ВЭД меняет пошлину в 2,5 раза</h3>
+          <span class="card__tag">[Таможня]</span>
+        </div>
+        <div class="tablewrap" style="margin: 16px 0;">
+          <table>
+            <thead><tr><th>Код</th><th>Товар</th><th>Пошлина</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">8708 29 900 0</td><td>Шумоизоляция кузова</td><td class="hl">12%</td></tr>
+              <tr><td class="mono">8708 29 900 9</td><td>Прочие детали кузова</td><td class="hl">5%</td></tr>
+              <tr><td class="mono">7604 21 00 00</td><td>Профили алюминиевые</td><td>12%</td></tr>
+              <tr><td class="mono">7604 29 90 00</td><td>Профили прочие</td><td>10%</td></tr>
+              <tr><td class="mono">3919 90 80 00</td><td>Плиты, плёнки</td><td class="hl">6,5%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kv kv--fix">
+          <h4>Находка</h4>
+          <p>Одна и та же номенклатура легко попадает под разные ставки. Если весь
+          товар заявлен под одним кодом, пошлина считается по нему на всю партию.
+          Для кодов групп 87 и 56 требуется сертификация ЕАЭС — неверный код даёт
+          ещё и задержку на таможне из-за несоответствия документов.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card__head">
+          <h3>Сборы считаются от таможенной стоимости</h3>
+          <span class="card__tag">[Тарифы 2026]</span>
+        </div>
+        <div class="kv" style="margin-top: 16px;">
+          <h4>Сетка тарифов</h4>
+          <p>8 ступеней по таможенной стоимости партии: от 1 231 ₽ до 73 860 ₽.</p>
+        </div>
+        <div class="kv kv--fix" style="margin-top: 14px;">
+          <h4>Находка</h4>
+          <p>Сбор считается не от суммы контракта, а от таможенной стоимости —
+          а она включает часть транспортных расходов до границы. Занизили
+          таможенную стоимость — попали в более низкую ступень, но получили
+          доначисление и проценты.</p>
+        </div>
+        <div class="kv" style="margin-top: 14px;">
+          <h4>Итог</h4>
+          <p>В расчёте появился отдельный блок: таможенная стоимость, ступень
+          сбора и проверка — попадает ли изменение цены в ту же ступень.</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- КОДЫ И ПОШЛИНЫ -->
+  <section id="rates" class="section">
+    <h2 class="section__title">Что входит в расчёт</h2>
+    <div class="terminal">
+      <div class="terminal__bar">
+        <span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span>
+        <span class="terminal__title">поставка@calc: ~</span>
+      </div>
+      <pre class="terminal__body"><span class="term-cmd">$ cat components.txt</span>
+<span class="k">товар</span>        цена из инвойса, количество, вес, объём по позициям
+<span class="k">логистика</span>    море / ж/д / авто, ставка экспедитора, терминальные расходы
+<span class="k">таможня</span>      пошлина по коду ТН ВЭД, таможенная стоимость, сбор 2026
+<span class="k">налоги</span>        НДС по маршруту и по ставке
+<span class="k">маржа</span>         юнит-экономика по каждой позиции, не средняя по категории
+<span class="k">срок</span>         дней в пути — оборот, который не работает
+
+<span class="term-cmd">$ echo $?</span>
+0 <span class="k"># цена из инвойса ≠ себестоимость на складе</span></pre>
+    </div>
+
+    <div class="panel" style="margin-top: 26px;">
+      <p><strong>Возвращаетесь не с отчётом, а с решением.</strong> В расчёте видно,
+      какой маршрут выгоден при вашем объёме и сроке, какой код ТН ВЭД стоит
+      перепроверить, и где маржа уходит в логистику, а не в цену поставщика.</p>
+    </div>
+  </section>
+
+  <!-- КАК РАБОТАЮ -->
+  <section id="how" class="section">
+    <h2 class="section__title">Как проходит работа</h2>
+    <div class="steps">
+      <div class="step-card">
+        <span class="num">01 / вход</span>
+        <h3>Инвойс и параметры</h3>
+        <p>Инвойс или КП, откуда и куда, тип контейнера, вес и габариты.
+        Если ставка экспедитора известна — использую её, если нет — беру
+        актуальные котировки.</p>
+      </div>
+      <div class="step-card">
+        <span class="num">02 / маршрут</span>
+        <h3>Сравнение вариантов</h3>
+        <p>Считаю все доступные маршруты до вашего склада, а не до порта.
+        Сравниваю не ставку, а итоговую себестоимость с учётом срока.</p>
+      </div>
+      <div class="step-card">
+        <span class="num">03 / таможня</span>
+        <h3>Коды и пошлины</h3>
+        <p>Проверяю коды ТН ВЭД по позициям, считаю пошлину и сбор от таможенной
+        стоимости. Отдельно отмечаю позиции, где код стоит перепроверить.</p>
+      </div>
+      <div class="step-card">
+        <span class="num">04 / вывод</span>
+        <h3>Решение и цифры</h3>
+        <p>Юнит-экономика по каждой позиции, маржа, сравнение маршрутов.
+        Показываю, где именно теряете и что меняется при смене маршрута
+        или кода.</p>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top: 28px;">
+      <p><strong>Одно условие.</strong> Расчёт — это рекомендация на основе ставок
+      на дату. Перед тем как принять решение по поставке, сверьте суммы со своим
+      брокером. Я считаю логику и показываю, где теряете; решение и ответственность
+      за таможенное оформление — на вас.</p>
+      <p><strong>Почему так.</strong> Ошибка в расчёте стоит вам денег. Лучше, чтобы
+      цифры проверил человек, который отвечает за таможню, чем чтобы вы верили
+      расчёту незнакомого человека.</p>
+    </div>
+  </section>
+
+  <!-- ЦЕНЫ -->
+  <section id="prices" class="section">
+    <h2 class="section__title">Цены</h2>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="price-card__name">экспресс-расчёт</div>
+        <div class="price-card__price">5 000 ₽</div>
+        <div class="price-card__when">1 день · одна поставка</div>
+        <ul>
+          <li>3–5 позиций, один маршрут</li>
+          <li>Пошлина по кодам ТН ВЭД</li>
+          <li>Полная себестоимость до склада</li>
+          <li>Юнит-экономика по позициям</li>
+        </ul>
+        <a href="#contact" class="btn btn--ghost">Заказать</a>
+      </div>
+
+      <div class="price-card price-card--accent">
+        <div class="price-card__name">полный расчёт партии</div>
+        <div class="price-card__price">15 000 ₽</div>
+        <div class="price-card__when">1–2 дня · вся поставка</div>
+        <ul>
+          <li>Все позиции, без ограничения</li>
+          <li>Сравнение всех доступных маршрутов</li>
+          <li>Проверка кодов ТН ВЭД и сертификации</li>
+          <li>Маржа по каждой позиции и по партии</li>
+          <li>Выгрузка в Excel и PDF</li>
+        </ul>
+        <a href="#contact" class="btn btn--primary">Заказать</a>
+      </div>
+
+      <div class="price-card">
+        <div class="price-card__name">калькулятор под компанию</div>
+        <div class="price-card__price">50 000 ₽</div>
+        <div class="price-card__when">обсуждается · по вашим ставкам</div>
+        <ul>
+          <li>Ваши маршруты, ставки, коды</li>
+          <li>Загрузка инвойса → расчёт сам</li>
+          <li>Ваша товарная матрица</li>
+          <li>Обучение сотрудников</li>
+        </ul>
+        <a href="#contact" class="btn btn--ghost">Обсудить</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ЗАЯВКА -->
+  <section id="contact" class="section">
+    <h2 class="section__title">Заявка на расчёт</h2>
+    <p class="contact__lead">
+      Достаточно инвойса или КП и параметров поставки. Отвечаю в течение дня.
+    </p>
+    <form class="form-grid" onsubmit="return false;">
+      <div class="field">
+        <label for="f-name">Как к вам обращаться</label>
+        <input id="f-name" type="text" placeholder="Имя" />
+      </div>
+      <div class="field">
+        <label for="f-contact">Telegram или почта</label>
+        <input id="f-contact" type="text" placeholder="@username или почта" />
+      </div>
+      <div class="field">
+        <label for="f-route">Откуда → куда</label>
+        <input id="f-route" type="text" placeholder="например, Циндао → Ставрополь" />
+      </div>
+      <div class="field">
+        <label for="f-type">Что везём</label>
+        <input id="f-type" type="text" placeholder="например, алюминиевые профили" />
+      </div>
+      <div class="field">
+        <label for="f-weight">Вес и объём</label>
+        <input id="f-weight" type="text" placeholder="например, 20 т, 40 HC" />
+      </div>
+      <div class="field">
+        <label for="f-volume">Что нужно посчитать</label>
+        <select id="f-volume">
+          <option>Экспресс-расчёт одной партии</option>
+          <option>Полный расчёт со сравнением маршрутов</option>
+          <option>Калькулятор под нашу компанию</option>
+          <option>Пока не знаю — нужна консультация</option>
+        </select>
+      </div>
+    </form>
+    <p class="form-note">
+      Форма ниже не отправляется автоматически — напишите мне в Telegram, позвоните
+      или напишите на почту, приложив инвойс. Так быстрее, чем ждать обработчик.
+    </p>
+    <div class="hero__actions" style="margin-top: 24px;">
+      <a href="https://t.me/SashaShyman" target="_blank" rel="noopener" class="btn btn--primary">Написать в Telegram</a>
+      <a href="tel:+79943221688" class="btn btn--ghost">+7 (994) 322-16-88</a>
+      <a href="mailto:shymans8@gmail.com" class="btn btn--ghost">shymans8@gmail.com</a>
+    </div>
+
+    <div class="contact__grid" style="margin-top: 34px;">
+      <a class="contact__item" href="https://t.me/SashaShyman" target="_blank" rel="noopener">
+        <span class="contact__label">Telegram</span><span class="contact__value">@SashaShyman</span>
+      </a>
+      <a class="contact__item" href="tel:+79943221688">
+        <span class="contact__label">Телефон</span><span class="contact__value">+7 (994) 322-16-88</span>
+      </a>
+      <a class="contact__item" href="mailto:shymans8@gmail.com">
+        <span class="contact__label">Почта</span><span class="contact__value">shymans8@gmail.com</span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>© 2026 Александра Сарычева · расчёт себестоимости поставок из Китая · Ставрополь, удалённо</p>
+</footer>
+
+<script src="main.js"></script>
+<script>window.ga = function () {};</script>
+<script src="assets/fluid.js"></script>
+<script src="assets/fluid-init.js"></script>
+<script>
+  (function () {
+    document.querySelectorAll('.field select').forEach(function (sel) {
+      var label = sel.closest('.field').querySelector('label');
+      if (label && sel.value !== label.textContent) sel.style.color = 'var(--text)';
+    });
+  })();
+</script>
+</body>
+</html>
