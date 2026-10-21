@@ -1148,7 +1148,7 @@ multipleSplats(parseInt(Math.random() * 20) + 5);
 
 // Если у пользователя включено «уменьшить движение» — рисуем статичный фон
 // и не запускаем цикл анимации. Фон остаётся видимым, движение убрано.
-const reduceMotion = true; // TEST-FORCE
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 let lastUpdateTime = Date.now();
 let colorUpdateTimer = 0.0;
