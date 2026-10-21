@@ -231,3 +231,22 @@ h1, h2, h3 { font-family: var(--font-head); letter-spacing: -0.01em; }
   .nav__cta { display: none; }
   .nav__burger { display: grid; place-items: center; }
 }
+
+
+/* ---------- Results ---------- */
+.results { padding: 64px 20px; background: var(--bg-soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.results__inner { max-width: 1080px; margin: 0 auto; }
+.results__head { margin-bottom: 36px; }
+.results__label { font-family: var(--font-mono); font-size: 13px; color: var(--accent); }
+.results__title { font-size: 30px; font-weight: 700; margin: 10px 0 8px; letter-spacing: -0.5px; }
+.results__sub { color: var(--muted); font-size: 15.5px; max-width: 640px; }
+.results__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+.result {
+  background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 22px; display: flex; flex-direction: column; gap: 8px;
+  transition: border-color .18s ease, transform .18s ease;
+}
+.result:hover { border-color: var(--accent); transform: translateY(-3px); }
+.result__num { font-family: var(--font-mono); font-size: 21px; font-weight: 700; color: var(--accent); letter-spacing: -0.5px; }
+.result__name { font-size: 15.5px; font-weight: 600; line-height: 1.4; }
+.result__note { font-size: 13.5px; color: var(--muted); line-height: 1.55; }
