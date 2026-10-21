@@ -283,3 +283,12 @@ h1, h2, h3 { font-family: var(--font-head); letter-spacing: -0.01em; }
 .ai__rule p:last-child { margin-bottom: 0; }
 .ai__rule strong { color: var(--accent); }
 .ai__rule code { font-family: var(--font-mono); font-size: 13.5px; background: color-mix(in srgb, var(--line) 40%, transparent); padding: 1px 6px; border-radius: 5px; }
+
+
+/* ---------- Project screenshots ---------- */
+.card__shot { margin: 16px 0 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--bg); }
+.card__shot img { display: block; width: 100%; height: auto; }
+.card__shot figcaption { font-family: var(--font-mono); font-size: 12px; color: var(--comment); padding: 8px 12px; border-top: 1px solid var(--line); }
+.card__shots { display: grid; gap: 12px; margin-top: 16px; }
+.card__shots--2 { grid-template-columns: 1fr 1fr; }
+@media (max-width: 640px) { .card__shots--2 { grid-template-columns: 1fr; } }
