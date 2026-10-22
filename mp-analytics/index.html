@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Аналитика маркетплейсов — юнит-экономика, ABC, автосвод (демо-кейс)</title>
+<meta name="description" content="Демо-кейс аналитики маркетплейсов: интерактивный расчёт юнит-экономики SKU, ABC-анализ ассортимента, расчёт потребности в заказе и Python-скрипт свода выгрузок WB/Ozon. Данные синтетические, логика расчётов рабочая." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  .lead { color: var(--muted); max-width: 780px; }
+  .demo-note {
+    display: flex; gap: 12px; align-items: flex-start;
+    border: 1px dashed color-mix(in srgb, var(--accent-2) 45%, transparent);
+    background: color-mix(in srgb, var(--accent-2) 8%, transparent);
+    border-radius: var(--radius); padding: 16px 18px; margin: 22px 0 0;
+    max-width: 830px; font-size: 14.5px; color: var(--muted);
+  }
+  .demo-note strong { color: var(--accent-2); }
+
+  .panel {
+    border: 1px solid var(--line); border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    background: color-mix(in srgb, var(--bg-soft) 70%, transparent);
+    padding: 22px 24px; max-width: 830px; margin-top: 24px;
+  }
+  .panel p { margin: 0 0 12px; color: var(--muted); }
+  .panel p:last-child { margin-bottom: 0; }
+  .panel strong { color: var(--text); }
+  .panel code { font-family: var(--font-mono); color: var(--accent); font-size: 13.5px; }
+
+  /* ---------- Юнит-экономика ---------- */
+  .calc {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 26px;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: color-mix(in srgb, var(--card) 82%, transparent);
+    padding: 26px; margin-top: 26px; box-shadow: var(--shadow);
+  }
+  @media (max-width: 780px) { .calc { grid-template-columns: 1fr; } }
+  .calc h3 { margin: 0 0 4px; font-size: 16px; }
+  .calc__hint { color: var(--comment); font-size: 13px; margin: 0 0 16px; font-family: var(--font-mono); }
+  .calc__fields { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 480px) { .calc__fields { grid-template-columns: 1fr; } }
+  .field label { display: block; font-size: 12.5px; color: var(--muted); margin-bottom: 5px; }
+  .field input {
+    width: 100%; padding: 9px 11px; border: 1px solid var(--line);
+    border-radius: 9px; background: var(--bg-soft); color: var(--text);
+    font-family: var(--font-mono); font-size: 14.5px;
+  }
+  .field input:focus { outline: none; border-color: var(--accent); }
+  .out { display: flex; flex-direction: column; gap: 10px; }
+  .out__row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px;
+    background: color-mix(in srgb, var(--bg-soft) 65%, transparent);
+    font-family: var(--font-mono); font-size: 14px;
+  }
+  .out__row span { color: var(--muted); }
+  .out__row b { font-weight: 600; }
+  .out__row--profit { border-color: color-mix(in srgb, var(--accent-2) 40%, transparent); font-size: 16px; }
+  .out__row--profit b { color: var(--accent-2); }
+  .out__row--profit.is-loss b { color: #e57373; }
+  .out__row--warn b { color: var(--accent-2); }
+  .out__bar { height: 8px; border-radius: 4px; background: var(--line); overflow: hidden; display: flex; margin-top: 4px; }
+  .out__bar i { display: block; height: 100%; }
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--muted); font-family: var(--font-mono); }
+  .legend i { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 5px; }
+
+  /* ---------- Таблицы ---------- */
+  .table-wrap { overflow-x: auto; margin-top: 24px; border: 1px solid var(--line); border-radius: var(--radius); }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; min-width: 880px; }
+  th, td { padding: 11px 12px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th {
+    font-family: var(--font-mono); font-size: 11.5px; text-transform: uppercase;
+    letter-spacing: .4px; color: var(--comment); background: color-mix(in srgb, var(--bg-soft) 80%, transparent);
+    position: sticky; top: 0;
+  }
+  th:first-child, td:first-child, th.l, td.l { text-align: left; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: color-mix(in srgb, var(--accent) 5%, transparent); }
+  td.num, th.num { font-family: var(--font-mono); }
+  .abc { font-family: var(--font-mono); font-weight: 700; padding: 2px 8px; border-radius: 6px; font-size: 12px; }
+  .abc-a { color: var(--accent-2); background: color-mix(in srgb, var(--accent-2) 12%, transparent); }
+  .abc-b { color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
+  .abc-c { color: var(--comment); background: color-mix(in srgb, var(--comment) 14%, transparent); }
+  .verdict { font-family: var(--font-mono); font-size: 12.5px; padding: 3px 9px; border-radius: 6px; border: 1px solid; }
+  .v-def { color: #ffb74d; border-color: color-mix(in srgb, #ffb74d 45%, transparent); background: color-mix(in srgb, #ffb74d 9%, transparent); }
+  .v-ok { color: var(--accent-2); border-color: color-mix(in srgb, var(--accent-2) 45%, transparent); background: color-mix(in srgb, var(--accent-2) 8%, transparent); }
+  .v-over { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, transparent); background: color-mix(in srgb, var(--accent) 8%, transparent); }
+
+  .stats { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 20px; }
+  .stat {
+    border: 1px solid var(--line); border-radius: 12px;
+    background: color-mix(in srgb, var(--card) 80%, transparent);
+    padding: 14px 18px; min-width: 150px; font-family: var(--font-mono);
+  }
+  .stat b { display: block; font-size: 21px; color: var(--accent); }
+  .stat span { font-size: 12.5px; color: var(--muted); }
+
+  .controls { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-top: 22px; font-size: 14px; color: var(--muted); }
+  .controls select {
+    padding: 8px 12px; border: 1px solid var(--line); border-radius: 9px;
+    background: var(--bg-soft); color: var(--text); font-family: var(--font-mono); font-size: 14px;
+  }
+
+  /* ---------- Скрипт ---------- */
+  .terminal { margin-top: 26px; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: color-mix(in srgb, var(--card) 86%, transparent); }
+  .terminal__bar { display: flex; align-items: center; gap: 8px; padding: 11px 16px; border-bottom: 1px solid var(--line); font-family: var(--font-mono); font-size: 12.5px; color: var(--comment); }
+  .tdot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+  .tdot.r { background: #ff5f57; } .tdot.y { background: #febc2e; } .tdot.g { background: #28c840; }
+  .terminal__title { margin-left: 6px; }
+  pre { margin: 0; padding: 18px 20px; overflow-x: auto; font-family: var(--font-mono); font-size: 13px; line-height: 1.6; color: var(--muted); }
+  pre .c { color: var(--comment); }
+  pre .k { color: var(--accent); }
+  pre .g { color: var(--accent-2); }
+  pre .prompt { color: var(--accent-2); }
+
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; margin-top: 24px; }
+  .step {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: color-mix(in srgb, var(--card) 82%, transparent); padding: 18px;
+  }
+  .step .num { font-family: var(--font-mono); font-size: 12px; color: var(--accent); font-weight: 700; }
+  .step h4 { margin: 6px 0; font-size: 15px; }
+  .step p { margin: 0; color: var(--muted); font-size: 13.5px; }
+</style>
+</head>
+<body>
+
+<canvas id="fluid" aria-hidden="true"></canvas>
+
+<header class="nav" id="top">
+  <div class="nav__inner">
+    <a href="../" class="nav__logo">александра<span>.dev</span></a>
+    <nav class="nav__links" id="navLinks">
+      <a href="#unit">Юнит-экономика</a>
+      <a href="#assort">Остатки и ABC</a>
+      <a href="#script">Скрипт</a>
+      <a href="#scope">Рамка</a>
+    </nav>
+    <div class="nav__actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему" title="Светлая / тёмная тема">
+        <span class="theme-toggle__icon">◐</span>
+      </button>
+      <a href="../#contact" class="btn btn--primary nav__cta">Связаться</a>
+      <button class="nav__burger" id="navBurger" aria-label="Меню">≡</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="about">
+  <div class="hero__grid"></div>
+  <div class="hero__inner">
+    <div class="hero__text" style="max-width: 860px;">
+      <span class="badge"><span class="badge__dot"></span> демо-кейс · синтетические данные</span>
+      <p class="hero__comment">// аналитика маркетплейсов · WB / Ozon</p>
+      <h1 class="hero__title">Юнит-экономика,<br />ABC и автосвод выгрузок</h1>
+      <p class="hero__sub" style="max-width: 780px;">
+        Три рабочих инструмента аналитика селлера в одном месте: живой расчёт
+        прибыльности SKU, план потребности в заказе с учётом остатков и сроков
+        поставки, Python-скрипт, который сводит выгрузки из разных кабинетов
+        в один отчёт. Всё считается в браузере — можно потрогать руками.
+      </p>
+      <div class="hero__actions">
+        <a href="#unit" class="btn btn--primary">открыть расчёт</a>
+        <a href="#script" class="btn btn--ghost">Python-скрипт</a>
+        <a href="../" class="btn btn--ghost">← портфолио</a>
+      </div>
+      <div class="demo-note">
+        <span>⚠</span>
+        <span><strong>Честная рамка.</strong> Данные в кейсе синтетические —
+        коммерческого опыта работы с кабинетами WB/Ozon у меня пока нет.
+        Что здесь настоящее: логика расчётов (юнит-экономика, ABC, план-факт
+        остатков — я применяю их в текущей роли с выгрузками 1С) и сам скрипт,
+        он запускается и выдаёт отчёт. Инструменты кабинетов (mpstats, WB-Джем)
+        и их отчёты закрываю сейчас — это единственный пробел.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+
+  <section id="unit" class="section">
+    <h2 class="section__title">Юнит-экономика SKU</h2>
+    <p class="lead">Прибыль на маркетплейсе — это не «цена минус закупка».
+      Комиссия, логистика, хранение, возвраты и реклама съедают разницу по-разному
+      в зависимости от цены. Меняйте цифры — пересчёт идёт на лету.</p>
+
+    <div class="calc">
+      <div>
+        <h3>Входные данные</h3>
+        <p class="calc__hint">$ ввод · синтетический пример</p>
+        <div class="calc__fields">
+          <div class="field"><label for="f-price">Цена продажи, ₽/шт</label><input id="f-price" type="number" value="1490" min="1" step="10"></div>
+          <div class="field"><label for="f-qty">Продано за месяц, шт</label><input id="f-qty" type="number" value="300" min="1" step="10"></div>
+          <div class="field"><label for="f-comm">Комиссия площадки, %</label><input id="f-comm" type="number" value="16.5" min="0" max="100" step="0.1"></div>
+          <div class="field"><label for="f-fee">Логистика и хранение, ₽/шт</label><input id="f-fee" type="number" value="95" min="0" step="5"></div>
+          <div class="field"><label for="f-cost">Себестоимость (закуп), ₽/шт</label><input id="f-cost" type="number" value="520" min="0" step="10"></div>
+          <div class="field"><label for="f-ret">Возвраты, %</label><input id="f-ret" type="number" value="4" min="0" max="100" step="0.5"></div>
+          <div class="field"><label for="f-drr">Реклама (ДРР), % от продаж</label><input id="f-drr" type="number" value="7" min="0" max="100" step="0.5"></div>
+          <div class="field"><label for="f-pack">Упаковка, ₽/шт</label><input id="f-pack" type="number" value="15" min="0" step="5"></div>
+        </div>
+      </div>
+      <div class="out">
+        <h3>Результат</h3>
+        <p class="calc__hint">за месяц · нарастающим итогом</p>
+        <div class="out__row"><span>Выручка (с учётом возвратов)</span><b id="o-rev">—</b></div>
+        <div class="out__row"><span>Комиссия площадки</span><b id="o-comm">—</b></div>
+        <div class="out__row"><span>Логистика и хранение</span><b id="o-fee">—</b></div>
+        <div class="out__row"><span>Реклама</span><b id="o-ads">—</b></div>
+        <div class="out__row"><span>Себестоимость + упаковка</span><b id="o-cogs">—</b></div>
+        <div class="out__row out__row--profit" id="o-profit-row"><span>Прибыль</span><b id="o-profit">—</b></div>
+        <div class="out__row"><span>Маржа</span><b id="o-margin">—</b></div>
+        <div class="out__row out__row--warn"><span>Безубыточный ДРР (потолок)</span><b id="o-drrmax">—</b></div>
+        <div class="out__bar" id="o-bar" title="Доля расходов в цене"></div>
+        <div class="legend">
+          <span><i style="background:#e57373"></i>расходы</span>
+          <span><i style="background:#7ee787"></i>прибыль</span>
+          <span>бар = 100% цены продажи</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <p><strong>Инсайт.</strong> Призрак «хорошей маржи» обычно прячется в двух местах:
+        возвраты и ДРР. Безубыточный ДРР в поле справа — это потолок: реклама дороже
+        этого значения превращает продажи в убыток, даже если цена кажется высокой.
+        Поэтому ДРР в модели — правило с порогом, а не «посмотрим по ощущениям».</p>
+    </div>
+  </section>
+
+  <section id="assort" class="section">
+    <h2 class="section__title">Остатки, план-факт и ABC</h2>
+    <p class="lead">Вторая половина работы селлера: не просчитать заказ.
+      Скорость продаж × (срок поставки + страховой запас) минус то, что уже есть
+      на складе и в пути. Меняйте страховой запас — рекомендация по заказу пересчитается.</p>
+
+    <div class="controls">
+      <label for="f-lead">Срок поставки с производства:</label>
+      <select id="f-lead">
+        <option value="7">7 дней</option>
+        <option value="14" selected>14 дней</option>
+        <option value="21">21 день</option>
+        <option value="30">30 дней</option>
+      </select>
+      <label for="f-buffer">Страховой запас:</label>
+      <select id="f-buffer">
+        <option value="0">0 дней</option>
+        <option value="7" selected>7 дней</option>
+        <option value="14">14 дней</option>
+      </select>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b id="s-rev">—</b><span>выручка ассортимента / мес</span></div>
+      <div class="stat"><b id="s-def">—</b><span>SKU в дефиците</span></div>
+      <div class="stat"><b id="s-order">—</b><span>шт к заказу сейчас</span></div>
+      <div class="stat"><b id="s-frozen">—</b><span>₽ заморожено в избытке</span></div>
+    </div>
+
+    <div class="table-wrap">
+      <table id="assort-table">
+        <thead>
+          <tr>
+            <th class="l">Артикул</th>
+            <th class="l">Товар</th>
+            <th class="num">Цена, ₽</th>
+            <th class="num">Продажи, шт/мес</th>
+            <th class="num">Выручка, ₽</th>
+            <th>ABC</th>
+            <th class="num">Скорость, шт/день</th>
+            <th class="num">Остаток FBO, шт</th>
+            <th class="num">В пути, шт</th>
+            <th class="num">Хватит на, дней</th>
+            <th>Решение</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="panel">
+      <p><strong>Инсайт.</strong> «Хватит на 30 дней» — опасная фраза без срока поставки.
+        При сроке 14 дней и запасе 7 остатка хватает на 21+ день, а не на месяц:
+        заказ нужно выставить заранее, иначе позиция «выгорит» из выдачи в самый
+        пиковый период. Поэтому в колонке «Решение» срок поставки участвует в расчёте,
+        а не лежит отдельной табличкой.</p>
+      <p><strong>ABC здесь</strong> считается по кумулятивной выручке: A — товары,
+        дающие первые 80% выручки, B — до 95%, C — остальное. Класс определяет
+        внимание: A-позиции нельзя терять в наличии, по C обсуждается вывод из ассортимента.</p>
+    </div>
+  </section>
+
+  <section id="script" class="section">
+    <h2 class="section__title">Автосвод выгрузок: Python</h2>
+    <p class="lead">Скрипт <code style="font-family: var(--font-mono); color: var(--accent);">mp_svod.py</code>
+      читает выгрузки из разных кабинетов (у колонок WB и Ozon разные заголовки —
+      он их нормализует по словарю), сводит по артикулу, считает прибыль и ABC,
+      выгружает отчёт в Excel. Запускается одной командой, демо-режим не требует файлов.</p>
+
+    <div class="steps">
+      <div class="step"><span class="num">01</span><h4>Нормализация</h4><p>Заголовки кабинетов приводятся к логическим именам: «Сумма продаж» из WB и «price» из Ozon становятся одной колонкой.</p></div>
+      <div class="step"><span class="num">02</span><h4>Свод по артикулу</h4><p>Несколько выгрузок схлопываются в одну строку: заказы, выручка, комиссия, логистика, себестоимость, прибыль.</p></div>
+      <div class="step"><span class="num">03</span><h4>ABC и экспорт</h4><p>ABC по кумулятивной выручке, итог — в Excel (openpyxl) или CSV, если библиотеки нет.</p></div>
+    </div>
+
+    <div class="terminal">
+      <div class="terminal__bar">
+        <span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span>
+        <span class="terminal__title">alexandra@mp: ~/svod</span>
+      </div>
+      <pre><span class="prompt">$</span> python mp_svod.py --demo
+<span class="g">Артикулов: 6 · выручка: 3,054,800 ₽ · прибыль: 1,302,764 ₽</span>
+  [A] KRT-2990   выручка    717,600 ₽  маржа  46.9%  Куртка утеплённая
+  [A] BOT-1450   выручка    594,500 ₽  маржа  44.0%  Кроссовки
+  [A] TSH-690    выручка    538,200 ₽  маржа  38.2%  Футболка хлопок
+  [A] DSK-890    выручка    462,800 ₽  маржа  41.7%  Рюкзак
+  [B] JKT-3490   выручка    453,700 ₽  маржа  47.0%  Парка
+  [C] GLV-450    выручка    288,000 ₽  маржа  32.1%  Перчатки строительные
+<span class="g">Отчёт: mp_report.xlsx</span>
+
+<span class="prompt">$</span> <span class="c"># с реальными выгрузками:</span>
+<span class="prompt">$</span> python mp_svod.py sales_wb.csv sales_ozon.csv --cost cost.csv</pre>
+    </div>
+
+    <div class="panel">
+      <p><strong>Что уже умеет:</strong> нормализация заголовков по словарю алиасов,
+        слияние нескольких выгрузок, комиссия из данных или ставкой по умолчанию,
+        ABC, экспорт в Excel/CSV, честное предупреждение, когда себестоимость не передана.</p>
+      <p><strong>Что делается под конкретную команду:</strong> подключение реальных
+        API-выгрузок по расписанию, колонки логистики и хранения из отчёта «Приёмка»,
+        сверка с выгрузкой рекламы. Скачать скрипт:
+        <a href="mp_svod.py" download style="color: var(--accent);">mp_svod.py ↓</a></p>
+    </div>
+  </section>
+
+  <section id="scope" class="section">
+    <h2 class="section__title">Что здесь моё, а что нет</h2>
+    <div class="panel">
+      <p><strong>Моё (проверяется кодом и опытом):</strong> юнит-экономика и
+        план-факт — считаю в текущей роли (ассортимент, цены, остатки, ABC/XYZ с
+        выгрузками 1С); Python + pandas + openpyxl — рабочий инструмент, скрипт выше
+        запускался; визуализация логики и порогов — то же правило, что в моём
+        агенте рекламы: решение держится на детерминированном расчёте, не на модели.</p>
+      <p><strong>Пробел (закрываю):</strong> личный опыт кабинетов продавца WB/Ozon.
+        Сейчас разбираю их отчёты и логику показателей по документации, инструменты
+        mpstats и WB-Джем — следующий шаг. Готова к быстрому погружению: я уже
+        работаю с данными, которые через кабинеты и проходят.</p>
+      <p><strong>Смежный опыт:</strong> расчёт поставок из спецификаций (калькулятор
+        доставки из Китая — маршрут, сроки, себестоимость) — та же задача «не просчитать
+        заказ», только для импорта.</p>
+    </div>
+    <div class="hero__actions" style="margin-top: 26px;">
+      <a href="../" class="btn btn--primary">← все проекты</a>
+      <a href="../#contact" class="btn btn--ghost">связаться</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>© 2026 Александра Сарычева · демо-кейс на синтетических данных · статический сайт на GitHub Pages</p>
+</footer>
+
+<script src="../main.js"></script>
+<script>
+// ---------- Юнит-экономика ----------
+const ids = ['f-price','f-qty','f-comm','f-fee','f-cost','f-ret','f-drr','f-pack'];
+const fmt = n => new Intl.NumberFormat('ru-RU').format(Math.round(n));
+const fmtPct = n => n.toLocaleString('ru-RU', {maximumFractionDigits: 1}) + ' %';
+
+function recalc() {
+  const v = id => parseFloat(document.getElementById(id).value) || 0;
+  const price = v('f-price'), qty = v('f-qty');
+  const comm = v('f-comm') / 100, fee = v('f-fee'), cost = v('f-cost');
+  const ret = v('f-ret') / 100, drr = v('f-drr') / 100, pack = v('f-pack');
+
+  const sold = qty * (1 - ret);            // продажи за вычетом возвратов
+  const revenue = sold * price;            // чистая выручка
+  const cComm = revenue * comm;
+  const cFee = qty * fee;                  // доставка оплачивается за все отправленные
+  const cAds = revenue * drr;
+  const cCogs = qty * (cost + pack);
+  const profit = revenue - cComm - cFee - cAds - cCogs;
+  const margin = revenue ? profit / revenue * 100 : 0;
+  // потолок ДРР: при котором прибыль = 0
+  const drrMax = revenue ? (revenue - cComm - cFee - cCogs) / revenue * 100 : 0;
+
+  document.getElementById('o-rev').textContent = fmt(revenue) + ' ₽';
+  document.getElementById('o-comm').textContent = fmt(cComm) + ' ₽';
+  document.getElementById('o-fee').textContent = fmt(cFee) + ' ₽';
+  document.getElementById('o-ads').textContent = fmt(cAds) + ' ₽';
+  document.getElementById('o-cogs').textContent = fmt(cCogs) + ' ₽';
+  document.getElementById('o-profit').textContent = fmt(profit) + ' ₽';
+  document.getElementById('o-margin').textContent = fmtPct(margin);
+  document.getElementById('o-drrmax').textContent = drrMax > 0 ? fmtPct(drrMax) : 'недостижим';
+
+  document.getElementById('o-profit-row').classList.toggle('is-loss', profit < 0);
+
+  const exp = Math.max(0, cComm + cFee + cAds + cCogs);
+  const profitShare = revenue ? Math.max(0, profit) / revenue * 100 : 0;
+  const expShare = Math.min(100, revenue ? exp / revenue * 100 : 100);
+  document.getElementById('o-bar').innerHTML =
+    '<i style="width:' + expShare + '%;background:#e57373"></i>' +
+    '<i style="width:' + profitShare + '%;background:#7ee787"></i>';
+}
+ids.forEach(id => document.getElementById(id).addEventListener('input', recalc));
+recalc();
+
+// ---------- Остатки, план-факт, ABC ----------
+const SKU = [
+  {sku: 'KRT-2990', name: 'Куртка утеплённая',   price: 2990, sales: 240, stock: 180, transit: 0},
+  {sku: 'BOT-1450', name: 'Кроссовки',            price: 1450, sales: 410, stock: 520, transit: 200},
+  {sku: 'TSH-690',  name: 'Футболка хлопок',      price: 690,  sales: 780, stock: 900, transit: 0},
+  {sku: 'DSK-890',  name: 'Рюкзак городской',     price: 890,  sales: 520, stock: 310, transit: 0},
+  {sku: 'JKT-3490', name: 'Парка',                price: 3490, sales: 130, stock: 60,  transit: 0},
+  {sku: 'GLV-450',  name: 'Перчатки строит.',     price: 450,  sales: 640, stock: 2400, transit: 0},
+];
+
+function renderAssort() {
+  const lead = parseInt(document.getElementById('f-lead').value, 10);
+  const buffer = parseInt(document.getElementById('f-buffer').value, 10);
+  const perDay = s => s.sales / 30;
+
+  // ABC по кумулятивной выручке
+  const rows = SKU.map(s => ({...s, revenue: s.price * s.sales}));
+  const total = rows.reduce((a, s) => a + s.revenue, 0);
+  let cum = 0;
+  rows.sort((a, b) => b.revenue - a.revenue);
+  rows.forEach(s => {
+    cum += s.revenue;
+    const share = cum / total * 100;
+    s.abc = share <= 80 ? 'A' : (share <= 95 ? 'B' : 'C');
+  });
+  rows.sort((a, b) => b.revenue - a.revenue);
+
+  let defCount = 0, orderSum = 0, frozenSum = 0;
+  const tbody = document.querySelector('#assort-table tbody');
+  tbody.innerHTML = rows.map(s => {
+    const speed = perDay(s);
+    const avail = s.stock + s.transit;
+    const daysLeft = speed > 0 ? avail / speed : Infinity;
+    const need = Math.ceil(speed * (lead + buffer) - avail);
+    let cls, text;
+    if (need > 0) {
+      cls = 'v-def'; text = 'заказать ' + need + ' шт';
+      defCount++; orderSum += need;
+    } else if (daysLeft > lead + buffer * 2 + 14) {
+      cls = 'v-over'; text = 'излишек ' + Math.abs(need) + ' шт';
+      frozenSum += Math.abs(need) * s.price;
+    } else {
+      cls = 'v-ok'; text = 'норма';
+    }
+    const abcCls = 'abc abc-' + s.abc.toLowerCase();
+    return '<tr>' +
+      '<td class="l num">' + s.sku + '</td>' +
+      '<td class="l">' + s.name + '</td>' +
+      '<td class="num">' + fmt(s.price) + '</td>' +
+      '<td class="num">' + s.sales + '</td>' +
+      '<td class="num">' + fmt(s.revenue) + '</td>' +
+      '<td><span class="' + abcCls + '">' + s.abc + '</span></td>' +
+      '<td class="num">' + speed.toFixed(1) + '</td>' +
+      '<td class="num">' + fmt(s.stock) + '</td>' +
+      '<td class="num">' + fmt(s.transit) + '</td>' +
+      '<td class="num">' + (isFinite(daysLeft) ? Math.floor(daysLeft) : '∞') + '</td>' +
+      '<td><span class="verdict ' + cls + '">' + text + '</span></td>' +
+      '</tr>';
+  }).join('');
+
+  document.getElementById('s-rev').textContent = fmt(total / 1_000_000).replace(',', '.') + ' млн ₽';
+  document.getElementById('s-def').textContent = defCount;
+  document.getElementById('s-order').textContent = fmt(orderSum);
+  document.getElementById('s-frozen').textContent = fmt(frozenSum);
+}
+document.getElementById('f-lead').addEventListener('change', renderAssort);
+document.getElementById('f-buffer').addEventListener('change', renderAssort);
+renderAssort();
+</script>
+<script>window.ga = function () {};</script>
+<script src="../assets/fluid.js"></script>
+<script src="../assets/fluid-init.js"></script>
+</body>
+</html>
