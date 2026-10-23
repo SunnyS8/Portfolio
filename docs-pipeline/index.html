@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Конвейер документов: PDF, DOCX, XLSX, сканы, OCR — демо-кейс</title>
+<meta name="description" content="Демо-кейс обработки документов: Python-скрипт читает PDF, DOCX, XLSX и сканы через OCR, классифицирует тип документа, извлекает номер, дату, контрагента, ИНН и сумму, выгружает свод в Excel. Живой демо-классификатор в браузере." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  .lead { color: var(--muted); max-width: 780px; }
+  .demo-note {
+    display: flex; gap: 12px; align-items: flex-start;
+    border: 1px dashed color-mix(in srgb, var(--accent-2) 45%, transparent);
+    background: color-mix(in srgb, var(--accent-2) 8%, transparent);
+    border-radius: var(--radius); padding: 16px 18px; margin: 22px 0 0;
+    max-width: 830px; font-size: 14.5px; color: var(--muted);
+  }
+  .demo-note strong { color: var(--accent-2); }
+
+  .panel {
+    border: 1px solid var(--line); border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    background: color-mix(in srgb, var(--bg-soft) 70%, transparent);
+    padding: 22px 24px; max-width: 830px; margin-top: 24px;
+  }
+  .panel p { margin: 0 0 12px; color: var(--muted); }
+  .panel p:last-child { margin-bottom: 0; }
+  .panel strong { color: var(--text); }
+
+  /* ---------- Интерактивный классификатор ---------- */
+  .try {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 26px;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: color-mix(in srgb, var(--card) 82%, transparent);
+    padding: 26px; margin-top: 26px; box-shadow: var(--shadow);
+  }
+  @media (max-width: 780px) { .try { grid-template-columns: 1fr; } }
+  .try h3 { margin: 0 0 4px; font-size: 16px; }
+  .try__hint { color: var(--comment); font-size: 13px; margin: 0 0 14px; font-family: var(--font-mono); }
+  .try textarea {
+    width: 100%; min-height: 220px; resize: vertical;
+    padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px;
+    background: var(--bg-soft); color: var(--text);
+    font-family: var(--font-mono); font-size: 13.5px; line-height: 1.55;
+  }
+  .try textarea:focus { outline: none; border-color: var(--accent); }
+  .try__samples { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .try__samples button {
+    font-family: var(--font-mono); font-size: 12.5px; cursor: pointer;
+    padding: 6px 11px; border-radius: 8px;
+    border: 1px solid var(--line); background: var(--bg-soft); color: var(--muted);
+  }
+  .try__samples button:hover { border-color: var(--accent); color: var(--text); }
+  .out { display: flex; flex-direction: column; gap: 10px; }
+  .out__row {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 14px;
+    padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px;
+    background: color-mix(in srgb, var(--bg-soft) 65%, transparent);
+    font-family: var(--font-mono); font-size: 14px;
+  }
+  .out__row span { color: var(--muted); }
+  .out__row b { font-weight: 600; word-break: break-all; text-align: right; }
+  .out__row--type b { font-size: 16px; color: var(--accent-2); }
+  .out__row--type.is-unknown b { color: var(--comment); }
+
+  /* ---------- Конвейер ---------- */
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin-top: 24px; }
+  .step {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: color-mix(in srgb, var(--card) 82%, transparent); padding: 18px;
+  }
+  .step .num { font-family: var(--font-mono); font-size: 12px; color: var(--accent); font-weight: 700; }
+  .step h4 { margin: 6px 0; font-size: 15px; }
+  .step p { margin: 0; color: var(--muted); font-size: 13.5px; }
+  .step code { font-family: var(--font-mono); font-size: 12px; color: var(--accent); }
+
+  /* ---------- Форматы ---------- */
+  .formats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-top: 22px; }
+  .fmt-card {
+    border: 1px solid var(--line); border-radius: 12px;
+    background: color-mix(in srgb, var(--card) 80%, transparent);
+    padding: 16px 18px;
+  }
+  .fmt-card b { display: block; font-family: var(--font-mono); font-size: 14.5px; color: var(--accent); margin-bottom: 6px; }
+  .fmt-card span { font-size: 13px; color: var(--muted); }
+
+  /* ---------- Терминал ---------- */
+  .terminal { margin-top: 26px; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: color-mix(in srgb, var(--card) 86%, transparent); }
+  .terminal__bar { display: flex; align-items: center; gap: 8px; padding: 11px 16px; border-bottom: 1px solid var(--line); font-family: var(--font-mono); font-size: 12.5px; color: var(--comment); }
+  .tdot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+  .tdot.r { background: #ff5f57; } .tdot.y { background: #febc2e; } .tdot.g { background: #28c840; }
+  .terminal__title { margin-left: 6px; }
+  pre { margin: 0; padding: 18px 20px; overflow-x: auto; font-family: var(--font-mono); font-size: 13px; line-height: 1.6; color: var(--muted); }
+  pre .k { color: var(--accent); }
+  pre .g { color: var(--accent-2); }
+  pre .prompt { color: var(--accent-2); }
+  .dl { margin-top: 18px; display: flex; gap: 12px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<canvas id="fluid" aria-hidden="true"></canvas>
+
+<header class="nav" id="top">
+  <div class="nav__inner">
+    <a href="../" class="nav__logo">александра<span>.dev</span></a>
+    <nav class="nav__links" id="navLinks">
+      <a href="#try">Проверить</a>
+      <a href="#pipeline">Конвейер</a>
+      <a href="#script">Скрипт</a>
+      <a href="#scope">Рамка</a>
+    </nav>
+    <div class="nav__actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему" title="Светлая / тёмная тема">
+        <span class="theme-toggle__icon">◐</span>
+      </button>
+      <a href="../#contact" class="btn btn--primary nav__cta">Связаться</a>
+      <button class="nav__burger" id="navBurger" aria-label="Меню">≡</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="about">
+  <div class="hero__grid"></div>
+  <div class="hero__inner">
+    <div class="hero__text" style="max-width: 860px;">
+      <span class="badge"><span class="badge__dot"></span> демо-кейс · рабочий скрипт</span>
+      <p class="hero__comment">// обработка документов · PDF / DOCX / XLSX / сканы</p>
+      <h1 class="hero__title">Конвейер<br />документов с OCR</h1>
+      <p class="hero__sub" style="max-width: 780px;">
+        Папка со счетами, актами, накладными и сканами на вход — таблица Excel
+        на выходе: тип документа, номер, дата, контрагент, ИНН и сумма.
+        Python-скрипт читает четыре формата, распознаёт русские сканы через
+        Tesseract и классифицирует документы по ключевым правилам. Ниже —
+        живой классификатор прямо в браузере.
+      </p>
+      <div class="hero__actions">
+        <a href="#try" class="btn btn--primary">проверить на тексте</a>
+        <a href="#script" class="btn btn--ghost">Python-скрипт</a>
+        <a href="../" class="btn btn--ghost">← портфолио</a>
+      </div>
+      <div class="demo-note">
+        <span>⚠</span>
+        <span><strong>Честная рамка.</strong> Коммерческого опыта проекта
+        «распознавание сканов» пока нет. Что здесь настоящее: сам скрипт — он
+        запускается, распознаёт русские изображения через Tesseract и выгружает
+        свод. Документальный опыт из работы уже есть: свод выгрузок 1С
+        (Excel, любая структура файла) и документы в базе знаний для
+        RAG-бота. Демо-документы синтетические, чужие документы не использую.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+
+  <section id="try" class="section">
+    <h2 class="section__title">Проверить классификатор</h2>
+    <p class="lead">Вставьте текст документа или возьмите пример. Те же правила
+      (типы, поля), что в Python-скрипте, только считает браузер — ничего никуда
+      не отправляется.</p>
+
+    <div class="try">
+      <div>
+        <h3>Текст документа</h3>
+        <p class="try__hint">$ ввод · текст или скопированная выписка</p>
+        <textarea id="docText" spellcheck="false"></textarea>
+        <div class="try__samples">
+          <button data-s="invoice">счёт (PDF)</button>
+          <button data-s="act">акт (DOCX)</button>
+          <button data-s="nakl">накладная (XLSX)</button>
+          <button data-s="letter">скан письма (PNG)</button>
+          <button data-s="other">нераспознанный</button>
+        </div>
+      </div>
+      <div class="out">
+        <h3>Результат</h3>
+        <p class="try__hint">классификация + извлечённые поля</p>
+        <div class="out__row out__row--type" id="row-type"><span>Тип документа</span><b id="o-type">—</b></div>
+        <div class="out__row"><span>Номер</span><b id="o-num">—</b></div>
+        <div class="out__row"><span>Дата</span><b id="o-date">—</b></div>
+        <div class="out__row"><span>Контрагент</span><b id="o-org">—</b></div>
+        <div class="out__row"><span>ИНН</span><b id="o-inn">—</b></div>
+        <div class="out__row"><span>Сумма</span><b id="o-sum">—</b></div>
+        <div class="out__row"><span>Совпадений правил</span><b id="o-hits">—</b></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <p><strong>Как считает классификатор.</strong> Не нейросеть, а правила:
+        у каждого типа документа есть ключевые фразы («товарная накладная»,
+        «счёт на оплату», «акт оказанных услуг»). Побеждает тип с наибольшим
+        числом совпадений. Это детерминированно: одинаковый вход всегда даёт
+        одинаковый результат, ошибки видны и правятся за минуту. Модель тут
+        не нужна — а нужна там, где документов много и шаблонов нет.</p>
+    </div>
+  </section>
+
+  <section id="pipeline" class="section">
+    <h2 class="section__title">Что делает скрипт</h2>
+    <p class="lead">Пять шагов от папки до готового свода. На входе — любая
+      смесь форматов, на выходе — один Excel с фиксированными колонками.</p>
+
+    <div class="formats">
+      <div class="fmt-card"><b>PDF</b><span>pdfplumber, текстовый слой</span></div>
+      <div class="fmt-card"><b>DOCX</b><span>python-docx, абзацы и таблицы</span></div>
+      <div class="fmt-card"><b>XLSX</b><span>openpyxl, все ячейки листа</span></div>
+      <div class="fmt-card"><b>PNG / JPG / TIF</b><span>Tesseract OCR, rus + eng</span></div>
+    </div>
+
+    <div class="steps">
+      <div class="step"><span class="num">01</span><h4>Чтение</h4><p>Каждый файл через свой парсер: PDF, DOCX, таблица или OCR-картинка.</p></div>
+      <div class="step"><span class="num">02</span><h4>Классификация</h4><p>Ключевые фразы определяют тип: счёт, акт, накладная, договор, письмо, отчёт.</p></div>
+      <div class="step"><span class="num">03</span><h4>Поля</h4><p>Регулярные выражения достают номер, дату, контрагента, ИНН и сумму.</p></div>
+      <div class="step"><span class="num">04</span><h4>Свод</h4><p>Таблица pandas, экспорт в Excel с шапкой, ширинами и закреплённой строкой.</p></div>
+      <div class="step"><span class="num">05</span><h4>Устойчивость</h4><p>Битый файл не роняет конвейер: ошибка попадает в свою строку, папка обрабатывается целиком.</p></div>
+    </div>
+  </section>
+
+  <section id="script" class="section">
+    <h2 class="section__title">Скрипт и его вывод</h2>
+    <p class="lead">Реальный запуск на демо-пакете: PDF-счёт, DOCX-акт,
+      XLSX-накладная и PNG-скан письма. Обратите внимание на последнюю
+      строку — это скан, распознанный Tesseract.</p>
+
+    <div class="terminal">
+      <div class="terminal__bar">
+        <span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span>
+        <span class="terminal__title">doc_pipeline.py --demo</span>
+      </div>
+<pre><span class="prompt">$</span> python doc_pipeline.py demo_docs --demo
+
+Демо-документы созданы в: demo_docs
+
+Обработано: 4 док. Результат: demo_docs/свод_документов.xlsx
+
+  акт_88.docx                <span class="g">Акт</span>          №88       15.10.2026  62500
+  накладная_551.xlsx         <span class="g">Накладная</span>    №551      18.10.2026  18400.00
+  скан_письмо_7.png          <span class="g">Письмо</span>       №7        20.10.2026
+  счёт_1042.pdf              <span class="g">Счёт</span>         №1042     12.10.2026  145000.00</pre>
+    </div>
+
+    <div class="dl">
+      <a href="doc_pipeline.py" class="btn btn--primary" download>скачать doc_pipeline.py</a>
+      <a href="demo_docs/" class="btn btn--ghost">демо-документы</a>
+    </div>
+
+    <div class="panel">
+      <p><strong>Запуск у себя.</strong> <code>python doc_pipeline.py моя_папка</code> —
+        обработать свои файлы. <code>--demo</code> — сгенерировать тестовый комплект
+        и прогнать его. <code>--ocr</code> — проверить, настроен ли Tesseract
+        (нужен установленный движок, путь прописан в начале файла).</p>
+    </div>
+  </section>
+
+  <section id="scope" class="section">
+    <h2 class="section__title">Рамка и границы</h2>
+    <p class="lead">Чтобы на собеседовании не было сюрпризов — что здесь настоящее,
+      а что я изучу на работе.</p>
+
+    <div class="steps">
+      <div class="step"><span class="num">✓</span><h4>Уже в работе</h4><p>Свод выгрузок 1С в Excel с автопоиском колонок в файле любой структуры. Документы в базе знаний для RAG-бота: чанкинг, поиск, ответ со ссылкой.</p></div>
+      <div class="step"><span class="num">✓</span><h4>Собрано руками</h4><p>Сам конвейер: парсеры четырёх форматов, OCR на Tesseract, правила классификации, извлечение полей, экспорт. Код читается и правится.</p></div>
+      <div class="step"><span class="num">→</span><h4>Изучу на работе</h4><p>Коммерческий поток сканов с их шумом: низкое разрешение, повороты, штампы. Внедрение в боевой документооборот и контроль точности по их документам.</p></div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+// ---------- Классификатор и извлечение полей (зеркало Python-логики) ----------
+const DOC_TYPES = {
+  'Счёт':      ['счёт на оплату', 'счёт-фактура', 'счёт №', 'счёт за', 'оплату по счёту'],
+  'Договор':   ['договор поставки', 'договор оказания', 'договор №', 'стороны заключили договор'],
+  'Акт':       ['акт оказанных услуг', 'акт выполненных работ', 'акт №', 'подписали настоящий акт'],
+  'Накладная': ['товарная накладная', 'накладная №', 'грузополучатель', 'отпустил'],
+  'Письмо':    ['письмо', 'уважаемый', 'направляем вам'],
+  'Отчёт':     ['отчёт', 'итоги периода', 'показатели'],
+};
+
+const RE_DATE = /(\d{2}[./-]\d{2}[./-]\d{4})/;
+const RE_INN  = /\b(?:ИНН|инн)[:\s]*(\d{10}|\d{12})\b/;
+const RE_NUM  = /(?:№|#)\s*([A-Za-zА-Яа-я0-9][\w/-]{0,20})/;
+const RE_SUM  = /(?:итого|всего к оплате|к оплате|сумма)\s*[:\s]*([0-9][\d\s]*(?:[.,]\d{1,2})?)/i;
+const RE_ORG  = /([А-ЯЁ][а-яё\s\-"«»]{2,60}(?:ООО|АО|ЗАО|ИП)\b|\bООО\s*["«][^"»]{2,60}["»])/;
+
+function classify(text) {
+  const low = text.toLowerCase();
+  let best = 'Прочее', score = 0;
+  for (const [type, keys] of Object.entries(DOC_TYPES)) {
+    const hits = keys.filter(k => low.includes(k)).length;
+    if (hits > score) { best = type; score = hits; }
+  }
+  return { type: best, hits: score };
+}
+
+const SAMPLES = {
+  invoice: 'ООО "Ромашка"\nСчёт № 1042 от 12.10.2026\nНа оплату: монтаж оборудования\nИНН 7701234567\nИтого к оплате: 145 000,00 руб.',
+  act: 'ООО «Север»\nАкт оказанных услуг № 88 от 15.10.2026\nООО «Ромашка» оказала услуги по настройке серверов.\nИтого: 62 500 руб.',
+  nakl: 'Товарная накладная № 551 от 18.10.2026\nГрузополучатель: ИП Иванов И.И.\nИНН 771234567890\nВсего к оплате: 18 400,00',
+  letter: 'ООО «Свет»\nПисьмо № 7 от 20.10.2026\nУважаемые коллеги! Направляем вам отчёт по итогам квартала.',
+  other: 'Заметка с рабочего стола\nВстреча в четверг, обсудить закупку бумаги.\nБюджет уточнить.',
+};
+
+function analyze() {
+  const text = document.getElementById('docText').value;
+  const { type, hits } = classify(text);
+  const set = (id, v) => document.getElementById(id).textContent = v || '—';
+  document.getElementById('o-type').textContent = type;
+  document.getElementById('row-type').classList.toggle('is-unknown', hits === 0);
+  set('o-num', (text.match(RE_NUM) || [])[1]);
+  set('o-date', (text.match(RE_DATE) || [])[1]);
+  set('o-org', (text.match(RE_ORG) || [])[1]);
+  set('o-inn', (text.match(RE_INN) || [])[1]);
+  set('o-sum', ((text.match(RE_SUM) || [])[1] || '').replace(/\s/g, ''));
+  document.getElementById('o-hits').textContent = hits;
+}
+
+document.getElementById('docText').addEventListener('input', analyze);
+document.querySelectorAll('.try__samples button').forEach(b => {
+  b.addEventListener('click', () => {
+    document.getElementById('docText').value = SAMPLES[b.dataset.s];
+    analyze();
+  });
+});
+document.getElementById('docText').value = SAMPLES.invoice;
+analyze();
+
+// ---------- Шапка / тема ----------
+const themeToggle = document.getElementById('themeToggle');
+themeToggle.addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  document.documentElement.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+});
+const navBurger = document.getElementById('navBurger');
+navBurger.addEventListener('click', () => document.getElementById('navLinks').classList.toggle('open'));
+</script>
+<script>window.ga = function () {};</script>
+<script src="../assets/fluid.js"></script>
+<script src="../assets/fluid-init.js"></script>
+</body>
+</html>
