@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Демо-документы — конвейер документов</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  .lead { color: var(--muted); max-width: 780px; }
+  .files { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 12px; max-width: 780px; }
+  .files li {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+    border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px;
+    background: color-mix(in srgb, var(--card) 82%, transparent);
+  }
+  .files li:hover { border-color: var(--accent); }
+  .file-name { font-family: var(--font-mono); font-size: 14px; word-break: break-all; }
+  .file-name small { display: block; color: var(--muted); font-family: Inter, sans-serif; font-size: 12.5px; margin-top: 4px; }
+  .file-tag { font-family: var(--font-mono); font-size: 12px; color: var(--accent-2); white-space: nowrap; }
+  .note {
+    border-left: 3px solid var(--accent); background: color-mix(in srgb, var(--bg-soft) 70%, transparent);
+    border-radius: 0 var(--radius) var(--radius) 0; padding: 16px 20px; margin-top: 24px;
+    max-width: 780px; font-size: 14.5px; color: var(--muted);
+  }
+  .note code { font-family: var(--font-mono); color: var(--accent); font-size: 13.5px; }
+  .note strong { color: var(--text); }
+</style>
+</head>
+<body>
+
+<header class="nav" id="top">
+  <div class="nav__inner">
+    <a href="../../" class="nav__logo">александра<span>.dev</span></a>
+    <nav class="nav__links">
+      <a href="../#try">Классификатор</a>
+      <a href="../#script">Скрипт</a>
+    </nav>
+    <div class="nav__actions">
+      <a href="../" class="btn btn--ghost">← к кейсу</a>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <section class="section">
+    <h1 class="section__title">Демо-документы</h1>
+    <p class="lead">Синтетический комплект для проверки скрипта: четыре формата,
+      одна задача. Скачайте файлы в одну папку и запустите конвейер — результат
+      совпадёт с выводом на странице кейса.</p>
+
+    <ul class="files">
+      <li>
+        <span class="file-name">счёт_1042.pdf<small>Счёт на оплату, текстовый PDF — читается pdfplumber</small></span>
+        <a class="file-tag" href="счёт_1042.pdf" download>PDF ↓</a>
+      </li>
+      <li>
+        <span class="file-name">акт_88.docx<small>Акт оказанных услуг — читается python-docx</small></span>
+        <a class="file-tag" href="акт_88.docx" download>DOCX ↓</a>
+      </li>
+      <li>
+        <span class="file-name">накладная_551.xlsx<small>Товарная накладная — читается openpyxl, ячейки таблицы</small></span>
+        <a class="file-tag" href="накладная_551.xlsx" download>XLSX ↓</a>
+      </li>
+      <li>
+        <span class="file-name">скан_письмо_7.png<small>Фото письма — распознаётся Tesseract (rus + eng)</small></span>
+        <a class="file-tag" href="скан_письмо_7.png" download>PNG / OCR ↓</a>
+      </li>
+      <li>
+        <span class="file-name">свод_документов.xlsx<small>Готовый результат конвейера — как выглядит выход</small></span>
+        <a class="file-tag" href="свод_документов.xlsx" download>Excel ↓</a>
+      </li>
+    </ul>
+
+    <div class="note">
+      <p><strong>Как прогнать самому.</strong> Скачайте четыре документа в одну
+      папку, возьмите <code>doc_pipeline.py</code> со страницы кейса и запустите:</p>
+      <p><code>python doc_pipeline.py папка_с_файлами</code> — обработать свои документы<br />
+      <code>python doc_pipeline.py папка_с_файлами --demo</code> — сгенерировать этот же комплект заново<br />
+      <code>python doc_pipeline.py --ocr</code> — проверить, настроен ли Tesseract</p>
+      <p>Все данные в файлах вымышлены: компании, номера, ИНН и суммы придуманы
+      для теста. Чужих документов в кейсе нет.</p>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>
