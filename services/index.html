@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Автоматизация и ИИ под ключ для малого бизнеса | Александра Сарычева</title>
+  <meta name="description" content="Внедряю автоматизацию для малого бизнеса и продаж в интернете: отчёты из 1С, разбор документов, боты с базой знаний, аналитика. Python, LLM, интеграции. Бесплатный разбор задачи.">
+  <link rel="canonical" href="https://sunnys8.github.io/Portfolio/services/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Рутина уходит в автомат, вы возвращаетесь к продажам">
+  <meta property="og:description" content="Автоматизация под ключ: отчёты из 1С, конвейер документов, боты с базой знаний, аналитика. Python и LLM.">
+  <meta property="og:image" content="https://sunnys8.github.io/Portfolio/assets/shots/kapitan-dash.png">
+  <meta property="og:url" content="https://sunnys8.github.io/Portfolio/services/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23181818'/%3E%3Ctext x='16' y='22' font-family='sans-serif' font-size='16' font-weight='700' fill='%234fd1c5' text-anchor='middle'%3EА%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "Сколько стоит автоматизация?", "acceptedAnswer": {"@type": "Answer", "text": "Цену называю после бесплатного разбора задачи. Типовой инструмент обычно окупается за счёт времени, которое команда перестаёт тратить вручную."}},
+      {"@type": "Question", "name": "Сколько времени занимает проект?", "acceptedAnswer": {"@type": "Answer", "text": "Прототип типовой задачи занимает 1–2 недели. Точные сроки называю до старта работ."}},
+      {"@type": "Question", "name": "С какими системами работаете?", "acceptedAnswer": {"@type": "Answer", "text": "1С через выгрузки, Bitrix24 через вебхуки и REST API, маркетплейсы, Excel и таблицы, любые источники с API."}},
+      {"@type": "Question", "name": "Что с безопасностью данных?", "acceptedAnswer": {"@type": "Answer", "text": "Доступы выдаёте вы, данные не уходят в сторонние сервисы без согласования. Персональные данные обезличиваю, требования 152-ФЗ учитываю."}},
+      {"@type": "Question", "name": "Что если модель ошибётся?", "acceptedAnswer": {"@type": "Answer", "text": "Расчёты выношу в код с тестами, модель остаётся там, где цена ошибки нулевая: формулировки, выводы и подсказки."}},
+      {"@type": "Question", "name": "Вы работаете удалённо?", "acceptedAnswer": {"@type": "Answer", "text": "Да, полностью удалённо. Ставрополь, часовой пояс удобен для московских компаний."}},
+      {"@type": "Question", "name": "Что нужно от меня?", "acceptedAnswer": {"@type": "Answer", "text": "Доступ к данным или выгрузкам и один человек, который отвечает на вопросы по процессу."}},
+      {"@type": "Question", "name": "Есть поддержка после сдачи?", "acceptedAnswer": {"@type": "Answer", "text": "Да: документация, инструкции для команды и доработки по результатам запуска."}},
+      {"@type": "Question", "name": "Как устроена оплата?", "acceptedAnswer": {"@type": "Answer", "text": "По этапам: разбор, прототип, внедрление. Условия фиксируем до старта работ."}},
+      {"@type": "Question", "name": "Делаете только автоматизацию?", "acceptedAnswer": {"@type": "Answer", "text": "Нет: аналитика, дашборды и отчётность тоже в работе."}}
+    ]
+  }
+  </script>
+  <style>
+    /* ===== Tokens: только значения из шкалы скилла ===== */
+    :root {
+      --bg: #181818;
+      --surface: #1f1f1f;
+      --card: #272727;
+      --line: #313131;
+      --text: #ffffff;
+      --muted: #9b9b9b;
+      --accent: #4fd1c5;
+      --accent-ink: #181818;
+
+      --fs-xs: 0.75rem;   --lh-xs: 1rem;
+      --fs-sm: 0.875rem;  --lh-sm: 1.25rem;
+      --fs-base: 1rem;    --lh-base: 1.5rem;
+      --fs-lg: 1.125rem;  --lh-lg: 1.75rem;
+      --fs-xl: 1.25rem;   --lh-xl: 1.75rem;
+      --fs-2xl: 1.5rem;   --lh-2xl: 2rem;
+      --fs-3xl: 1.875rem; --lh-3xl: 2.25rem;
+      --fs-4xl: 2.25rem;  --lh-4xl: 2.5rem;
+      --fs-5xl: 3rem;     --lh-5xl: 1;
+
+      --sp-75: 8px;  --sp-100: 12px; --sp-200: 16px; --sp-300: 24px;
+      --sp-400: 32px; --sp-500: 40px; --sp-600: 48px; --sp-700: 64px;
+      --sp-800: 80px; --sp-900: 96px;
+
+      --r-sm: 8px; --r-md: 12px; --r-lg: 16px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --dur: 500ms;
+      --dur-fast: 300ms;
+      --maxw: 1080px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Manrope", system-ui, sans-serif;
+      font-size: var(--fs-base);
+      line-height: var(--lh-base);
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3 { margin: 0; font-weight: 600; text-wrap: balance; letter-spacing: -0.01em; }
+    p { margin: 0; text-wrap: pretty; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    ul { margin: 0; padding: 0; list-style: none; }
+
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: var(--r-sm);
+    }
+
+    .skip {
+      position: absolute; left: -9999px; top: 0; z-index: 100;
+      background: var(--accent); color: var(--accent-ink);
+      padding: var(--sp-75) var(--sp-100); border-radius: var(--r-sm);
+      font-weight: 600;
+    }
+    .skip:focus { left: var(--sp-200); top: var(--sp-200); }
+
+    .container { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--sp-300); }
+
+    /* ===== Навигация: плавающий бар ===== */
+    .nav-wrap {
+      position: fixed; top: var(--sp-200); left: 0; right: 0; z-index: 50;
+      display: flex; justify-content: center; padding: 0 var(--sp-200);
+      pointer-events: none;
+    }
+    .nav {
+      pointer-events: auto;
+      display: flex; align-items: center; gap: var(--sp-300);
+      background: rgba(24, 24, 24, 0.72);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      padding: var(--sp-75) var(--sp-100);
+    }
+    .nav__logo { font-weight: 700; font-size: var(--fs-sm); white-space: nowrap; }
+    .nav__logo span { color: var(--accent); }
+    .nav__links { display: flex; gap: var(--sp-300); align-items: center; }
+    .nav__link {
+      font-size: var(--fs-sm); font-weight: 500; color: var(--muted);
+      transition: color var(--dur-fast) var(--ease);
+    }
+    .nav__link:hover, .nav__link[aria-current="true"] { color: var(--text); }
+    .nav__cta { display: inline-flex; }
+
+    .burger {
+      display: none;
+      background: none; border: 1px solid var(--line); border-radius: var(--r-sm);
+      color: var(--text); cursor: pointer;
+      padding: var(--sp-75) var(--sp-100);
+      transition: transform var(--dur) var(--ease);
+    }
+    .burger:active { transform: scale(0.98); }
+    .burger i { font-size: var(--fs-xl); display: block; transition: transform var(--dur) var(--ease); }
+    .burger[aria-expanded="true"] i { transform: rotate(90deg); }
+
+    .menu {
+      position: fixed; inset: 0; z-index: 40;
+      background: rgba(24, 24, 24, 0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      display: flex; flex-direction: column; justify-content: center;
+      gap: var(--sp-300); padding: var(--sp-600) var(--sp-300);
+      opacity: 0; visibility: hidden;
+      transition: opacity var(--dur) var(--ease), visibility var(--dur) var(--ease);
+    }
+    .menu.open { opacity: 1; visibility: visible; }
+    .menu a {
+      font-size: var(--fs-3xl); font-weight: 600;
+      transform: translateY(24px); opacity: 0;
+      transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
+    }
+    .menu.open a { transform: translateY(0); opacity: 1; }
+    .menu.open a:nth-child(1) { transition-delay: 0ms; }
+    .menu.open a:nth-child(2) { transition-delay: 60ms; }
+    .menu.open a:nth-child(3) { transition-delay: 120ms; }
+    .menu.open a:nth-child(4) { transition-delay: 180ms; }
+
+    /* ===== Кнопки ===== */
+    .btn {
+      display: inline-flex; align-items: center; gap: var(--sp-75);
+      font-family: inherit; font-size: var(--fs-base); font-weight: 600;
+      padding: var(--sp-75) var(--sp-100);
+      border-radius: var(--r-sm); border: 1px solid transparent;
+      cursor: pointer; text-align: center;
+      transition: transform var(--dur) var(--ease), opacity var(--dur-fast) var(--ease),
+                  background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn--primary { background: var(--accent); color: var(--accent-ink); }
+    .btn--primary:hover { opacity: 0.88; }
+    .btn--ghost { background: transparent; color: var(--text); border-color: var(--line); }
+    .btn--ghost:hover { background: var(--card); }
+    .btn--lg { font-size: var(--fs-lg); padding: var(--sp-100) var(--sp-200); }
+    .btn--block { width: 100%; justify-content: center; }
+
+    /* ===== Герой ===== */
+    .hero { padding: 152px 0 var(--sp-800); }
+    .hero__grid {
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--sp-700); align-items: center;
+    }
+    .hero h1 {
+      font-size: var(--fs-5xl); line-height: var(--lh-5xl);
+      max-width: 680px;
+      background: linear-gradient(to right, #ffffff, #9b9b9b);
+      -webkit-background-clip: text; background-clip: text;
+      color: transparent;
+    }
+    .hero__sub {
+      margin-top: var(--sp-300); max-width: 680px;
+      font-size: var(--fs-lg); line-height: var(--lh-lg); color: var(--muted);
+    }
+    .hero__cta { margin-top: var(--sp-400); display: flex; gap: var(--sp-200); flex-wrap: wrap; }
+    .hero__proof {
+      margin-top: var(--sp-400); display: flex; flex-wrap: wrap;
+      gap: var(--sp-75) var(--sp-300);
+      font-size: var(--fs-sm); color: var(--muted);
+    }
+    .hero__proof li { display: flex; align-items: center; gap: var(--sp-75); }
+    .hero__proof i { color: var(--accent); font-size: var(--fs-lg); }
+    .hero__shot {
+      background: var(--surface); border: 1px solid var(--line);
+      border-radius: var(--r-lg); padding: var(--sp-75);
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+    }
+    .hero__shot img { border-radius: var(--r-sm); }
+
+    /* ===== Секция-тэглайн (обязательная по скиллу) ===== */
+    .tagline { padding: var(--sp-900) 0; }
+    .tagline p {
+      max-width: 680px;
+      font-size: var(--fs-5xl); line-height: var(--lh-5xl); font-weight: 600;
+      letter-spacing: -0.01em; text-wrap: balance;
+    }
+    .tagline .w { color: var(--text); opacity: 0.3; transition: opacity var(--dur) var(--ease); }
+    .tagline .w.on { opacity: 1; }
+
+    /* ===== Общие секции ===== */
+    section { scroll-margin-top: 96px; }
+    .section { padding: var(--sp-700) 0; }
+    .section__label {
+      font-size: var(--fs-sm); font-weight: 600; color: var(--accent);
+      margin-bottom: var(--sp-100);
+    }
+    .section__title { font-size: var(--fs-3xl); line-height: var(--lh-3xl); max-width: 680px; }
+    .section__lead { margin-top: var(--sp-200); max-width: 680px; color: var(--muted); font-size: var(--fs-lg); line-height: var(--lh-lg); }
+
+    /* ===== Боль и решение ===== */
+    .pain-grid {
+      margin-top: var(--sp-500);
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-200);
+    }
+    .pain {
+      background: var(--surface); border: 1px solid var(--line);
+      border-radius: var(--r-lg); padding: var(--sp-300);
+      display: flex; gap: var(--sp-100); align-items: flex-start;
+      font-size: var(--fs-base);
+    }
+    .pain i { color: var(--muted); font-size: var(--fs-xl); flex-shrink: 0; }
+    .pain--fix i { color: var(--accent); }
+
+    /* ===== Выгоды ===== */
+    .benefits {
+      margin-top: var(--sp-500);
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-200);
+    }
+    .benefit {
+      background: var(--surface); border: 1px solid var(--line);
+      border-radius: var(--r-lg); padding: var(--sp-300);
+      display: flex; flex-direction: column; gap: var(--sp-100);
+      transition: transform var(--dur) var(--ease), border-color var(--dur-fast) var(--ease);
+    }
+    .benefit:hover { transform: translateY(-4px); border-color: var(--accent); }
+    .benefit__icon {
+      width: 40px; height: 40px; border-radius: var(--r-sm);
+      background: var(--card); display: flex; align-items: center; justify-content: center;
+      color: var(--accent); font-size: var(--fs-xl);
+    }
+    .benefit h3 { font-size: var(--fs-lg); line-height: var(--lh-lg); }
+    .benefit p { color: var(--muted); font-size: var(--fs-sm); line-height: var(--lh-sm); }
+
+    /* ===== Шаги ===== */
+    .steps {
+      margin-top: var(--sp-500);
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-200);
+      counter-reset: step;
+    }
+    .step {
+      background: var(--surface); border: 1px solid var(--line);
+      border-radius: var(--r-lg); padding: var(--sp-300);
+      counter-increment: step;
+    }
+    .step::before {
+      content: "0" counter(step);
+      display: block; font-size: var(--fs-sm); font-weight: 700;
+      color: var(--accent); margin-bottom: var(--sp-100);
+    }
+    .step h3 { font-size: var(--fs-lg); line-height: var(--lh-lg); margin-bottom: var(--sp-75); }
+    .step p { color: var(--muted); font-size: var(--fs-sm); line-height: var(--lh-sm); }
+
+    /* ===== Кейсы ===== */
+    .cases {
+      margin-top: var(--sp-500);
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--sp-200);
+    }
+    .case {
+      background: var(--surface); border: 1px solid var(--line);
+      border-radius: var(--r-lg); padding: var(--sp-300);
+      display: flex; flex-direction: column; gap: var(--sp-100);
+      transition: transform var(--dur) var(--ease), border-color var(--dur-fast) var(--ease);
+    }
+    .case:hover { transform: translateY(-4px); border-color: var(--accent); }
+    .case__tag { font-size: var(--fs-xs); font-weight: 600; color: var(--accent); }
+    .case h3 { font-size: var(--fs-lg); line-height: var(--lh-lg); }
+    .case p { color: var(--muted); font-size: var(--fs-sm); line-height: var(--lh-sm); flex-grow: 1; }
+    .case__link {
+      display: inline-flex; align-items: center; gap: var(--sp-75);
+      font-size: var(--fs-sm); font-weight: 600; color: var(--text);
+      transition: gap var(--dur) var(--ease), color var(--dur-fast) var(--ease);
+    }
+    .case__link:hover { color: var(--accent); gap: var(--sp-100); }
+
+    /* ===== FAQ ===== */
+    .faq { margin-top: var(--sp-500); display: flex; flex-direction: column; gap: var(--sp-100); max-width: 780px; }
+    .faq details {
+      background: var(--surface); border: 1px solid var(--line);
+      border-radius: var(--r-lg); padding: var(--sp-200) var(--sp-300);
+    }
+    .faq summary {
+      cursor: pointer; font-weight: 600; font-size: var(--fs-base);
+      list-style: none; display: flex; justify-content: space-between; align-items: center;
+      gap: var(--sp-200);
+    }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary i { color: var(--accent); font-size: var(--fs-xl); transition: transform var(--dur) var(--ease); flex-shrink: 0; }
+    .faq details[open] summary i { transform: rotate(45deg); }
+    .faq details p { margin-top: var(--sp-100); color: var(--muted); font-size: var(--fs-sm); line-height: var(--lh-sm); }
+
+    /* ===== Гарантии и финальный CTA ===== */
+    .assure {
+      background: var(--surface); border: 1px solid var(--line);
+      border-radius: var(--r-lg); padding: var(--sp-500) var(--sp-400);
+      display: flex; flex-wrap: wrap; gap: var(--sp-300);
+      align-items: center; justify-content: space-between;
+    }
+    .assure ul { display: flex; flex-wrap: wrap; gap: var(--sp-100) var(--sp-300); }
+    .assure li { display: flex; align-items: center; gap: var(--sp-75); font-size: var(--fs-sm); color: var(--muted); }
+    .assure li i { color: var(--accent); font-size: var(--fs-lg); }
+
+    /* ===== Подвал ===== */
+    .legal { padding: var(--sp-700) 0 0; display: grid; gap: var(--sp-200); }
+    .legal h3 { font-size: var(--fs-base); }
+    .legal p { color: var(--muted); font-size: var(--fs-sm); line-height: var(--lh-sm); max-width: 680px; margin-top: var(--sp-75); }
+    footer {
+      margin-top: var(--sp-600); border-top: 1px solid var(--line);
+      padding: var(--sp-400) 0;
+    }
+    .footer__inner {
+      display: flex; flex-wrap: wrap; gap: var(--sp-300);
+      justify-content: space-between; align-items: center;
+      font-size: var(--fs-sm); color: var(--muted);
+    }
+    .footer__links { display: flex; flex-wrap: wrap; gap: var(--sp-300); }
+    .footer__links a { transition: color var(--dur-fast) var(--ease); }
+    .footer__links a:hover { color: var(--text); }
+
+    /* ===== Появление при скролле ===== */
+    [data-reveal] {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity 700ms var(--ease), transform 700ms var(--ease);
+    }
+    [data-reveal].is-visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== Адаптив ===== */
+    @media (max-width: 900px) {
+      .hero__grid { grid-template-columns: 1fr; gap: var(--sp-500); }
+      .benefits, .steps { grid-template-columns: 1fr; }
+      .pain-grid { grid-template-columns: 1fr; }
+      .nav__links { display: none; }
+      .nav__cta { display: none; }
+      .burger { display: block; }
+      .hero h1, .tagline p { font-size: var(--fs-4xl); line-height: var(--lh-4xl); }
+      .hero { padding-top: 120px; }
+      .assure { flex-direction: column; align-items: flex-start; }
+      .assure .btn { width: 100%; justify-content: center; }
+    }
+    @media (max-width: 560px) {
+      .section { padding: var(--sp-600) 0; }
+      .hero h1, .tagline p { font-size: var(--fs-3xl); line-height: var(--lh-3xl); }
+      .section__title { font-size: var(--fs-2xl); line-height: var(--lh-2xl); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      [data-reveal] { opacity: 1; transform: none; transition: none; }
+      .tagline .w { opacity: 1; transition: none; }
+      .menu a { transition: opacity var(--dur-fast) var(--ease); transform: none; }
+      * { animation-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Перейти к содержанию</a>
+
+  <div class="nav-wrap">
+    <nav class="nav" aria-label="Основная навигация">
+      <a class="nav__logo" href="/Portfolio/">А<span>.</span>Сарычева</a>
+      <div class="nav__links">
+        <a class="nav__link" href="#benefits">Что делаю</a>
+        <a class="nav__link" href="#cases">Кейсы</a>
+        <a class="nav__link" href="#faq">Вопросы</a>
+      </div>
+      <!-- ЗАМЕНИ: подставь свой ник в Telegram -->
+      <a class="btn btn--primary nav__cta" href="https://t.me/">Написать</a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Открыть меню">
+        <i class="ph ph-list" aria-hidden="true"></i>
+      </button>
+    </nav>
+  </div>
+
+  <div class="menu" id="menu" hidden>
+    <a href="#benefits">Что делаю</a>
+    <a href="#cases">Кейсы</a>
+    <a href="#faq">Вопросы</a>
+    <!-- ЗАМЕНИ: подставь свой ник в Telegram -->
+    <a href="https://t.me/">Написать в Telegram</a>
+  </div>
+
+  <main id="main">
+    <!-- Герой -->
+    <header class="hero">
+      <div class="container hero__grid">
+        <div>
+          <h1>Рутина уходит в автомат,<br>вы возвращаетесь к продажам.</h1>
+          <p class="hero__sub">
+            Внедряю автоматизацию под ключ для малого бизнеса и продаж в интернете:
+            отчёты из 1С, разбор документов, боты с базой знаний, аналитика.
+            Python, LLM и интеграции с вашими системами.
+          </p>
+          <div class="hero__cta">
+            <!-- ЗАМЕНИ: подставь свой ник в Telegram -->
+            <a class="btn btn--primary btn--lg" href="https://t.me/">
+              <i class="ph ph-telegram-logo" aria-hidden="true"></i>
+              Обсудить задачу в Telegram
+            </a>
+          </div>
+          <ul class="hero__proof">
+            <li><i class="ph ph-timer" aria-hidden="true"></i> Неделя отчёта за один день</li>
+            <li><i class="ph ph-chart-line-up" aria-hidden="true"></i> 3 года в аналитике</li>
+            <li><i class="ph ph-map-pin" aria-hidden="true"></i> Удалённо из Ставрополя</li>
+          </ul>
+        </div>
+        <div class="hero__shot" data-reveal>
+          <img src="../assets/shots/kapitan-dash.png"
+               alt="Дашборд автоотчётности: дебиторка, неликвиды, план и факт по данным из 1С"
+               loading="eager" width="640" height="400">
+        </div>
+      </div>
+    </header>
+
+    <!-- Обязательная секция-тэглайн -->
+    <section class="tagline" aria-label="Главный принцип">
+      <div class="container">
+        <p id="tagline-text">Сложное становится кодом, ваше время остаётся вашим.</p>
+      </div>
+    </section>
+
+    <!-- Боль и решение -->
+    <section class="section" id="pain">
+      <div class="container">
+        <p class="section__label" data-reveal>Почему это происходит</p>
+        <h2 class="section__title" data-reveal>Знакомые симптомы ручной работы</h2>
+        <div class="pain-grid">
+          <div class="pain" data-reveal><i class="ph ph-file-x" aria-hidden="true"></i>
+            <span>Отчёты собираются вручную в таблицах, и на это уходит день каждую неделю.</span></div>
+          <div class="pain" data-reveal><i class="ph ph-database" aria-hidden="true"></i>
+            <span>Данные живут в 1С, таблицах и почте, свести их воедино негде.</span></div>
+          <div class="pain" data-reveal><i class="ph ph-person-simple" aria-hidden="true"></i>
+            <span>Сотрудник делает работу, которую легко описать скрипту, и зависит от её наличия.</span></div>
+          <div class="pain" data-reveal><i class="ph ph-chats-circle" aria-hidden="true"></i>
+            <span>На вопросы о правилах и регламентах отвечает один человек, и без него всё встаёт.</span></div>
+          <div class="pain pain--fix" data-reveal><i class="ph ph-check-circle" aria-hidden="true"></i>
+            <span><strong>Решение:</strong> код берёт рутину на себя, человек остаётся решениям и общению с клиентами.</span></div>
+          <div class="pain pain--fix" data-reveal><i class="ph ph-shield-check" aria-hidden="true"></i>
+            <span><strong>Решение:</strong> расчёты прозрачны и проверяемы, модель работает там, где цена ошибки нулевая.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Выгоды -->
+    <section class="section" id="benefits">
+      <div class="container">
+        <p class="section__label" data-reveal>Что вы получаете</p>
+        <h2 class="section__title" data-reveal>Пять результатов, за которыми стоит работа</h2>
+        <div class="benefits">
+          <article class="benefit" data-reveal>
+            <div class="benefit__icon"><i class="ph ph-clock-countdown" aria-hidden="true"></i></div>
+            <h3>Отчёт за день вместо недели</h3>
+            <p>Python читает 8 типов выгрузок из 1С и собирает 14 отчётов с выводами: дебиторка, неликвиды, план и факт. Готово к утреннему совещанию.</p>
+          </article>
+          <article class="benefit" data-reveal>
+            <div class="benefit__icon"><i class="ph ph-files" aria-hidden="true"></i></div>
+            <h3>Документы превращаются в данные</h3>
+            <p>Сканы, PDF и XLSX проходят конвейер: распознавание, классификация, извлечение полей, свод в таблицу. Демо можно потрогать руками.</p>
+          </article>
+          <article class="benefit" data-reveal>
+            <div class="benefit__icon"><i class="ph ph-robot" aria-hidden="true"></i></div>
+            <h3>Бот отвечает вместо сотрудника</h3>
+            <p>Бот с поиском по вашим регламентам отвечает на вопросы в чате и цитирует источник. Подключён к Bitrix24 по вебхуку.</p>
+          </article>
+          <article class="benefit" data-reveal>
+            <div class="benefit__icon"><i class="ph ph-graph" aria-hidden="true"></i></div>
+            <h3>Цифры для решений</h3>
+            <p>SQL, Python и Power BI: дашборды и витрины вместо таблиц, в которых никто не разбирается. Метрики, по которым видно направление.</p>
+          </article>
+          <article class="benefit" data-reveal>
+            <div class="benefit__icon"><i class="ph ph-package" aria-hidden="true"></i></div>
+            <h3>Остается вашим имуществом</h3>
+            <p>Передаю код, документацию и логику расчётов. Автоматизация работает без меня и не привязана к подписке.</p>
+          </article>
+          <article class="benefit" data-reveal>
+            <div class="benefit__icon"><i class="ph ph-plugs-connected" aria-hidden="true"></i></div>
+            <h3>Интеграции с вашими системами</h3>
+            <p>1С через выгрузки, Bitrix24 через вебхуки и REST, маркетплейсы и таблицы. Связываю то, что у вас уже есть.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Как работаю -->
+    <section class="section" id="how">
+      <div class="container">
+        <p class="section__label" data-reveal>Процесс</p>
+        <h2 class="section__title" data-reveal>Три шага от разговора до результата</h2>
+        <div class="steps">
+          <article class="step" data-reveal>
+            <h3>Разбор задачи</h3>
+            <p>Бесплатный созвон на 30 минут. Говорите о процессе, я говорю, что автоматизировать стоит, а что не имеет смысла.</p>
+          </article>
+          <article class="step" data-reveal>
+            <h3>Прототип на ваших данных</h3>
+            <p>Собираю рабочий прототип за 1–2 недели и показываю результат на реальных данных до старта полного объёма работ.</p>
+          </article>
+          <article class="step" data-reveal>
+            <h3>Внедрение и передача</h3>
+            <p>Подключаю к вашим системам, документирую логику, обучаю команду. Дальше инструмент живёт вашей жизнью.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Кейсы -->
+    <section class="section" id="cases">
+      <div class="container">
+        <p class="section__label" data-reveal>Доказательства</p>
+        <h2 class="section__title" data-reveal>Живые проекты, а не обещания</h2>
+        <div class="cases">
+          <article class="case" data-reveal>
+            <span class="case__tag">Конвейер документов</span>
+            <h3>Сканы и PDF стали структурой</h3>
+            <p>Распознавание, классификация, извлечение полей и свод в таблицу. Демо с настоящими файлами, которые можно скачать.</p>
+            <a class="case__link" href="/Portfolio/docs-pipeline/">Открыть демо
+              <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+          </article>
+          <article class="case" data-reveal>
+            <span class="case__tag">Автоотчётность из 1С</span>
+            <h3>Неделя ручной работы за один день</h3>
+            <p>8 типов выгрузок из 1С превращаются в 14 отчётов с выводами LLM и поиском аномалий. Потребность выявила сама.</p>
+            <a class="case__link" href="/-kapitan-reports/">Посмотреть отчёт
+              <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+          </article>
+          <article class="case" data-reveal>
+            <span class="case__tag">Бот с базой знаний</span>
+            <h3>Регламенты отвечают сами</h3>
+            <p>RAG поиск по 11 разделам регламентов: сотрудник спрашивает словами, бот цитирует источник. Подключён к Bitrix24 по вебхуку.</p>
+            <a class="case__link" href="/Portfolio/">Подробнее в портфолио
+              <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+          </article>
+          <article class="case" data-reveal>
+            <span class="case__tag">Аналитика маркетплейсов</span>
+            <h3>Витрины и дашборды продаж</h3>
+            <p>Продажи, остатки и концентрация выручки по SKU. SQL и Python на данных маркетплейсов, выводы для закупок.</p>
+            <a class="case__link" href="/Portfolio/mp-analytics/">Открыть кейс
+              <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+          </article>
+          <article class="case" data-reveal>
+            <span class="case__tag">Калькулятор стоимости</span>
+            <h3>Цена из Китая за 10 секунд</h3>
+            <p>Товар, доставка, пошлина, НДС и курс в одной цифре. Собственный инструмент для расчёта себестоимости ввоза.</p>
+            <a class="case__link" href="/china-landed-cost/">Попробовать
+              <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="container">
+        <p class="section__label" data-reveal>Вопросы</p>
+        <h2 class="section__title" data-reveal>Что спрашивают до первого созвона</h2>
+        <div class="faq" data-reveal>
+          <details>
+            <summary>Сколько стоит автоматизация?
+              <i class="ph ph-plus" aria-hidden="true"></i></summary>
+            <p>Цену называю после бесплатного разбора задачи. Типовой инструмент обычно окупается за счёт времени, которое команда перестаёт тратить вручную.</p>
+          </details>
+          <details>
+            <summary>Сколько времени занимает проект?
+              <i class="ph ph-plus" aria-hidden="true"></i></summary>
+            <p>Прототип типовой задачи занимает 1–2 недели. Точные сроки называю до старта работ, с поправкой на доступ к данным.</p>
+          </details>
+          <details>
+            <summary>С какими системами работаете?
+              <i class="ph ph-plus" aria-hidden="true"></i></summary>
+            <p>1С через выгрузки, Bitrix24 через вебхуки и REST API, маркетплейсы, Excel и таблицы, любые источники с API.</p>
+          </details>
+          <details>
+            <summary>Что с безопасностью данных?
+              <i class="ph ph-plus" aria-hidden="true"></i></summary>
+            <p>Доступы выдаёте вы, данные не уходят в сторонние сервисы без согласования. Персональные данные обезличиваю, требования 152-ФЗ учитываю.</p>
+          </details>
+          <details>
+            <summary>Что если модель ошибётся?
+              <i class="ph ph-plus" aria-hidden="true"></i></summary>
+            <p>Расчёты выношу в код с тестами, модель остаётся там, где цена ошибки нулевая: формулировки, выводы и подсказки. Так галлюцинации не портят цифры.</p>
+          </details>
+          <details>
+            <summary>Вы работаете удалённо?
+              <i class="ph ph-plus" aria-hidden="true"></i></summary>
+            <p>Да, полностью удалённо. Ставрополь, часовой пояс удобен для московских компаний.</p>
+          </details>
+          <details>
+            <summary>Что нужно от меня?
+              <i class="ph ph-plus" aria-hidden="true"></i></summary>
+            <p>Доступ к данным или выгрузкам и один человек, который отвечает на вопросы по процессу. Остальное моя зона.</p>
+          </details>
+          <details>
+            <summary>Есть поддержка после сдачи?
+              <i class="ph ph-plus" aria-hidden="true"></i></summary>
+            <p>Да: документация, инструкции для команды и доработки по результатам запуска.</p>
+          </details>
+          <details>
+            <summary>Как устроена оплата?
+              <i class="ph ph-plus" aria-hidden="true"></i></summary>
+            <p>По этапам: разбор, прототип, внедрление. Условия фиксируем письменно до старта работ.</p>
+          </details>
+          <details>
+            <summary>Делаете только автоматизацию?
+              <i class="ph ph-plus" aria-hidden="true"></i></summary>
+            <p>Нет: аналитика, дашборды и отчётность тоже в работе. Если задача только в цифрах, начнём с них.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Гарантии и финальный CTA -->
+    <section class="section">
+      <div class="container">
+        <div class="assure" data-reveal>
+          <ul>
+            <li><i class="ph ph-check-circle" aria-hidden="true"></i> Разбор задачи и оценка бесплатно</li>
+            <li><i class="ph ph-check-circle" aria-hidden="true"></i> Оплата по этапам</li>
+            <li><i class="ph ph-check-circle" aria-hidden="true"></i> Логику расчётов передаю с документацией</li>
+          </ul>
+          <!-- ЗАМЕНИ: подставь свой ник в Telegram -->
+          <a class="btn btn--primary btn--lg" href="https://t.me/">
+            <i class="ph ph-telegram-logo" aria-hidden="true"></i>
+            Обсудить задачу в Telegram
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Правовые секции -->
+    <div class="container">
+      <div class="legal">
+        <section id="privacy">
+          <h3>Конфиденциальность</h3>
+          <p>Страница не собирает персональные данные: нет форм, трекеров и куков аналитики.
+            Если вы пишете мне в Telegram, данные общаются только между вами и мной.
+            Доступы к системам заказчика используются исключительно для выполнения задачи
+            и передаются по завершении.</p>
+        </section>
+        <section id="terms">
+          <h3>Условия сотрудничества</h3>
+          <p>Разбор задачи и предварительная оценка бесплатны. Стоимость, сроки и объём работ
+            фиксируются письменно до старта. Оплата по этапам. Готовый результат: рабочий
+            инструмент, исходный код и документация по логике расчётов.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer__inner">
+      <span>© <span id="year">2026</span> Александра Сарычева</span>
+      <div class="footer__links">
+        <a href="/Portfolio/">Портфолио</a>
+        <a href="#privacy">Конфиденциальность</a>
+        <a href="#terms">Условия</a>
+        <!-- ЗАМЕНИ: подставь свой ник в Telegram -->
+        <a href="https://t.me/">Telegram</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Мобильное меню
+    const burger = document.querySelector('.burger');
+    const menu = document.getElementById('menu');
+    function setMenu(open) {
+      burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+      burger.querySelector('i').className = open ? 'ph ph-x' : 'ph ph-list';
+      menu.hidden = false;
+      requestAnimationFrame(() => menu.classList.toggle('open', open));
+      document.body.style.overflow = open ? 'hidden' : '';
+      if (!open) setTimeout(() => { menu.hidden = true; }, 500);
+    }
+    burger.addEventListener('click', () => setMenu(burger.getAttribute('aria-expanded') !== 'true'));
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && burger.getAttribute('aria-expanded') === 'true') setMenu(false);
+    });
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Появление секций при скролле, один раз
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('[data-reveal]').forEach(el => {
+      if (reduceMotion) el.classList.add('is-visible');
+      else revealObserver.observe(el);
+    });
+
+    // Тэглайн: слова загораются по одному при пересечении линии триггера
+    const tagline = document.getElementById('tagline-text');
+    const words = tagline.textContent.trim().split(/\s+/);
+    tagline.innerHTML = words.map(w => '<span class="w">' + w + '</span>').join(' ');
+    const wordEls = [...tagline.querySelectorAll('.w')];
+    if (reduceMotion) {
+      wordEls.forEach(w => w.classList.add('on'));
+    } else {
+      let ticking = false;
+      function activateWords() {
+        const trigger = window.innerHeight * 0.75;
+        wordEls.forEach(w => {
+          if (w.getBoundingClientRect().top < trigger) w.classList.add('on');
+        });
+        ticking = false;
+      }
+      window.addEventListener('scroll', () => {
+        if (!ticking) { ticking = true; requestAnimationFrame(activateWords); }
+      }, { passive: true });
+      activateWords();
+    }
+
+    // Активный пункт навигации
+    const navLinks = [...document.querySelectorAll('.nav__link')];
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l =>
+            l.setAttribute('aria-current', l.hash === '#' + entry.target.id ? 'true' : 'false'));
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    ['benefits', 'cases', 'faq'].forEach(id => {
+      const s = document.getElementById(id);
+      if (s) sectionObserver.observe(s);
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
